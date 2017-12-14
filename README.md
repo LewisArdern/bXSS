@@ -81,4 +81,4 @@ This was more of a fun personal project after seeing the example from [Mario Hei
 
 This is perfect for my needs, and maybe yours too; I would recommend looking at [Sleepy Puppy](https://github.com/Netflix/sleepy-puppy) or [XSS Hunter](https://xsshunter.com/features) to see if they are appropriate as they are extremly easy to get started with, especially XSS Hunter's online version. 
 
-If you like the project, feel free to contribute or if you want to suggest improvements or notice any issues, open a new issue.
+If you like the project, feel free to contribute or if you want to suggest improvements or notice any problems, file a [issue](https://github.com/LewisArdern/bXSS/issues).
