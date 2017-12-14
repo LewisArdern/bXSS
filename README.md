@@ -1,6 +1,6 @@
 # bXSS
 
-bXSS is a simple Blind XSS application adapted from https://cure53.de/m, you can read about it here.
+bXSS is a simple Blind XSS application adapted from https://cure53.de/m, you can read about it [here](https://lewisardern.github.io/2017/12/10/blind-xss/).
 
 ![Gif of BlindXSS](./Images/cure53.gif)
 
