@@ -1,0 +1,26 @@
+{
+  "name": "bXSS",
+  "version": "1.0.0",
+  "description": "bXSS is a simple Blind XSS application adapted from https://cure53.de/m",
+  "main": "app.js",
+  "scripts": {},
+  "author": "Lewis Ardern",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "helmet": "^3.9.0",
+    "moment": "^2.19.2",
+    "nodemailer": "^4.4.0",
+    "twilio": "^3.9.3",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0"
+  }
+}
