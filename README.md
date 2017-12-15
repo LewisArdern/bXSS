@@ -52,9 +52,9 @@ bXSS will:
 * Using Node.js
     * Update Configuration 
         * config.letsEncrypt.TLS = true;
-        * config.letsEncrypt.publicKey = $Path
-        * config.letsEncrypt.privateKey = $Path
-        * config.letsEncrypt.privateKey = $Path
+        * config.letsEncrypt.publicKey = $Path/fullchain.pem
+        * config.letsEncrypt.privateKey = $Path/privkey.pem
+        * config.letsEncrypt.ca = $Path/chain.pem
 * Start your app (depending on your preference)
     * node app.js
     * npm2 start app.js 
