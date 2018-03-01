@@ -4,6 +4,7 @@ const process = require('../utilities/process');
 const save = require('../utilities/save');
 const uuid = require('uuid/v1');
 const config = require('../config/config');
+const slack = require('../utilities/slack');
 
 exports.displayScript = (req, res) => {
   res.type('.js');
@@ -52,6 +53,8 @@ exports.capture = (req, res) => {
 
     // Always send email when resource is loaded
     mail.sendMail(guid, domain);
+    // Always send to slack when resource is loaded;
+    slack.sendSlack(guid,domain);
     // check if domain.URL exists or is not null/empty (should always be captured if valid request)
     if (!process.checkExists(domain) && !!domain.URL) {
       console.log(`${domain.URL} doesn't exist saving file`);

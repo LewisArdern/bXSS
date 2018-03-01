@@ -2,6 +2,8 @@ const config = {};
 
 config.twilio = {};
 config.gmail = {};
+config.slack = {};
+config.letsEncrypt = {};
 
 config.port = process.env.PORT || 3030;
 config.url = process.env.url || 'example.com';
@@ -14,10 +16,16 @@ config.letsEncrypt.publicKey = process.env.publicKey || `/etc/letsencrypt/live/$
 config.letsEncrypt.privateKey = process.env.privateKey || `/etc/letsencrypt/live/${config.url}/privkey.pem`;
 config.letsEncrypt.ca = process.env.ca || `/etc/letsencrypt/live/${config.url}/chain.pem`;
 
+// Remove if you dont' want Twilio
 config.twilio.accountSid = process.env.accountSid || '';
 config.twilio.authToken = process.env.authToken || '';
 config.twilio.to = process.env.twilioTo || '';
 config.twilio.from = process.env.twilioFrom || '';
+
+// Remove if you dont want Slack
+config.slack.token = process.env.token || '';
+config.slack.channel = process.env.slackChannel || 'general';
+
 
 config.gmail.user = process.env.gmailUser || 'example@gmail.com';
 config.gmail.pass = process.env.gmailPass || '';

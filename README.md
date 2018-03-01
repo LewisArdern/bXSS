@@ -8,6 +8,7 @@ bXSS will:
 
 * [Email when the resource has been loaded via nodemailer ](./Images/email.jpg)
 * [Send a SMS via Twilio](./Images/sms.jpg)
+* [Send a Slack Message](./Images/slack.jpg)
 * [Save to disk to review later (If necessary)](./Images/file.jpg)
 
 # Requirements
@@ -18,6 +19,7 @@ bXSS will:
 * Node.js and Express
 * A [Gmail](https://gmail.com) account, to send reports via Nodemailer
 * A [Twilio Account](https://www.twilio.com/sms) (Optional) 
+* A [Slack Token](https://api.slack.com/docs/token-types) (Optional)
 
 # Step-Up
 
@@ -32,6 +34,10 @@ bXSS will:
         * config.twilio.authToken = [Twilio Auth Token](https://support.twilio.com/hc/en-us/articles/223136027-Auth-Tokens-and-how-to-change-them)
         * config.twilio.to = Your telephone number
         * config.twilio.from = [Twilio telephone number](https://support.twilio.com/hc/en-us/articles/223136207-Getting-started-with-your-new-Twilio-phone-number)
+    * Slack <b>(Optional, if you don't want to use Slack just delete all Slack references from the config)</b> 
+        * config.slack.token = [Slack Token](https://api.slack.com/docs/token-types)
+        * config.slack.channel = [Channel you want to send the report to](https://get.slack.help/hc/en-us/articles/201402297-Create-a-channel)
+        * Slack permissions required [channels:read](https://api.slack.com/scopes/channels:read) and [chat:write](https://api.slack.com/scopes/chat:write)
     * Gmail
         * config.gmail.user = Gmail Username
         * config.gmail.pass = Gmail Password
