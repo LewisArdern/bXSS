@@ -16,9 +16,9 @@ if (config.letsEncrypt.TLS) {
     ca: fs.readFileSync(config.letsEncrypt.ca),
 
   };
-  app.listen(config.port, () => console.log(`BlindXSSer listening on port ${config.port}`));
+  app.listen(config.port, () => console.log(`bXSS listening on port ${config.port}`));
   https.createServer(options, app).listen(8443);
 } else {
-  app.listen(config.port, () => console.log(`BlindXSSer listening on port ${config.port}`));
+  app.listen(config.port, () => console.log(`bXSS listening on port ${config.port}`));
 }
 
