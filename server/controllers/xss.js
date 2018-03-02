@@ -54,24 +54,23 @@ exports.capture = (req, res) => {
     // Always send email when resource is loaded
     mail.sendMail(guid, domain);
     // Always send to slack when resource is loaded;
-    slack.sendSlack(guid,domain);
+    slack.sendSlack(guid, domain);
     // check if domain.URL exists or is not null/empty (should always be captured if valid request)
     if (!process.checkExists(domain) && !!domain.URL) {
       console.log(`${domain.URL} doesn't exist saving file`);
       if (!process.lastSave()) {
         console.log(`Sending SMS For URL ${domain.URL}`);
         sms.sendSMS(guid, domain);
-        console.log(`Saving To Disk URL ${domain.URL}`);
-        save.saveFile(guid, domain);
         res.redirect(domain.URL);
       } else {
         res.redirect(domain.URL);
-        console.log('Already sent SMS/Saved to disk today');      
+        console.log('Already sent SMS today, saved to disk');
       }
     } else {
-      res.redirect(domain.URL);
       console.log(`The domain ${domain.URL} already exists`);
-
+      console.log(`Saving To Disk URL ${domain.URL}`);
+      save.saveFile(guid, domain);
+      res.redirect(domain.URL);
     }
   } else {
     // You always need a meme to spice up code, this feels appropriate
