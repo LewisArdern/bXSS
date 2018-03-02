@@ -61,10 +61,14 @@ exports.capture = (req, res) => {
       if (!process.lastSave()) {
         console.log(`Sending SMS For URL ${domain.URL}`);
         sms.sendSMS(guid, domain);
+        console.log(`Saving To Disk URL ${domain.URL}`);
+        save.saveFile(guid, domain);
         res.redirect(domain.URL);
       } else {
         res.redirect(domain.URL);
-        console.log('Already sent SMS today, saved to disk');
+        console.log('Already sent SMS today, saving to disk');
+        console.log(`Saving To Disk URL ${domain.URL}`);
+        save.saveFile(guid, domain);
       }
     } else {
       console.log(`The domain ${domain.URL} already exists`);

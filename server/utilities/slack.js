@@ -18,7 +18,7 @@ exports.sendSlack = (guid, domain) => {
         if (err) {
           console.error(err);
         } else {
-          console.log('Sent Slack Message');
+          console.log(`Sent Slack Message to channel ${channel} for URL ${domain.URL}`);
         }
       });
     });

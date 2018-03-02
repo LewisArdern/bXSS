@@ -54,7 +54,7 @@ exports.sendMail = (guid, domain) => {
       html: createTemplate(guid, domain),
     };
 
-    smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || 'mail sent!'));
+    smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || `Mail sent to ${config.gmail.to} for URL ${domain.URL}!`));
   } else {
     console.log('You need to configure your gmail account');
   }
