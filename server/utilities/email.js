@@ -1,8 +1,7 @@
 const nodemailer = require('nodemailer');
 const config = require('../config/config');
 
-const createTemplate = (guid, domain) => {
-  return `
+const createTemplate = (guid, domain) => `
   <!DOCTYPE HTML>
   <HTML style="font-family: sans-serif; margin: 0; padding-left: 1em;">
       <body>
@@ -36,25 +35,28 @@ const createTemplate = (guid, domain) => {
       </body>
   </HTML>
   `;
-};
 
 
 exports.sendMail = (guid, domain) => {
   // TODO: Add more email support options, add tokens rather than creds.
-  const smtpTransport = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: config.gmail.user,
-      pass: config.gmail.pass,
-    },
-  });
-  const mailOptions = {
-    from: config.gmail.from,
-    to: config.gmail.to,
-    subject: `New Blind XSS ! | ${domain.URL} ${guid}`,
-    html: createTemplate(guid, domain),
-  };
+  if (!!config.gmail.user && !!config.gmail.pass && !!config.gmail.to && !!config.gmail.from) {
+    const smtpTransport = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: config.gmail.user,
+        pass: config.gmail.pass,
+      },
+    });
+    const mailOptions = {
+      from: config.gmail.from,
+      to: config.gmail.to,
+      subject: `New Blind XSS ! | ${domain.URL} ${guid}`,
+      html: createTemplate(guid, domain),
+    };
 
-  smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || 'mail sent!'));
+    smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || 'mail sent!'));
+  } else {
+    console.log('You need to configure your gmail account');
+  }
 };
 

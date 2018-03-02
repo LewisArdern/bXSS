@@ -38,7 +38,7 @@ bXSS will:
         * config.slack.token = [Slack Token](https://api.slack.com/docs/token-types)
         * config.slack.channel = [Channel you want to send the report to](https://get.slack.help/hc/en-us/articles/201402297-Create-a-channel)
         * Slack permissions required [channels:read](https://api.slack.com/scopes/channels:read) and [chat:write](https://api.slack.com/scopes/chat:write)
-    * Gmail
+    * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>
         * config.gmail.user = Gmail Username
         * config.gmail.pass = Gmail Password
         * config.gmail.to = Where you want to send the emails

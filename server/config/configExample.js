@@ -26,7 +26,7 @@ config.twilio.from = process.env.twilioFrom || '';
 config.slack.token = process.env.token || '';
 config.slack.channel = process.env.slackChannel || 'general';
 
-
+// Remove if you dont want Gmail
 config.gmail.user = process.env.gmailUser || 'example@gmail.com';
 config.gmail.pass = process.env.gmailPass || '';
 config.gmail.to = process.env.gmailTo || 'youremail@domain.com';
