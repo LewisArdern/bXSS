@@ -54,7 +54,7 @@ exports.sendMail = (guid, domain) => {
         subject: `New Blind XSS ! | ${domain.URL} ${guid}`,
         html: createTemplate(guid, domain),
       };
-      smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || `Mail sent to ${config.gmail.to} for URL ${domain.URL}!`));
+      smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || `Mail sent to ${element} for URL ${domain.URL}!`));
     });
   } else {
     console.log('You need to configure your gmail account');
