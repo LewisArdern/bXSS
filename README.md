@@ -17,7 +17,7 @@ bXSS will:
 * A usable domain
 * A SSL/TLS Certificate, free from [Lets Encrypt](https://letsencrypt.org) 
 * Node.js and Express
-* A [Gmail](https://gmail.com) account, to send reports via Nodemailer
+* A [Gmail](https://gmail.com) account, to send reports via Nodemailer (Optional)
 * A [Twilio Account](https://www.twilio.com/sms) (Optional) 
 * A [Slack Token](https://api.slack.com/docs/token-types) (Optional)
 
