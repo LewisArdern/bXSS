@@ -19,7 +19,7 @@ config.letsEncrypt.ca = process.env.ca || `/etc/letsencrypt/live/${config.url}/c
 // Remove if you dont' want Twilio
 config.twilio.accountSid = process.env.accountSid || '';
 config.twilio.authToken = process.env.authToken || '';
-config.twilio.to = process.env.twilioTo || '';
+config.twilio.to = process.env.twilioTo || ['']; // add additonal numbers with comma seperation e.g '+447000000', ''
 config.twilio.from = process.env.twilioFrom || '';
 
 // Remove if you dont want Slack
@@ -29,7 +29,7 @@ config.slack.channel = process.env.slackChannel || 'general';
 // Remove if you dont want Gmail
 config.gmail.user = process.env.gmailUser || 'example@gmail.com';
 config.gmail.pass = process.env.gmailPass || '';
-config.gmail.to = process.env.gmailTo || ['youremail@domain.com', 'anotheremail@domain.com'];
+config.gmail.to = process.env.gmailTo || ['youremail@domain.com']; // add additonal emails with comma seperation '', ''
 config.gmail.from = process.env.gmailFrom || 'example@gmail.com';
 
 
