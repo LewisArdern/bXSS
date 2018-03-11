@@ -41,7 +41,7 @@ bXSS will:
     * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>
         * config.gmail.user = Gmail Username
         * config.gmail.pass = Gmail Password
-        * config.gmail.to = ['email1@domain.com','email2@domain.com] Where you want to send the emails
+        * config.gmail.to = ['email1@domain.com','email2@domain.com'] Where you want to send the emails
         * config.gmail.from = Who sent the message, usually Gmail Username
     * Rename configExample.js to config.js
 * Start your app (depending on your preference)
