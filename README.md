@@ -17,7 +17,7 @@ bXSS will:
 * A usable domain
 * A SSL/TLS Certificate, free from [Lets Encrypt](https://letsencrypt.org) 
 * Node.js and Express
-* A [Gmail](https://gmail.com) account, to send reports via Nodemailer
+* A [Gmail](https://gmail.com) account, to send reports via Nodemailer (Optional)
 * A [Twilio Account](https://www.twilio.com/sms) (Optional) 
 * A [Slack Token](https://api.slack.com/docs/token-types) (Optional)
 
@@ -32,7 +32,7 @@ bXSS will:
     * Twilio <b>(Optional, if you don't want to use Twilio just delete all Twilio references from the config)</b> 
         * config.twilio.accountSid =   [Twilio SID](https://support.twilio.com/hc/en-us/articles/223136607-What-is-an-Application-SID)
         * config.twilio.authToken = [Twilio Auth Token](https://support.twilio.com/hc/en-us/articles/223136027-Auth-Tokens-and-how-to-change-them)
-        * config.twilio.to = Your telephone number
+        * config.twilio.to = ['+447500000000','+0018056826043'] Your telephone number(s)
         * config.twilio.from = [Twilio telephone number](https://support.twilio.com/hc/en-us/articles/223136207-Getting-started-with-your-new-Twilio-phone-number)
     * Slack <b>(Optional, if you don't want to use Slack just delete all Slack references from the config)</b> 
         * config.slack.token = [Slack Token](https://api.slack.com/docs/token-types)
@@ -41,7 +41,7 @@ bXSS will:
     * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>
         * config.gmail.user = Gmail Username
         * config.gmail.pass = Gmail Password
-        * config.gmail.to = Where you want to send the emails
+        * config.gmail.to = ['email1@domain.com','email2@domain.com'] Where you want to send the emails
         * config.gmail.from = Who sent the message, usually Gmail Username
     * Rename configExample.js to config.js
 * Start your app (depending on your preference)

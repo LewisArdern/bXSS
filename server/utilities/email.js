@@ -47,14 +47,15 @@ exports.sendMail = (guid, domain) => {
         pass: config.gmail.pass,
       },
     });
-    const mailOptions = {
-      from: config.gmail.from,
-      to: config.gmail.to,
-      subject: `New Blind XSS ! | ${domain.URL} ${guid}`,
-      html: createTemplate(guid, domain),
-    };
-
-    smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || `Mail sent to ${config.gmail.to} for URL ${domain.URL}!`));
+    config.gmail.to.forEach((element) => {
+      const mailOptions = {
+        from: config.gmail.from,
+        to: element,
+        subject: `New Blind XSS ! | ${domain.URL} ${guid}`,
+        html: createTemplate(guid, domain),
+      };
+      smtpTransport.sendMail(mailOptions, (error, response) => console.log(error || `Mail sent to ${element} for URL ${domain.URL}!`));
+    });
   } else {
     console.log('You need to configure your gmail account');
   }
