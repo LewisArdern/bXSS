@@ -49,7 +49,7 @@ bXSS will:
     * pm2 start app.js 
     * nodemon app.js
 
-## Additional Steps
+## Additional Steps (Optional)
 
 * Obtain a let's Encrypt cert
     * [Manual](https://gist.github.com/davestevens/c9e437afbb41c1d5c3ab)

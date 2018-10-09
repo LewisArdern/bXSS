@@ -1,13 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
-const config = require('../config/config');
 
 const dir = path.normalize(`${__dirname}/../../server/found`);
 const urls = path.normalize(`${__dirname}/../../server/found/urls.txt`);
 const date = path.normalize(`${__dirname}/../../server/found/date.txt`);
 
-exports.processDomain = (data) => {
+exports.processDomain = (data, config) => {
   const domain = {
     Cookie: '', innerHTML: '', URL: '', openerLocation: '', openerInnerHTML: '', openerCookie: '', victimIP: '',
   };

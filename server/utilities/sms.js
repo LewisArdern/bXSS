@@ -1,11 +1,9 @@
 const Twilio = require('twilio');
-const config = require('../config/config');
-const save = require('./save');
 
-exports.sendSMS = (guid, domain) => {
-  if (!!config.twilio.accountSid && !!config.twilio.authToken) {
+exports.sendSMS = (guid, domain, config, save) => {
+  if (config.twilio !== undefined && config.twilio.accountSid !== undefined
+    && config.twilio.authToken !== undefined) {
     const client = new Twilio(config.twilio.accountSid, config.twilio.authToken);
-
     config.twilio.to.forEach((element) => {
       const payload = {
         body: `You have a new potential Blind XSS for domain ${domain.URL} check the logs ${guid}`,

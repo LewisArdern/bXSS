@@ -1,10 +1,8 @@
 const Slack = require('slack');
-const config = require('../config/config');
 
-
-exports.sendSlack = (guid, domain) => {
-  if (!!config.slack.token && !!config.slack.channel) {
-    const token = config.slack.token;
+exports.sendSlack = (guid, domain, config) => {
+  if (config.slack !== undefined && config.slack.token !== undefined && config.slack.token !== undefined) {
+    const token = config.slack.token || '(no token)';
     const mail = config.gmail.to || '(no email configured), saved to disk';
     const text = `There is a new potential Blind XSS for domain ${domain.URL}, email sent to ${mail} with the GUID: ${guid}`;
 

@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const config = require('../config/config');
+
 
 const createTemplate = (guid, domain) => `
   <!DOCTYPE HTML>
@@ -34,10 +34,10 @@ const createTemplate = (guid, domain) => `
               </div>
       </body>
   </HTML>
-  `;
+`;
 
 
-exports.sendMail = (guid, domain) => {
+exports.sendMail = (guid, domain, config) => {
   // TODO: Add more email support options, add tokens rather than creds.
   if (!!config.gmail.user && !!config.gmail.pass && !!config.gmail.to && !!config.gmail.from) {
     const smtpTransport = nodemailer.createTransport({

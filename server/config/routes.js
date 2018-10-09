@@ -7,5 +7,7 @@ module.exports = (app) => {
   // // Which will be included in "><script src="site"></script>
   app.get('/m', xss.displayScript);
   // just shows alert(1), for normal xss.
+  app.get('/payloads', xss.generatePayloads);
+
   app.get('*', xss.displayDefault);
 };
