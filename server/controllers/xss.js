@@ -6,7 +6,7 @@ const uuid = require('uuid/v1');
 const config = require('../config/config');
 const slack = require('../utilities/slack');
 const template = require('../utilities/template');
-const payloads = require('../utilities/payloads')
+const payloads = require('../utilities/payloads');
 
 exports.displayScript = (req, res) => {
   res.type('.js');
