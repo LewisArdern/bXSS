@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const validator = require('validator');
 
 
 const createTemplate = (guid, domain) => `
@@ -38,6 +39,18 @@ const createTemplate = (guid, domain) => `
 
 
 exports.sendMail = (guid, domain, config) => {
+
+  if (domain.hasSecurityTxt !== null) {
+    domain.hasSecurityTxt.split('\r\n').forEach((item) => {
+      if (item.includes('Contact:')) {
+        const email = item.replace('Contact:', '').replace('mailto:', '').trim();
+        if ((validator.isEmail(email))) {
+          // send email
+        }
+      }
+    });
+  }
+
   // TODO: Add more email support options, add tokens rather than creds.
   if (!!config.gmail.user && !!config.gmail.pass && !!config.gmail.to && !!config.gmail.from) {
     const smtpTransport = nodemailer.createTransport({

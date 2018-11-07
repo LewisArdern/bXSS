@@ -8,7 +8,7 @@ const date = path.normalize(`${__dirname}/../../server/found/date.txt`);
 
 exports.processDomain = (data, config) => {
   const domain = {
-    Cookie: '', innerHTML: '', URL: '', openerLocation: '', openerInnerHTML: '', openerCookie: '', victimIP: '',
+    Cookie: '', innerHTML: '', URL: '', openerLocation: '', openerInnerHTML: '', openerCookie: '', hasSecurityTxt: '', victimIP: '',
   };
   const fields = data.split(`\r\n\r\n${config.boundary}`);
   let i = 0;

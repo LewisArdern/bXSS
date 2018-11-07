@@ -14,7 +14,8 @@
     "nodemailer": "^4.6.2",
     "slack": "^11.0.0",
     "twilio": "^3.18.0",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "validator": "^10.8.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",

@@ -32,6 +32,7 @@ exports.capture = (req, res) => {
     domain.victimIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
     const guid = uuid();
 
+
     // Always send email when resource is loaded
     mail.sendMail(guid, domain, config);
     // Always send to slack when resource is loaded;
