@@ -24,8 +24,14 @@ function captureParentNodes(config) {
                   _array.push(element.nodeName)
             }
             else {
-                  console.log(element.nodeName)
-                   _array.push(element.nodeName);
+                  value = element.nodeName
+                  if(element.className !== null) {
+                        value = value + '-' + element.className
+                  }
+                  if(element.id.trim() !== null && element.id != ' ') {
+                        value = value + '-' + element.id
+                  }
+                   _array.push(value);
             }
             if(element.nodeName !== 'HTML' ) return captureParentNodes(element.parentNode, _array);
             else return _array;           
@@ -126,7 +132,7 @@ exports.generateTemplate = (config) => {
 
             ${sendXhr(config)}
 
-        } else {window.name=''}
+        } else {window.name='__'}
       })();`;
 
   return template;

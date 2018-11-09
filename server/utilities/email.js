@@ -13,6 +13,14 @@ function isIntrusive(value) {
     return true;
   } return false;
 }
+function structureDomNodes(f) {
+  let structured = '';
+  const b = f.split('\r\n');
+  b.forEach((value) => {
+    structured += `${value}<br/>`;
+  });
+  return structured;
+}
 
 const createTemplate = (domain, config) => `
 <!DOCTYPE HTML>
@@ -50,11 +58,11 @@ const createTemplate = (domain, config) => `
                 <div class="panel-body" style="padding: 1em; width: 50%; font-family: courier, Inconsolata; background-color: #DCDCDC; color: black">
                     <pre><code>${domain.innerHTML}</code></pre>
                 </div>
-            </div>` : `<div class="panel panel-default" style="height: 4em">
+            </div>` : `<div class="panel panel-default" style="height: 9em;padding-bottom: 5px">
             <div class="panel-heading"><h3 style="color: #EE9C4F">DOM Structure</h3></div>
-            <div class="panel-body" style="padding-left: 1em; color: #696969"">
-                This payload is non-intrusve, it will only capture HTML elements, not the entire body.
-                ${domain.innerHTML}
+            <div class="panel-body style="padding-bottom: 10px" ">
+                This payload is non-intrusve, it will only capture HTML elements, not the entire body.<br/>
+                ${structureDomNodes(domain.innerHTML)}
             </div>
         </div>`}
     </body>
@@ -70,7 +78,6 @@ function mailOptions(config, mail, guid, domain, message) {
 }
 
 exports.sendMail = (guid, domain, config) => {
-  
   if (!!config.gmail.user && !!config.gmail.pass && !!config.gmail.to && !!config.gmail.from) {
     if (domain.hasSecurityTxt !== 'null') {
       domain.hasSecurityTxt.split('\r\n').forEach((item) => {

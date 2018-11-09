@@ -15,6 +15,18 @@ exports.processDomain = (data, config) => {
   for (const key in domain) {
     domain[key] = fields[i++];
   }
+
+  if (config.intrusiveLevel !== 1) {
+    const configureInnerHtml = domain.innerHTML.replace('--', '');
+    const nodes = configureInnerHtml.split(',');
+    let computedNodes = '';
+    nodes.forEach((node) => {
+      const strippedNode = node.replace('--', '');
+      computedNodes += `${strippedNode}\r\n`;
+    });
+    console.log(computedNodes)
+    domain.innerHTML = computedNodes.replace('--', '');
+  }
   return domain;
 };
 

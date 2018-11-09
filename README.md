@@ -1,25 +1,30 @@
 # bXSS
 
-bXSS is a simple Blind XSS application adapted from https://cure53.de/m, you can read about it [here](https://lewisardern.github.io/2017/12/10/blind-xss/).
+bXSS is a Blind XSS application adapted from https://cure53.de/m, you can read about it [here](https://ardern.io/2017/12/10/blind-xss/).
 
 ![Gif of BlindXSS](./Images/cure53.gif)
 
-bXSS will:
+bXSS supports the following:
 
-* [Email when the resource has been loaded via nodemailer ](./Images/email.jpg)
-* [Send a SMS via Twilio](./Images/sms.jpg)
-* [Send a Slack Message](./Images/slack.jpg)
-* [Save to disk to review later (If necessary)](./Images/file.jpg)
+* [Intrusive Levels](./Images/intrusion.jpg)
+* [Email](./Images/email.jpg)
+    * [Auto report via /.well-known/security.txt](./Images/securitytxt.jpg)
+* [Twilio](./Images/sms.jpg)
+* [Slack](./Images/slack.jpg)
+* [Webex Teams](./Images/cisco.jpg)
+* [Payload Generation](./Images/payloads.jpg)
+* [Save locally](./Images/file.jpg)
 
 # Requirements
 
 * A server you control
 * A usable domain
-* A SSL/TLS Certificate, free from [Lets Encrypt](https://letsencrypt.org) 
 * Node.js and Express
+* A SSL/TLS Certificate, free from [Lets Encrypt](https://letsencrypt.org) (Optional)
 * A [Gmail](https://gmail.com) account, to send reports via Nodemailer (Optional)
 * A [Twilio Account](https://www.twilio.com/sms) (Optional) 
 * A [Slack Token](https://api.slack.com/docs/token-types) (Optional)
+* A [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details) (Optional)
 
 # Step-Up
 
@@ -38,6 +43,9 @@ bXSS will:
         * config.slack.token = [Slack Token](https://api.slack.com/docs/token-types)
         * config.slack.channel = [Channel you want to send the report to](https://get.slack.help/hc/en-us/articles/201402297-Create-a-channel)
         * Slack permissions required [channels:read](https://api.slack.com/scopes/channels:read) and [chat:write](https://api.slack.com/scopes/chat:write)
+     * Cisco <b>(Optional, if you don't want to use Cisco just delete all Cisco references from the config)</b> 
+        * config.ciscoSpark.token = [Cisco Token](https://api.slack.com/docs/token-types)
+        * config.ciscoSpark.sparkRoom = ['email1@domain.com','email2@domain.com']     
     * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>
         * config.gmail.user = Gmail Username
         * config.gmail.pass = Gmail Password
@@ -78,13 +86,10 @@ The application has three core functions
 
 * POST - /m (captures DOM information)  
 * GET - /m (Loads the payload)
+* Payloads - /payloads (Gives payloads you can use for testing blind xss)
 * Everything else - Loads alert(1)
 
 
 # Contribute?
-
-This was more of a fun personal project after seeing the example from [Mario Heiderich's](https://twitter.com/0x6D6172696F) AppSec Europe training and I wanted to have a reason to write more JavaScript and use some ES6. 
-
-This is perfect for my needs, and maybe yours too; I would recommend looking at [Sleepy Puppy](https://github.com/Netflix/sleepy-puppy) or [XSS Hunter](https://xsshunter.com/features) to see if they are appropriate as they are extremly easy to get started with, especially XSS Hunter's online version. 
 
 If you like the project, feel free to contribute or if you want to suggest improvements or notice any problems, file a [issue](https://github.com/LewisArdern/bXSS/issues).

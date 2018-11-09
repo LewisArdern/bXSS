@@ -26,7 +26,7 @@ config.twilio.from = process.env.twilioFrom || '';
 config.slack.token = process.env.token || '';
 config.slack.channel = process.env.slackChannel || '';
 
-// Remove if you dont want Cisco
+// Remove if you dont want Cisco Webex Teams
 config.ciscoSpark.token = process.env.sparkToken || '';
 config.ciscoSpark.sparkRoom = process.env.sparkRoom || ['']; // add additonal emails with comma seperation e.g 'youremail@gmail.com', ''
 
@@ -36,6 +36,8 @@ config.gmail.pass = process.env.gmailPass || '';
 config.gmail.to = process.env.gmailTo || ['youremail@domain.com']; // add additonal emails with comma seperation '', ''
 config.gmail.from = process.env.gmailFrom || 'example@gmail.com';
 
-config.intrusiveLevel = '1';
+// 1 Everything
+// 0 Just DOM Nodes
+config.intrusiveLevel = 0;
 
 module.exports = config;

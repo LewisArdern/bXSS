@@ -21,7 +21,7 @@ exports.displayDefault = (req, res) => {
 };
 
 exports.generatePayloads = (req, res) => {
-  res.type('.html');
+  res.set('Content-Type', 'text/plain');
   const generatedPayloads = payloads.generatePayloads(config);
   res.send(generatedPayloads);
 };

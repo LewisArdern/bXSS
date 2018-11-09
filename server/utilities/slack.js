@@ -3,7 +3,7 @@ const Slack = require('slack');
 exports.sendSlack = (guid, domain, config) => {
   if (config.slack !== undefined &&
     config.slack.token !== undefined
-    && config.slack.token !== undefined) {
+    && config.slack.channel !== undefined) {
 
     const token = config.slack.token || '(no token)';
     const mail = config.gmail.to || '(no email configured), saved to disk';
