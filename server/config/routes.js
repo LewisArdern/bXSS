@@ -6,6 +6,8 @@ module.exports = (app) => {
   // // Any other request will generate the JavaScript payload
   // // Which will be included in "><script src="site"></script>
   app.get('/m', xss.displayScript);
+  // This GET query show's payloads that can be used when testing for bXSS.
+  app.get('/payloads', xss.generatePayloads);
   // just shows alert(1), for normal xss.
   app.get('*', xss.displayDefault);
 };

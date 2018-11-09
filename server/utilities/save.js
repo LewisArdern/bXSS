@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 const dir = path.normalize(`${__dirname}/../../server/found/`);
 const urls = path.normalize(`${dir}urls.txt`);

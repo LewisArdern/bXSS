@@ -1,20 +1,31 @@
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
-const config = require('../config/config');
 
 const dir = path.normalize(`${__dirname}/../../server/found`);
 const urls = path.normalize(`${__dirname}/../../server/found/urls.txt`);
 const date = path.normalize(`${__dirname}/../../server/found/date.txt`);
 
-exports.processDomain = (data) => {
+exports.processDomain = (data, config) => {
   const domain = {
-    Cookie: '', innerHTML: '', URL: '', openerLocation: '', openerInnerHTML: '', openerCookie: '', victimIP: '',
+    Cookie: '', innerHTML: '', URL: '', openerLocation: '', openerInnerHTML: '', openerCookie: '', hasSecurityTxt: '', victimIP: '',
   };
   const fields = data.split(`\r\n\r\n${config.boundary}`);
   let i = 0;
   for (const key in domain) {
     domain[key] = fields[i++];
+  }
+
+  if (config.intrusiveLevel !== 1) {
+    const configureInnerHtml = domain.innerHTML.replace('--', '');
+    const nodes = configureInnerHtml.split(',');
+    let computedNodes = '';
+    nodes.forEach((node) => {
+      const strippedNode = node.replace('--', '');
+      computedNodes += `${strippedNode}\r\n`;
+    });
+    console.log(computedNodes)
+    domain.innerHTML = computedNodes.replace('--', '');
   }
   return domain;
 };
