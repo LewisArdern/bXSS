@@ -44,7 +44,7 @@ bXSS supports the following:
         * config.slack.channel = [Channel you want to send the report to](https://get.slack.help/hc/en-us/articles/201402297-Create-a-channel)
         * Slack permissions required [channels:read](https://api.slack.com/scopes/channels:read) and [chat:write](https://api.slack.com/scopes/chat:write)
      * Cisco <b>(Optional, if you don't want to use Cisco just delete all Cisco references from the config)</b> 
-        * config.ciscoSpark.token = [Cisco Token](https://api.slack.com/docs/token-types)
+        * config.ciscoSpark.token = [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details)
         * config.ciscoSpark.sparkRoom = ['email1@domain.com','email2@domain.com']     
     * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>
         * config.gmail.user = Gmail Username
