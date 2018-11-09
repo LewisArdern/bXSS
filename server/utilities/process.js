@@ -24,7 +24,6 @@ exports.processDomain = (data, config) => {
       const strippedNode = node.replace('--', '');
       computedNodes += `${strippedNode}\r\n`;
     });
-    console.log(computedNodes)
     domain.innerHTML = computedNodes.replace('--', '');
   }
   return domain;
