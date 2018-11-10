@@ -1,8 +1,8 @@
 const Twilio = require('twilio');
+const check = require('./check');
 
 exports.sendSMS = (guid, domain, config, save) => {
-  if (config.twilio !== undefined && config.twilio.accountSid !== undefined
-    && config.twilio.authToken !== undefined) {
+  if (check.exists([config.twilio, config.twilio.accountSid, config.twilio.authToken])) {
     const client = new Twilio(config.twilio.accountSid, config.twilio.authToken);
     config.twilio.to.forEach((element) => {
       const payload = {

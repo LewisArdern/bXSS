@@ -1,10 +1,8 @@
 const ciscospark = require('ciscospark');
+const check = require('./check');
 
 exports.sendCiso = (guid, domain, config) => {
-  if (config.ciscoSpark !== undefined &&
-        config.ciscoSpark.token !== undefined
-        && config.ciscoSpark.sparkRoom !== undefined) {
-
+  if (check.exists([config.ciscoSpark, config.ciscoSpark.token, config.ciscoSpark.sparkRoom])) {
     const teams = ciscospark.init({
       credentials: {
         access_token: config.ciscoSpark.token,
@@ -19,11 +17,14 @@ exports.sendCiso = (guid, domain, config) => {
           personEmail: email,
         });
       }),
-    ]).then(() =>
+    ]).then(
+      () =>
+        console.log('Sending Webex Teams Message'),
       teams.messages.create({
         markdown: text,
         roomId: room.id,
-      })));
+      }),
+    ));
   } else {
     console.log('You need to configure your Webex Teams account');
   }
