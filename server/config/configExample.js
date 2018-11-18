@@ -3,6 +3,7 @@ const config = {};
 config.twilio = {};
 config.gmail = {};
 config.slack = {};
+config.discord = {};
 config.letsEncrypt = {};
 
 config.port = process.env.PORT || 3030;
@@ -21,6 +22,10 @@ config.twilio.accountSid = process.env.accountSid || '';
 config.twilio.authToken = process.env.authToken || '';
 config.twilio.to = process.env.twilioTo || ['']; // add additonal numbers with comma seperation e.g '+447000000', ''
 config.twilio.from = process.env.twilioFrom || '';
+
+// Remove if you dont want Discord
+config.discord.token = process.env.discordToken || '';
+config.discord.channel = process.env.discordChannel || '';
 
 // Remove if you dont want Slack
 config.slack.token = process.env.token || '';

@@ -3,3 +3,4 @@ server/config/config.js
 server/config/site.conf
 found/
 certs/
+.idea/
