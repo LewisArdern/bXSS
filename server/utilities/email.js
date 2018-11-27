@@ -1,13 +1,9 @@
 const nodemailer = require('nodemailer');
 const validator = require('validator');
+const check = require('./check');
 
 const securityTxtEmail = [];
 
-function valueExists(value) {
-  if (value == 'null') {
-    return false;
-  } return true;
-}
 function isIntrusive(value) {
   if (value === 1) {
     return true;
@@ -28,7 +24,7 @@ const createTemplate = (domain, config) => `
     <body>
 
             <h1 style="color: #3E5C9F; height: 1em">New XSS Detected for ${domain.URL}</h1>
-            ${valueExists(domain.hasSecurityTxt) ? `<div class="panel panel-default" style="height: 4em">
+            ${check.valueExists(domain.hasSecurityTxt) ? `<div class="panel panel-default" style="height: 4em">
                 <div class="panel-heading"><h3 style="color: #EE9C4F">Automated Message</h3></div>
                 <div class="panel-body" style="padding-left: 1em">This is an automated security report, the following domain has a /.well-known/.security.txt contact defined.<br/> Please respond to this email to discuss further.</a></div>
             </div>` : ''}
@@ -40,16 +36,16 @@ const createTemplate = (domain, config) => `
                 <div class="panel-heading"><h3 style="color: #EE9C4F">Affected IP</h3></div>
                 <div class="panel-body" style="padding-left: 1em"><a href="https://www.whois.com/whois/${domain.victimIP}" style="text-decoration: none; color: #9EDB46">${domain.victimIP}</a></div>
             </div>
-            ${valueExists(domain.Cookie) ? `<div class="panel panel-default" style="height: 4em">
+            ${check.valueExists(domain.Cookie) ? `<div class="panel panel-default" style="height: 4em">
             <div class="panel-heading"><h3 style="color: #EE9C4F">Cookies</h3>${domain.Cookie}</div>
             <div class="panel-body" style="padding-left: 1em; color: #696969"></div>
         </div>` : ''}
               
-          ${valueExists(domain.openerLocation) ? `<div class="panel panel-default" style="height: 4em">
+          ${check.valueExists(domain.openerLocation) ? `<div class="panel panel-default" style="height: 4em">
                     <div class="panel-heading"><h3 style="color: #EE9C4F">openerLocation</h3></div>
                     <div class="panel-body" style="padding-left: 1em; color: #696969">${domain.openerLocation}</div>
             </div>` : ''}
-            ${valueExists(domain.openerCookie) ? `<div class="panel panel-default" style="height: 4em">
+            ${check.valueExists(domain.openerCookie) ? `<div class="panel panel-default" style="height: 4em">
                     <div class="panel-heading"><h3 style="color: #EE9C4F">openerCookie</h3></div>
                     <div class="panel-body" style="padding-left: 1em; color: #696969">${domain.openerCookie}</div>
             </div>` : ''}

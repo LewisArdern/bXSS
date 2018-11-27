@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
+const check = require('./check');
 
 const dir = path.normalize(`${__dirname}/../../server/found`);
 const urls = path.normalize(`${__dirname}/../../server/found/urls.txt`);
@@ -17,7 +18,13 @@ exports.processDomain = (data, config) => {
   }
 
   if (config.intrusiveLevel !== 1) {
-    const configureInnerHtml = domain.innerHTML.replace('--', '');
+    let configureInnerHtml = '';
+    if (check.valueExists(domain.innerHTML)) {
+      configureInnerHtml = domain.innerHTML.replace('--', '');
+    }
+    if (check.valueExists(domain.openerInnerHTML)) {
+      configureInnerHtml = domain.openerInnerHTML.replace('--', '');
+    }
     const nodes = configureInnerHtml.split(',');
     let computedNodes = '';
     nodes.forEach((node) => {
@@ -25,6 +32,8 @@ exports.processDomain = (data, config) => {
       computedNodes += `${strippedNode}\r\n`;
     });
     domain.innerHTML = computedNodes.replace('--', '');
+  } else if (check.valueExists(domain.openerInnerHTML)) {
+    domain.innerHTML = domain.openerInnerHTML;
   }
   return domain;
 };

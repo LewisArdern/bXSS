@@ -2,7 +2,7 @@
 function buildPayloadStructure(payloads) {
   let structuredPayloads = '';
   payloads.map((payload) => {
-    structuredPayloads += `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`
+    structuredPayloads += `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`;
     return structuredPayloads;
   });
   return structuredPayloads;
