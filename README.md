@@ -12,6 +12,7 @@ bXSS supports the following:
 * [Twilio](./Images/sms.jpg)
 * [Slack](./Images/slack.jpg)
 * [Webex Teams](./Images/cisco.jpg)
+* [Discord](./Images/discord.jpg)
 * [Payload Generation](./Images/payloads.jpg)
 * [Save locally](./Images/file.jpg)
 
@@ -25,6 +26,7 @@ bXSS supports the following:
 * A [Twilio Account](https://www.twilio.com/sms) (Optional) 
 * A [Slack Token](https://api.slack.com/docs/token-types) (Optional)
 * A [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details) (Optional)
+* A [Discord Token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) (Optional)
 
 # Step-Up
 
@@ -47,6 +49,19 @@ bXSS supports the following:
         * config.ciscoSpark.token = [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details)
         * config.ciscoSpark.sparkRoom = ['email1@domain.com','email2@domain.com']     
     * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>
+    * Discord <b>(Optional, if you don't want to use Discord just delete all Discord references from the config)</b> 
+        * Steps to create a bot:
+            * Visit https://discordapp.com/developers/applications/
+            * Create a new application (e.g bXSSForCompany)
+            * Make a note of your CLIENT ID
+            * Select 'Bot' 
+                * Choose a USERNAME and press 'Click to Reveal Token' (copy the token)
+            * Visit the following URL (update with your CLIENT ID) https://discordapp.com/oauth2/authorize?&client_id=YOUR_CLIENT_ID&scope=bot&permissions=2048
+            * Select the server you want your bot to join and authorize
+            * Update the following values below for the bot to post to the channel e.g ('general')
+        * config.discord.token = 'your bot token'
+        * config.discord.channel = 'channel you want it to join, e.g general'    
+    * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>    
         * config.gmail.user = Gmail Username
         * config.gmail.pass = Gmail Password
         * config.gmail.to = ['email1@domain.com','email2@domain.com'] Where you want to send the emails
