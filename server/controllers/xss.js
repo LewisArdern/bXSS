@@ -5,6 +5,7 @@ const save = require('../utilities/save');
 const uuid = require('uuid/v1');
 const config = require('../config/config');
 const slack = require('../utilities/slack');
+const discord = require('../utilities/discord');
 const ciscoTeams = require('../utilities/spark');
 const template = require('../utilities/template');
 const payloads = require('../utilities/payloads');
@@ -39,6 +40,8 @@ exports.capture = (req, res) => {
     // Always send to slack when resource is loaded;
     slack.sendSlack(guid, domain, config);
     ciscoTeams.sendCiso(guid, domain, config);
+    // Always send to discord when resource is loaded;
+    discord.sendDiscord(guid, domain, config);
     // check if domain.URL exists or is not null/empty (should always be captured if valid request)
     if (!process.checkExists(domain) && !!domain.URL) {
       console.log(`${domain.URL} doesn't exist saving file`);
