@@ -58,7 +58,7 @@ bXSS supports the following:
                 * Choose a USERNAME and press 'Click to Reveal Token' (copy the token)
             * Visit the following URL (update with your CLIENT ID) https://discordapp.com/oauth2/authorize?&client_id=YOUR_CLIENT_ID&scope=bot&permissions=2048
             * Select the server you want your bot to join and authorize
-            * Update the following values below for the bot to post to the channel e.g ('general')
+            * Update the following values below for the bot to post to the 'text channel' e.g ('general')
         * config.discord.token = 'your bot token'
         * config.discord.channel = 'channel you want it to join, e.g general'    
     * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>    
