@@ -14,6 +14,7 @@ exports.sendDiscord = (guid, domain, config) => {
     const client = new Discord.Client();
     client.login(config.discord.token).then(() => {
       sendMessage(guid, domain, config, client);
+      console.log(`Discord Message Sent To ${config.discord.channel} Channel`);
     }).catch((err) => {
       console.error('Error with Discord:', err);
     });

