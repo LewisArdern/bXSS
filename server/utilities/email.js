@@ -73,19 +73,23 @@ function mailOptions(config, mail, guid, domain, message) {
   };
 }
 
-exports.sendMail = (guid, domain, config) => {
-  if (!!config.gmail.user && !!config.gmail.pass && !!config.gmail.to && !!config.gmail.from) {
-    if (domain.hasSecurityTxt !== 'null') {
-      domain.hasSecurityTxt.split('\r\n').forEach((item) => {
-        if (item.includes('Contact:')) {
-          const email = item.replace('Contact:', '').replace('mailto:', '').trim();
-          if ((validator.isEmail(email))) {
-            if (!securityTxtEmail.includes(email)) {
-              securityTxtEmail.push(email);
-            }
-          }
+function securityTxt(domain) {
+  domain.hasSecurityTxt.split('\r\n').forEach((item) => {
+    if (item.includes('Contact:')) {
+      const email = item.replace('Contact:', '').replace('mailto:', '').trim();
+      if ((validator.isEmail(email))) {
+        if (!securityTxtEmail.includes(email)) {
+          securityTxtEmail.push(email);
         }
-      });
+      }
+    }
+  });
+}
+
+exports.sendMail = (guid, domain, config) => {
+  if (check.exists([config.gmail.user, config.gmail.pass, config.gmail.to, config.gmail.from])) {
+    if (check.valueExists(domain.hasSecurityTxt)) {
+      securityTxt(domain);
     }
 
     // TODO: Add more email support options, add tokens rather than creds.
