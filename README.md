@@ -48,7 +48,6 @@ bXSS supports the following:
      * Cisco <b>(Optional, if you don't want to use Cisco just delete all Cisco references from the config)</b> 
         * config.ciscoSpark.token = [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details)
         * config.ciscoSpark.sparkRoom = ['email1@domain.com','email2@domain.com']     
-    * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>
     * Discord <b>(Optional, if you don't want to use Discord just delete all Discord references from the config)</b> 
         * Steps to create a bot:
             * Visit https://discordapp.com/developers/applications/
