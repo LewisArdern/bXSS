@@ -14,7 +14,7 @@ ${check.configurationValueExists([config.gmail]) ? `${check.configurationValueEx
 
 ## Details
 
-The following URL ${domain.URL} is succeptible to [Cross-Site-Scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS). XSS attacks occur when an attacker uses a web application to send malicious code, to a different end user. Flaws that allow these attacks to succeed are quite widespread and occur anywhere a web application uses input from a user within the output it generates without validating or encoding it.
+The following URL ${domain.URL} is succeptible to [Cross-Site-Scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)). XSS attacks occur when an attacker uses a web application to send malicious code, to a different end user. Flaws that allow these attacks to succeed are quite widespread and occur anywhere a web application uses input from a user within the output it generates without validating or encoding it.
 
 An attacker can use XSS to send a malicious script to an unsuspecting user. The end user’s browser has no way to know that the script should not be trusted, and will execute the script. Because it thinks the script came from a trusted source, the malicious script can access any cookies, session tokens, or other sensitive information retained by the browser and used with that site. These scripts can even rewrite the content of the HTML page.
 
