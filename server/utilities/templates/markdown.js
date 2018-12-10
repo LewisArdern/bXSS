@@ -1,5 +1,6 @@
 const check = require('../check');
 const path = require('path');
+const process = require('../process');
 
 const dir = path.normalize(`${__dirname}/../../found/`);
 

@@ -50,3 +50,12 @@ exports.processDomain = (data, config) => {
   }
   return domain;
 };
+
+exports.structureDomNodes = (f) => {
+  let structured = '';
+  const b = f.split('\r\n');
+  b.forEach((value) => {
+    structured += `${value}<br/>`;
+  });
+  return structured;
+};
