@@ -1,5 +1,7 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 // As some companies might not want all of their innerHTML/Cookies to be leaked to a third-party
-// This function acts as a barrier, by default this is set to 0, which means its non-intrusive
+// This acts as a barrier, by default config.intrusiveLevel is set to 0, which means
 // We will only capture relevant information about the host, and report it
 function determineInstrusive(config) {
   const capture = {};
@@ -118,7 +120,10 @@ function captureInformation(capture) {
           try {checkForSecurityTxt("/.well-known/security.txt", cbSecurityTxt)} catch(e) {cbSecurityTxt(null)}`;
 }
 
-// Builds the overall payload
+// This function builds the overall payload
+// We check to see if the window.name is __ because by default it will not be
+// After a succesfull capture it will set the window.name to be __
+// This means it will only fire in that window once, preventing spam
 exports.generateTemplate = (config) => {
   const capture = determineInstrusive(config);
   const template = `(function(){

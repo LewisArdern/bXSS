@@ -1,11 +1,5 @@
-const fs = require('fs');
-const path = require('path');
-const moment = require('moment');
 const check = require('./check');
-
-const dir = path.normalize(`${__dirname}/../../server/found`);
-const urls = path.normalize(`${__dirname}/../../server/found/urls.txt`);
-const date = path.normalize(`${__dirname}/../../server/found/date.txt`);
+const validator = require('validator');
 
 exports.processDomain = (data, config) => {
   const domain = {
@@ -15,6 +9,25 @@ exports.processDomain = (data, config) => {
   let i = 0;
   for (const key in domain) {
     domain[key] = fields[i++];
+  }
+
+  if (check.valueExists(domain.hasSecurityTxt)) {
+    const securityTxtEmail = [];
+    domain.hasSecurityTxt.split('\r\n').forEach((item) => {
+      if (item.includes('Contact:')) {
+        const email = item.replace('Contact:', '').replace('mailto:', '').trim();
+        if ((validator.isEmail(email))) {
+          if (!securityTxtEmail.includes(email)) {
+            securityTxtEmail.push(email);
+          }
+        }
+      }
+    });
+    if (securityTxtEmail !== []) {
+      domain.hasSecurityTxt = securityTxtEmail;
+    } else {
+      domain.hasSecurityTxt = 'null';
+    }
   }
 
   if (config.intrusiveLevel !== 1) {
@@ -36,36 +49,4 @@ exports.processDomain = (data, config) => {
     domain.innerHTML = domain.openerInnerHTML;
   }
   return domain;
-};
-
-// Checks if folders exist, creates otherwise
-exports.checkExists = (domain) => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
-  if (!fs.existsSync(urls)) {
-    fs.writeFileSync(urls, 'http://example.com:3000/index.html\r\n', (err) => {
-      if (err) throw err;
-      console.log(`Created ${urls}`);
-    });
-  }
-  if (!fs.existsSync(date)) {
-    fs.writeFileSync(date, moment('2017:12:09').format('YYYY:MM:DD'), (err) => {
-      if (err) throw err;
-      console.log(`Created ${date}`);
-    });
-  }
-
-  // Checks if URL already exists, if exists, wont save to disk or send via SMS
-  const lines = fs.readFileSync(urls, 'utf8')
-    .toLowerCase().split('\n')
-    .map(Function.prototype.call, String.prototype.trim);
-  return lines.indexOf(domain.URL.toLowerCase().trim()) !== -1;
-};
-
-// Check if SMS was sent in the last day
-exports.lastSave = () => {
-  const lastDate = fs.readFileSync(date, 'utf8').trim();
-  const currentTime = moment().format('YYYY:MM:DD');
-  return moment(currentTime).isSame(lastDate);
 };
