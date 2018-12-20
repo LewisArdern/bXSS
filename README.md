@@ -13,6 +13,7 @@ bXSS supports the following:
 * [Slack](./Images/slack.jpg)
 * [Webex Teams](./Images/cisco.jpg)
 * [Discord](./Images/discord.jpg)
+* [Twitter](./Images/twitter.jpg)
 * [Payload Generation](./Images/payloads.jpg)
 * [Save locally](./Images/file.jpg)
 
@@ -27,6 +28,7 @@ bXSS supports the following:
 * A [Slack Token](https://api.slack.com/docs/token-types) (Optional)
 * A [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details) (Optional)
 * A [Discord Token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) (Optional)
+* A [Twitter Developer Account](https://developer.twitter.com/en/apply/user) (Optional)
 
 # Step-Up
 
@@ -60,6 +62,13 @@ bXSS supports the following:
             * Update the following values below for the bot to post to the 'text channel' e.g ('general')
         * config.discord.token = 'your bot token'
         * config.discord.channel = 'channel you want it to join, e.g general'    
+    * Twitter  <b>(Optional, if you don't want to use Twitter just delete all Twitter references from the config)</b>  
+        *   config.twitter.consumer_key = API Key
+        * config.twitter.consumer_secret = API Secret Key
+        * config.twitter.access_token_key = Application Access Token
+        * config.twitter.access_token_secret =  Application Access Token Secret
+        * Permissions (Write)
+        * config.twitter.recipient_id = Twitter User ID, which can be found [here](https://twitter.com/settings/your_twitter_data)
     * Gmail <b>(Optional, if you don't want to use Gmail just delete all Gmail references from the config)</b>    
         * config.gmail.user = Gmail Username
         * config.gmail.pass = Gmail Password

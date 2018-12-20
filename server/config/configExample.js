@@ -3,10 +3,12 @@ const config = {};
 config.twilio = {};
 config.gmail = {};
 config.slack = {};
-config.discord = {};
 config.letsEncrypt = {};
+config.ciscoSpark = {};
+config.discord = {};
+config.twitter = {};
 
-config.port = process.env.PORT || 3030;
+config.port = process.env.PORT || 80;
 config.url = process.env.url || 'example.com';
 // used to split the results (dont remove)
 config.boundary = process.env.boundary || '#!!!!#';
@@ -34,6 +36,14 @@ config.slack.channel = process.env.slackChannel || '';
 // Remove if you dont want Cisco Webex Teams
 config.ciscoSpark.token = process.env.sparkToken || '';
 config.ciscoSpark.sparkRoom = process.env.sparkRoom || ['']; // add additonal emails with comma seperation e.g 'youremail@gmail.com', ''
+
+// Remove if you don't want Twitter
+config.twitter.consumer_key = process.env.twitterConsumerKey || '';
+config.twitter.consumer_secret = process.env.twitterSecret || '';
+config.twitter.access_token_key = process.env.twitterAccessKey || '';
+config.twitter.access_token_secret = process.env.twitterAccessSecret || '';
+config.twitter.recipient_id = process.env.recipient || ['']; // add additional recipients which can be comma seperation e.g '12030210321','1232131321'
+
 
 // Remove if you dont want Gmail
 config.gmail.user = process.env.gmailUser || 'example@gmail.com';

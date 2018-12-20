@@ -17,6 +17,7 @@
     "nodemailer-markdown": "^1.0.2",
     "slack": "^11.0.0",
     "twilio": "^3.18.0",
+    "twitter-lite": "^0.8.0",
     "uuid": "^3.2.1",
     "validator": "^10.8.0"
   },
