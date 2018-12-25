@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const check = require('./check');
 const validator = require('validator');
 

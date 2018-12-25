@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');

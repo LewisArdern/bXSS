@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const mail = require('../utilities/services/email');
 const sms = require('../utilities/services/sms');
 const process = require('../utilities/process');
@@ -11,6 +13,37 @@ const twitter = require('../utilities/services/twitter');
 const template = require('../utilities/templates/script');
 const payloads = require('../utilities/payloads');
 const check = require('../utilities/check');
+
+function reportToUtilities(guid, domain, config) {
+  mail.sendMail(guid, domain, config);
+  slack.sendSlack(guid, domain, config);
+  ciscoTeams.sendCiso(guid, domain, config);
+  discord.sendDiscord(guid, domain, config);
+  twitter.sendTwitter(guid, domain, config);
+}
+
+function sendSmsAndSaveToDisk(check, domain, res, guid) {
+  // check if domain.URL exists or is not null/empty (should always be captured if valid request)
+  if (!check.folderOrFileExists() && !!domain.URL) {
+    if (!check.lastSms()) {
+      console.log(`Sending SMS For URL ${domain.URL}`);
+      sms.sendSMS(guid, domain, config, save);
+      console.log(`Saving To Disk URL ${domain.URL}`);
+      save.saveFile(guid, domain, config);
+      res.redirect(domain.URL);
+    } else {
+      res.redirect(domain.URL);
+      console.log('Already sent SMS today, saving to disk');
+      console.log(`Saving To Disk URL ${domain.URL}`);
+      save.saveFile(guid, domain, config);
+    }
+  } else {
+    console.log(`The domain ${domain.URL} already exists`);
+    console.log(`Saving To Disk URL ${domain.URL}`);
+    save.saveFile(guid, domain, config);
+    res.redirect(domain.URL);
+  }
+}
 
 exports.displayScript = (req, res) => {
   res.type('.js');
@@ -39,37 +72,10 @@ exports.capture = (req, res) => {
 
 
     // Always send to email, slack, webex teams, or discord
-    mail.sendMail(guid, domain, config);
-    slack.sendSlack(guid, domain, config);
-    ciscoTeams.sendCiso(guid, domain, config);
-    discord.sendDiscord(guid, domain, config);
-    twitter.sendTwitter(guid, domain, config);
+    reportToUtilities(guid, domain, config);
 
     // check if domain.URL exists or is not null/empty (should always be captured if valid request)
-    if (!check.folderOrFileExists() && !!domain.URL) {
-      console.log(`${domain.URL} doesn't exist saving file`);
-      if (!check.lastSms()) {
-        console.log(`Sending SMS For URL ${domain.URL}`);
-        sms.sendSMS(guid, domain, config, save);
-        console.log(`Saving To Disk URL ${domain.URL}`);
-        save.saveFile(guid, domain, config);
-        res.redirect(domain.URL);
-      } else {
-        res.redirect(domain.URL);
-        console.log('Already sent SMS today, saving to disk');
-        console.log(`Saving To Disk URL ${domain.URL}`);
-        save.saveFile(guid, domain, config);
-      }
-    } else {
-      console.log(`The domain ${domain.URL} already exists`);
-      console.log(`Saving To Disk URL ${domain.URL}`);
-      save.saveFile(guid, domain, config);
-      res.redirect(domain.URL);
-    }
-  } else {
-    // You always need a meme to spice up code, this feels appropriate
-    console.log(`${req.connection.remoteAddress} :| https://www.youtube.com/watch?v=wKbU8B-QVZk`);
-    res.send(':-[');
+    sendSmsAndSaveToDisk(check, domain, res, guid)
   }
 };
 // Need to Rearchitecture this -- but simple PoC to-begin with.
@@ -88,30 +94,9 @@ exports.httpGet = (req, res) => {
   const guid = uuid();
 
   // Always send to email, slack, webex teams, or discord
-  mail.sendMail(guid, domain, config);
-  slack.sendSlack(guid, domain, config);
-  ciscoTeams.sendCiso(guid, domain, config);
-  discord.sendDiscord(guid, domain, config);
-  twitter.sendTwitter(guid, domain, config);
+  reportToUtilities(guid, domain, config);
+
   // check if domain.URL exists or is not null/empty (should always be captured if valid request)
-  if (!check.folderOrFileExists() && !!domain.URL) {
-    if (!check.lastSms()) {
-      console.log(`Sending SMS For URL ${domain.URL}`);
-      sms.sendSMS(guid, domain, config, save);
-      console.log(`Saving To Disk URL ${domain.URL}`);
-      save.saveFile(guid, domain, config);
-      res.redirect(domain.URL);
-    } else {
-      res.redirect(domain.URL);
-      console.log('Already sent SMS today, saving to disk');
-      console.log(`Saving To Disk URL ${domain.URL}`);
-      save.saveFile(guid, domain, config);
-    }
-  } else {
-    console.log(`The domain ${domain.URL} already exists`);
-    console.log(`Saving To Disk URL ${domain.URL}`);
-    save.saveFile(guid, domain, config);
-    res.redirect(domain.URL);
-  }
+  sendSmsAndSaveToDisk(check, domain, res, guid)
 };
 

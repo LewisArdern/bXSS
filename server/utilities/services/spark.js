@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const ciscospark = require('ciscospark');
 const check = require('../check');
 const template = require('../templates/markdown');

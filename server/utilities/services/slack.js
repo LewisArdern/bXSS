@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const Slack = require('slack');
 const check = require('../check');
 const template = require('../templates/markdown');

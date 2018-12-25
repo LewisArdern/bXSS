@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const Twilio = require('twilio');
 const check = require('../check');
 

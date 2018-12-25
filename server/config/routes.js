@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const xss = require('../controllers/xss');
 
 module.exports = (app) => {

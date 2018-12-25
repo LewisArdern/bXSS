@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const nodemailer = require('nodemailer');
 const nodemailerMarkdown = require('nodemailer-markdown').markdown;
 const template = require('../templates/markdown');

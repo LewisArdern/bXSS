@@ -1,4 +1,5 @@
-// TODO...
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 function buildPayloadStructure(payloads) {
   let structuredPayloads = '';
   payloads.map((payload) => {

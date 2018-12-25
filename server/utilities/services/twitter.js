@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const Twitter = require('twitter-lite');
 const check = require('../check');
 
