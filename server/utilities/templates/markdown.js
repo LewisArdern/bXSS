@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const check = require('../check');
 const path = require('path');
 const process = require('../process');
@@ -20,6 +22,8 @@ An attacker can use XSS to send a malicious script to an unsuspecting user. The 
 
 For more details on the different types of XSS flaws, see: [Types Of XSS](https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting)
 
+${check.valueExists(domain.innerHTML) ? '' : `### HTTP Interaction
+The triggered payload was through HTTP interaction, only HTTP headers were captured.`}
 
 ### Domain
 ${domain.URL}
@@ -39,14 +43,13 @@ ${domain.openerLocation}` : ''}
 ${check.valueExists(domain.openerCookie) ? `### openerCookie
 ${domain.openerCookie}` : ''}
 
-
-### Document Object Model (DOM) Structure
-${check.isIntrusive(config.intrusiveLevel) ? `\`\`\`html
+${check.valueExists(domain.innerHTML) ? `### Document Object Model (DOM) Structure
+${check.isIntrusive(config.intrusiveLevel) ? `\`\`\` html
 ${domain.innerHTML}
 \`\`\`
 ` : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
 
-${process.structureDomNodes(domain.innerHTML)}`}
+${process.structureDomNodes(domain.innerHTML)}`}` : ''}
 
 ### Remediation
 
@@ -76,42 +79,8 @@ ${check.valueExists(domain.hasSecurityTxt) ? `## Security Contact
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${check.configurationValueExists([config.gmail]) ? `${check.configurationValueExists([config.gmail.user, config.gmail.pass, config.gmail.to, config.gmail.from]) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.' }` : ''}
 
-*Domain*
-${domain.URL}
-
-*Affected IP*
-[${domain.victimIP}](https://www.whois.com/whois/${domain.victimIP})
-
-*User Agent*
-${domain.userAgent}
-
-${check.valueExists(domain.Cookie) ? `*Cookies*
-${domain.Cookie}` : ''}
-              
-${check.valueExists(domain.openerLocation) ? `*openerLocation*
-${domain.openerLocation}` : ''}
-
-${check.valueExists(domain.openerCookie) ? `*openerCookie*
-${domain.openerCookie}` : ''}
-
-
-*Document Object Model (DOM) Structure*
-${check.isIntrusive(config.intrusiveLevel) ? `\`\`\`html
-${domain.innerHTML}
-\`\`\`
-` : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
-
-${process.structureDomNodes(domain.innerHTML)}`}
-`;
-
-// Discord only allows upto 2000 characters!!!!
-// so sadly if we are verbose the API will kill our message, so shorented on purpose
-exports.createDiscordSimplifiedMarkdownTemplate = (domain, config, guid) => `
-*bXSS Report - ${guid}*
-
-${check.valueExists(domain.hasSecurityTxt) ? `*Security Contact*
-The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
-${check.configurationValueExists([config.gmail]) ? `${check.configurationValueExists([config.gmail.user, config.gmail.pass, config.gmail.to, config.gmail.from]) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.' }` : ''}
+${check.valueExists(domain.innerHTML) ? '' : `*HTTP Interaction*
+The triggered payload was through HTTP interaction, only HTTP headers were captured.`}
 
 *Domain*
 ${domain.URL}
@@ -129,8 +98,44 @@ ${domain.Cookie}` : ''}
 ${check.valueExists(domain.openerLocation) ? `*openerLocation*
 ${domain.openerLocation}` : ''}
 
-${check.valueExists(domain.openerCookie) ? `*openerCookie* 
+${check.valueExists(domain.openerCookie) ? `*openerCookie*
 ${domain.openerCookie}` : ''}
+
+
+${check.valueExists(domain.innerHTML) ? `*Document Object Model (DOM) Structure*
+${check.isIntrusive(config.intrusiveLevel) ? `\`\`\`html
+${domain.innerHTML}
+\`\`\`
+` : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
+
+${process.structureDomNodes(domain.innerHTML)}`}` : ''}
+`;
+
+// Discord only allows upto 2000 characters!!!!
+// Sadly if we are verbose the API will kill our message
+// This is a very simplified version of the markdown
+exports.createDiscordSimplifiedMarkdownTemplate = (domain, config, guid) => `
+*bXSS Report - ${guid}*
+
+${check.valueExists(domain.hasSecurityTxt) ? `*Security Contact*
+The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
+${check.configurationValueExists([config.gmail]) ? `${check.configurationValueExists([config.gmail.user, config.gmail.pass, config.gmail.to, config.gmail.from]) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.' }` : ''}
+
+${check.valueExists(domain.innerHTML) ? '' : `*HTTP Interaction*
+The triggered payload was through HTTP interaction, only HTTP headers were captured.`}
+
+*Domain*
+${domain.URL}
+
+*Affected IP*
+${domain.victimIP}
+https://www.whois.com/whois/${domain.victimIP}
+
+*User Agent*
+${domain.userAgent}
+              
+${check.valueExists(domain.openerLocation) ? `*openerLocation*
+${domain.openerLocation}` : ''}
 
 See ${dir}${guid}.md for a full breakdown
 `;

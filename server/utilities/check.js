@@ -7,7 +7,7 @@ const urls = path.normalize(`${__dirname}/../../server/found/urls.txt`);
 const date = path.normalize(`${__dirname}/../../server/found/date.txt`);
 
 // Checks if configuration values are defined or not
-exports.configurationValueExists = (config) => Object.values(config).every(x => (x !== undefined));
+exports.configurationValueExists = config => Object.values(config).every(x => (x !== undefined));
 
 // Checks if values sent from client-side payload has a value or did not capture anything
 exports.valueExists = (value) => {
@@ -35,7 +35,7 @@ exports.folderOrFileExists = () => {
     });
   }
   if (!fs.existsSync(date)) {
-    fs.writeFileSync(date, moment('2017:12:09').format('YYYY:MM:DD'), (err) => {
+    fs.writeFileSync(date, moment().subtract(1, 'day').format('YYYY-MM-DD'), (err) => {
       if (err) throw err;
       console.log(`Created ${date}`);
     });
@@ -53,6 +53,6 @@ exports.domainExists = (domain) => {
 // Check to see if we sent an SMS in the last day
 exports.lastSms = () => {
   const lastDate = fs.readFileSync(date, 'utf8').trim();
-  const currentTime = moment().format('YYYY:MM:DD');
+  const currentTime = moment().format('YYYY-MM-DD');
   return moment(currentTime).isSame(lastDate);
 };
