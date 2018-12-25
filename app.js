@@ -1,3 +1,5 @@
+// Copyright 2018 Lewis Ardern. All rights reserved.
+
 const express = require('express');
 const config = require('./server/config/config');
 const https = require('https');

