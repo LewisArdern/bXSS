@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "bXSS is a simple Blind XSS application adapted from https://cure53.de/m",
   "main": "app.js",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint server",
+    "prettier": "prettier \"**\\**\\**\\**.*+(js|json|md)\"",
+    "format": "npm run prettier -- --write",
+    "validate": "npm run lint && npm run prettier -- --list-different",
+    "precommit": "lint-staged"
+  },
   "author": "Lewis Ardern",
   "license": "MIT",
   "dependencies": {
@@ -22,13 +28,18 @@
     "validator": "^10.8.0"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
-    "eslint": "^4.18.2",
+    "cypress": "^3.1.3",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.7.0",
+    "husky": "^1.2.1",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.3",
     "sinon": "^6.1.4"
   }
 }

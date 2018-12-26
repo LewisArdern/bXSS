@@ -2,7 +2,7 @@
 
 const xss = require('../controllers/xss');
 
-module.exports = (app) => {
+module.exports = app => {
   // Whenever _ body is sent via /m/ POST it will trigger the capture request
   app.post('/m', xss.capture);
   // Displays the payload

@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 // Copyright 2018 Lewis Ardern. All rights reserved.
 
 const check = require('./check');
@@ -5,20 +7,31 @@ const validator = require('validator');
 
 exports.processDomain = (data, config) => {
   const domain = {
-    Cookie: '', innerHTML: '', URL: '', openerLocation: '', openerInnerHTML: '', openerCookie: '', hasSecurityTxt: '', victimIP: '',
+    Cookie: '',
+    innerHTML: '',
+    URL: '',
+    openerLocation: '',
+    openerInnerHTML: '',
+    openerCookie: '',
+    hasSecurityTxt: '',
+    victimIP: ''
   };
   const fields = data.split(`\r\n\r\n${config.boundary}`);
   let i = 0;
   for (const key in domain) {
+    // eslint-disable-next-line no-plusplus
     domain[key] = fields[i++];
   }
 
   if (check.valueExists(domain.hasSecurityTxt)) {
     const securityTxtEmail = [];
-    domain.hasSecurityTxt.split('\r\n').forEach((item) => {
+    domain.hasSecurityTxt.split('\r\n').forEach(item => {
       if (item.includes('Contact:')) {
-        const email = item.replace('Contact:', '').replace('mailto:', '').trim();
-        if ((validator.isEmail(email))) {
+        const email = item
+          .replace('Contact:', '')
+          .replace('mailto:', '')
+          .trim();
+        if (validator.isEmail(email)) {
           if (!securityTxtEmail.includes(email)) {
             securityTxtEmail.push(email);
           }
@@ -42,7 +55,7 @@ exports.processDomain = (data, config) => {
     }
     const nodes = configureInnerHtml.split(',');
     let computedNodes = '';
-    nodes.forEach((node) => {
+    nodes.forEach(node => {
       const strippedNode = node.replace('--', '');
       computedNodes += `${strippedNode}\r\n`;
     });
@@ -53,10 +66,10 @@ exports.processDomain = (data, config) => {
   return domain;
 };
 
-exports.structureDomNodes = (f) => {
+exports.structureDomNodes = f => {
   let structured = '';
   const b = f.split('\r\n');
-  b.forEach((value) => {
+  b.forEach(value => {
     structured += `${value}<br/>`;
   });
   return structured;

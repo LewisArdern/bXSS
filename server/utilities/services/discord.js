@@ -15,12 +15,15 @@ exports.sendDiscord = (guid, domain, config) => {
   if (check.configurationValueExists([config.discord])) {
     if (check.configurationValueExists([config.discord.token, config.discord.channel])) {
       const client = new Discord.Client();
-      client.login(config.discord.token).then(() => {
-        sendMessage(guid, domain, config, client);
-        console.log(`Discord Message Sent To ${config.discord.channel} Channel`);
-      }).catch((err) => {
-        console.error('Error with Discord:', err);
-      });
+      client
+        .login(config.discord.token)
+        .then(() => {
+          sendMessage(guid, domain, config, client);
+          console.log(`Discord Message Sent To ${config.discord.channel} Channel`);
+        })
+        .catch(err => {
+          console.error('Error with Discord:', err);
+        });
     } else {
       console.log('You need to configure your discord account');
     }
