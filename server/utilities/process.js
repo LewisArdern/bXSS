@@ -5,6 +5,44 @@
 const check = require('./check');
 const validator = require('validator');
 
+function processSecurityText(domain) {
+  let securityTxtEmail = [];
+  domain.hasSecurityTxt.split('\r\n').forEach(item => {
+    if (item.includes('Contact:')) {
+      const email = item
+        .replace('Contact:', '')
+        .replace('mailto:', '')
+        .trim();
+      if (validator.isEmail(email)) {
+        if (!securityTxtEmail.includes(email)) {
+          securityTxtEmail.push(email);
+        }
+      }
+    }
+  });
+  if (securityTxtEmail === []) {
+    securityTxtEmail = 'null';
+  }
+  return securityTxtEmail;
+}
+
+function processInnerHTML(domain) {
+  let configureInnerHtml = '';
+  if (check.valueExists(domain.innerHTML)) {
+    configureInnerHtml = domain.innerHTML.replace('--', '');
+  }
+  if (check.valueExists(domain.openerInnerHTML)) {
+    configureInnerHtml = domain.openerInnerHTML.replace('--', '');
+  }
+  const nodes = configureInnerHtml.split(',');
+  let computedNodes = '';
+  nodes.forEach(node => {
+    const strippedNode = node.replace('--', '');
+    computedNodes += `${strippedNode}\r\n`;
+  });
+  return computedNodes.replace('--', '');
+}
+
 exports.processDomain = (data, config) => {
   const domain = {
     Cookie: '',
@@ -22,44 +60,13 @@ exports.processDomain = (data, config) => {
     // eslint-disable-next-line no-plusplus
     domain[key] = fields[i++];
   }
-
+  console.log(check.valueExists(domain.hasSecurityTxt));
   if (check.valueExists(domain.hasSecurityTxt)) {
-    const securityTxtEmail = [];
-    domain.hasSecurityTxt.split('\r\n').forEach(item => {
-      if (item.includes('Contact:')) {
-        const email = item
-          .replace('Contact:', '')
-          .replace('mailto:', '')
-          .trim();
-        if (validator.isEmail(email)) {
-          if (!securityTxtEmail.includes(email)) {
-            securityTxtEmail.push(email);
-          }
-        }
-      }
-    });
-    if (securityTxtEmail !== []) {
-      domain.hasSecurityTxt = securityTxtEmail;
-    } else {
-      domain.hasSecurityTxt = 'null';
-    }
+    domain.hasSecurityTxt = processSecurityText(domain);
   }
 
   if (config.intrusiveLevel !== 1) {
-    let configureInnerHtml = '';
-    if (check.valueExists(domain.innerHTML)) {
-      configureInnerHtml = domain.innerHTML.replace('--', '');
-    }
-    if (check.valueExists(domain.openerInnerHTML)) {
-      configureInnerHtml = domain.openerInnerHTML.replace('--', '');
-    }
-    const nodes = configureInnerHtml.split(',');
-    let computedNodes = '';
-    nodes.forEach(node => {
-      const strippedNode = node.replace('--', '');
-      computedNodes += `${strippedNode}\r\n`;
-    });
-    domain.innerHTML = computedNodes.replace('--', '');
+    domain.innerHTML = processInnerHTML(domain);
   } else if (check.valueExists(domain.openerInnerHTML)) {
     domain.innerHTML = domain.openerInnerHTML;
   }

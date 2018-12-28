@@ -2,9 +2,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: '2018'
   },
-  extends: ['airbnb', 'prettier'],
+  extends: ['airbnb', 'prettier', 'plugin:jest/recommended'],
+  plugins: ['jest'],
   env: {
-    node: true
+    node: true,
+    'jest/globals': true
   },
   rules: {
     'no-console': 'off'

