@@ -5,7 +5,12 @@
 const check = require('./check');
 const validator = require('validator');
 
-function processSecurityText(domain) {
+// Takes in an XHR response captured from the client-side
+// It will check to see if a value includes Contact: (which is used in the spec e.g https://www.google.com/.well-known/security.txt
+// Strip away Contact: and mailto: and remove any whitespace
+// Once we have something like an email, we call validator which will check to see if its a email
+// If emails exist, it will append to the array, which will be used to send automated email
+exports.processSecurityText = domain => {
   let securityTxtEmail = [];
   domain.hasSecurityTxt.split('\r\n').forEach(item => {
     if (item.includes('Contact:')) {
@@ -24,15 +29,16 @@ function processSecurityText(domain) {
     securityTxtEmail = 'null';
   }
   return securityTxtEmail;
-}
+};
 
-function processInnerHTML(domain) {
+// Once we know the payload was set to be non-intrusive, we want to structure DOM nodes to send
+exports.processInnerHTML = domain => {
   let configureInnerHtml = '';
   if (check.valueExists(domain.innerHTML)) {
-    configureInnerHtml = domain.innerHTML.replace('--', '');
+    configureInnerHtml = domain.innerHTML;
   }
   if (check.valueExists(domain.openerInnerHTML)) {
-    configureInnerHtml = domain.openerInnerHTML.replace('--', '');
+    configureInnerHtml = domain.openerInnerHTML;
   }
   const nodes = configureInnerHtml.split(',');
   let computedNodes = '';
@@ -40,10 +46,12 @@ function processInnerHTML(domain) {
     const strippedNode = node.replace('--', '');
     computedNodes += `${strippedNode}\r\n`;
   });
-  return computedNodes.replace('--', '');
-}
+
+  return computedNodes;
+};
 
 exports.processDomain = (data, config) => {
+  const dataToProcess = unescape(data);
   const domain = {
     Cookie: '',
     innerHTML: '',
@@ -54,19 +62,18 @@ exports.processDomain = (data, config) => {
     hasSecurityTxt: '',
     victimIP: ''
   };
-  const fields = data.split(`\r\n\r\n${config.boundary}`);
+  const fields = dataToProcess.split(`\r\n\r\n${config.boundary}`);
   let i = 0;
   for (const key in domain) {
     // eslint-disable-next-line no-plusplus
     domain[key] = fields[i++];
   }
-  console.log(check.valueExists(domain.hasSecurityTxt));
-  if (check.valueExists(domain.hasSecurityTxt)) {
-    domain.hasSecurityTxt = processSecurityText(domain);
-  }
 
-  if (config.intrusiveLevel !== 1) {
-    domain.innerHTML = processInnerHTML(domain);
+  if (check.valueExists(domain.hasSecurityTxt)) {
+    domain.hasSecurityTxt = this.processSecurityText(domain);
+  }
+  if (!check.isIntrusive(config.intrusiveLevel)) {
+    domain.innerHTML = this.processInnerHTML(domain);
   } else if (check.valueExists(domain.openerInnerHTML)) {
     domain.innerHTML = domain.openerInnerHTML;
   }

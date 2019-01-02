@@ -65,8 +65,8 @@ exports.generatePayloads = (req, res) => {
 
 exports.capture = (req, res) => {
   if (req.body._) {
-    const rawDump = unescape(req.body._);
-    const domain = process.processDomain(rawDump, config);
+    console.log(req.body._);
+    const domain = process.processDomain(req.body._, config);
     domain.victimIP =
       req.headers['x-forwarded-for'] ||
       req.connection.remoteAddress ||
