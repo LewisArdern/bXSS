@@ -52,16 +52,6 @@ exports.folderOrFileExists = () => {
   }
 };
 
-// Checks if URL already exists, if exists, wont save to disk or send via SMS
-exports.domainExists = domain => {
-  const lines = fs
-    .readFileSync(urls, 'utf8')
-    .toLowerCase()
-    .split('\n')
-    .map(Function.prototype.call, String.prototype.trim);
-  return lines.indexOf(domain.URL.toLowerCase().trim()) !== -1;
-};
-
 // Check to see if we sent an SMS in the last day
 exports.lastSms = () => {
   const lastDate = fs.readFileSync(date, 'utf8').trim();
