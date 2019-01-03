@@ -25,7 +25,8 @@ exports.processSecurityText = domain => {
       }
     }
   });
-  if (securityTxtEmail === []) {
+
+  if (securityTxtEmail[0] === undefined) {
     securityTxtEmail = 'null';
   }
   return securityTxtEmail;

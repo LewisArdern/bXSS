@@ -1,7 +1,8 @@
-const check = require('./check');
+/* eslint-disable global-require */
+const check = require('../../../server/utilities/check');
 
 describe('configurationValueExists', () => {
-  test('Should return true for both values', () => {
+  test('Should return true for both configuration values as they exist', () => {
     const config = {
       twilio: { value: 'foo' }
     };
@@ -11,7 +12,7 @@ describe('configurationValueExists', () => {
     expect(twilioValue).toBeTruthy();
   });
 
-  test('Should return false for both values', () => {
+  test('Should return false for both configuration values as they do not exist', () => {
     const config = {
       twitter: { value: 'foo' }
     };
@@ -23,11 +24,11 @@ describe('configurationValueExists', () => {
 });
 
 describe('valueExists', () => {
-  test('Should return false for null value', () => {
+  test('Should return false for any string with null that comes from captured DOM output', () => {
     const result = check.valueExists('null');
     expect(result).toBeFalsy();
   });
-  test('Should return true for any value other than null', () => {
+  test('Should return true for any value other than null that comes from captured DOM output', () => {
     const result = check.valueExists('hello');
     expect(result).toBeTruthy();
     const result1 = check.valueExists('http://example.com:100/hi');
@@ -36,16 +37,14 @@ describe('valueExists', () => {
 });
 
 describe('isIntrusive', () => {
-  test('Should return true for 1', () => {
+  test('Should return true if isIntrusive is set to 1', () => {
     const result = check.isIntrusive(1);
     expect(result).toBeTruthy();
   });
-  test('Should return false for 0 for any other value', () => {
+  test('Should return false if isIntrusive is 0 for any other value', () => {
     const result = check.isIntrusive(0);
     expect(result).toBeFalsy();
     const result1 = check.isIntrusive(2);
     expect(result1).toBeFalsy();
   });
 });
-
-describe('lastSms', () => {});

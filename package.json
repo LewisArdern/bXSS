@@ -9,7 +9,7 @@
     "prettier": "prettier \"**\\**\\**\\**.*+(js|json|md)\"",
     "format": "npm run prettier -- --write",
     "validate": "npm run lint && npm run prettier -- --list-different",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged && jest"
   },
   "author": "Lewis Ardern",
   "license": "MIT",

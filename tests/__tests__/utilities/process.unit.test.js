@@ -1,4 +1,4 @@
-const process = require('./process');
+const process = require('../../../server/utilities/process');
 
 describe('processDomain', () => {
   test('Should return processed values for domain with Cookie, innerHTML, and URL, other values null or undefined', () => {
@@ -70,7 +70,7 @@ describe('processInnerHTML', () => {
 });
 
 describe('processSecurityText', () => {
-  test('Should return valid email and remove mailto:', () => {
+  test('Should return valid email and remove mailto: when XHR returns /.well-known/secuirty.txt', () => {
     const domain = {
       hasSecurityTxt:
         'Contact: https://g.co/vulnz\r\nContact: mailto:lewisardern@live.co.uk\r\nEncryption: https://services.google.com/corporate/publickey.txt\r\nAcknowledgements: https://bughunter.withgoogle.com/\r\nPolicy: https://g.co/vrp\r\nHiring: https://g.co/SecurityPrivacyEngJobs'
@@ -79,7 +79,7 @@ describe('processSecurityText', () => {
 
     expect(securityText).toMatchObject(['lewisardern@live.co.uk']);
   });
-  test('Should return valid email', () => {
+  test('Should return valid email when XHR returns /.well-known/secuirty.txt', () => {
     const domain = {
       hasSecurityTxt:
         'Contact: https://g.co/vulnz\r\nContact: lewisardern@live.co.uk\r\nEncryption: https://services.google.com/corporate/publickey.txt\r\nAcknowledgements: https://bughunter.withgoogle.com/\r\nPolicy: https://g.co/vrp\r\nHiring: https://g.co/SecurityPrivacyEngJobs'
@@ -88,14 +88,14 @@ describe('processSecurityText', () => {
 
     expect(securityText).toMatchObject(['lewisardern@live.co.uk']);
   });
-  test('Should return empty array', () => {
+  test('Should not return a valid email, should return "null" because lewisardern is not a valid email when XHR returns /.well-known/secuirty.txt', () => {
     const domain = {
       hasSecurityTxt:
         'Contact: https://g.co/vulnz\r\nContact: lewisardern\r\nEncryption: https://services.google.com/corporate/publickey.txt\r\nAcknowledgements: https://bughunter.withgoogle.com/\r\nPolicy: https://g.co/vrp\r\nHiring: https://g.co/SecurityPrivacyEngJobs'
     };
     const securityText = process.processSecurityText(domain);
 
-    expect(securityText).toMatchObject([]);
+    expect(securityText).toBe('null');
   });
 });
 

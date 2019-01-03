@@ -2,6 +2,11 @@
 
 const Twilio = require('twilio');
 const check = require('../check');
+const moment = require('moment');
+const fs = require('fs');
+const path = require('path');
+
+const datePath = path.normalize(`${__dirname}/../../../server/found/date.txt`);
 
 exports.sendSMS = (guid, domain, config, save) => {
   if (check.configurationValueExists([config.twilio])) {
@@ -28,4 +33,11 @@ exports.sendSMS = (guid, domain, config, save) => {
     console.log('You need to configure your twilio account');
     save.saveTodaysDate();
   }
+};
+
+// Check to see if we sent an SMS in the last day
+exports.lastSms = () => {
+  const lastDate = fs.readFileSync(datePath, 'utf8').trim();
+  const currentTime = moment().format('YYYY-MM-DD');
+  return moment(currentTime).isSame(lastDate);
 };

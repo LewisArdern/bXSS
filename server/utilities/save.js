@@ -38,3 +38,28 @@ exports.saveTodaysDate = () => {
     console.log(err || 'The file was saved!')
   );
 };
+
+// Checks if folders exist, creates otherwise
+exports.folderOrFileExists = () => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  if (!fs.existsSync(urls)) {
+    fs.writeFileSync(urls, 'http://example.com:3000/index.html\r\n', err => {
+      if (err) throw err;
+      console.log(`Created ${urls}`);
+    });
+  }
+  if (!fs.existsSync(date)) {
+    fs.writeFileSync(
+      date,
+      moment()
+        .subtract(1, 'day')
+        .format('YYYY-MM-DD'),
+      err => {
+        if (err) throw err;
+        console.log(`Created ${date}`);
+      }
+    );
+  }
+};
