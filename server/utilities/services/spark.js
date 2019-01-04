@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const ciscospark = require('ciscospark');
 const check = require('../check');
@@ -14,7 +14,7 @@ exports.sendCiso = (guid, domain, config) => {
       });
       const text = template.createMarkdownTemplate(domain, config);
 
-      teams.rooms.create({ title: `New Blind XSS - ${domain.URL}` }).then(room =>
+      teams.rooms.create({ title: `New Blind XSS - ${domain.url}` }).then(room =>
         Promise.all([
           config.ciscoSpark.sparkRoom.forEach(email => {
             teams.memberships.create({

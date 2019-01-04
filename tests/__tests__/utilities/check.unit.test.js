@@ -23,19 +23,6 @@ describe('configurationValueExists', () => {
   });
 });
 
-describe('valueExists', () => {
-  test('Should return false for any string with null that comes from captured DOM output', () => {
-    const result = check.valueExists('null');
-    expect(result).toBeFalsy();
-  });
-  test('Should return true for any value other than null that comes from captured DOM output', () => {
-    const result = check.valueExists('hello');
-    expect(result).toBeTruthy();
-    const result1 = check.valueExists('http://example.com:100/hi');
-    expect(result1).toBeTruthy();
-  });
-});
-
 describe('isIntrusive', () => {
   test('Should return true if isIntrusive is set to 1', () => {
     const result = check.isIntrusive(1);

@@ -1,8 +1,8 @@
 # bXSS
 
-bXSS is a Blind XSS application adapted from https://cure53.de/m, you can read about it [here](https://ardern.io/2017/12/10/blind-xss/).
+<a href="https://codeclimate.com/github/LewisArdern/bXSS/maintainability"><img src="https://api.codeclimate.com/v1/badges/a8e30934a0be1952891c/maintainability" /></a>
 
-![Gif of BlindXSS](./Images/cure53.gif)
+bXSS is a utility which can be used by bug hunters and organizations to identify [Blind Cross-Site Scripting](https://ardern.io/2017/12/10/blind-xss/).
 
 bXSS supports the following:
 
@@ -19,9 +19,14 @@ bXSS supports the following:
 
 # Requirements
 
+## Baseline Requirements
+
 - A server you control
 - A usable domain
 - Node.js and Express
+
+## Optional Requirements
+
 - A SSL/TLS Certificate, free from [Lets Encrypt](https://letsencrypt.org) (Optional)
 - A [Gmail](https://gmail.com) account, to send reports via Nodemailer (Optional)
 - A [Twilio Account](https://www.twilio.com/sms) (Optional)
@@ -108,9 +113,9 @@ Once the application is funcitonal, you would just identify sites you are author
 
 The application has five core functions to utilize:
 
-- POST - /m (captures DOM information)
+- POST - /m (Captures DOM information)
 - GET - /m (Loads the payload)
-- GET - /mH (captures HTTP interactions)
+- GET - /mH (Captures HTTP interactions)
 - Payloads - /payloads (Gives payloads you can use for testing blind xss)
 - Everything else - Loads alert(1)
 

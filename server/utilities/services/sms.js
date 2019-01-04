@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const Twilio = require('twilio');
 const check = require('../check');
@@ -14,7 +14,7 @@ exports.sendSMS = (guid, domain, config, save) => {
       const client = new Twilio(config.twilio.accountSid, config.twilio.authToken);
       config.twilio.to.forEach(element => {
         const payload = {
-          body: `You have a new potential Blind XSS for domain ${domain.URL} for ${guid}`,
+          body: `You have a new potential Blind XSS for domain ${domain.url} for ${guid}`,
           to: element,
           from: config.twilio.from
         };

@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const bodyParser = require('body-parser');
 const helmet = require('helmet');

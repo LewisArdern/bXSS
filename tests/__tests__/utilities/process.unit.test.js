@@ -7,19 +7,19 @@ describe('processDomain', () => {
       { boundary: '#!!!!#', intrusiveLevel: 1 }
     );
 
-    expect(domain.Cookie).toBe('test:test');
-    expect(domain.URL).toBe('http://localhost:1000/test.html');
+    expect(domain.cookie).toBe('test:test');
+    expect(domain.url).toBe('http://localhost:1000/test.html');
     expect(domain.innerHTML).toContain(
       '<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.js"></script>'
     );
     expect(domain.innerHTML).toContain('<script>document.cookie="test:test"</script>');
     expect(domain.innerHTML).toContain('<h1>This is secret content</h1>');
     expect(domain.innerHTML).toContain('<div ng-app="">');
-    expect(domain.openerLocation).toBe('null');
-    expect(domain.openerCookie).toBe('null');
-    expect(domain.openerInnerHTML).toBe('null');
-    expect(domain.hasSecurityTxt).toBe('null');
-    expect(domain.victimIP).toBe(undefined);
+    expect(domain.openerLocation).toBe(null);
+    expect(domain.openerCookie).toBe(null);
+    expect(domain.openerInnerHTML).toBe(null);
+    expect(domain.hasSecurityTxt).toBe(null);
+    expect(domain.victimIP).toBe(null);
   });
 
   test('Should return processed values for domain with Cookie, innerHTML, and URL, hasSecurityTxt, other values null or undefined', () => {
@@ -28,16 +28,16 @@ describe('processDomain', () => {
       { boundary: '#!!!!#', intrusiveLevel: 1 }
     );
 
-    expect(domain.Cookie).toBe('test:test');
+    expect(domain.cookie).toBe('test:test');
     expect(domain.innerHTML).toContain('<script>document.cookie="test:test"</script>');
     expect(domain.innerHTML).toContain('<h1>This is secret content</h1>');
     expect(domain.innerHTML).toContain('<div ng-app="">');
-    expect(domain.URL).toBe('http://localhost:81/hi');
-    expect(domain.openerLocation).toBe('null');
-    expect(domain.openerCookie).toBe('null');
-    expect(domain.openerInnerHTML).toBe('null');
+    expect(domain.url).toBe('http://localhost:81/hi');
+    expect(domain.openerLocation).toBe(null);
+    expect(domain.openerCookie).toBe(null);
+    expect(domain.openerInnerHTML).toBe(null);
     expect(domain.hasSecurityTxt).toMatchObject(['lewisardern@live.co.uk']);
-    expect(domain.victimIP).toBe(undefined);
+    expect(domain.victimIP).toBe(null);
   });
 
   test('Should return processed values for domain with innerHTML (non-intrusive), and URL, other values null or undefined', () => {
@@ -46,14 +46,14 @@ describe('processDomain', () => {
       { boundary: '#!!!!#', intrusiveLevel: 0 }
     );
 
-    expect(domain.Cookie).toBe('null');
+    expect(domain.cookie).toBe(null);
     expect(domain.innerHTML).toBe('SCRIPT\r\nDIV\r\nDIV-test123-test\r\nDIV\r\nBODY\r\nHTML\r\n');
-    expect(domain.URL).toBe('http://localhost:1000/test.html');
-    expect(domain.openerLocation).toBe('null');
-    expect(domain.openerCookie).toBe('null');
-    expect(domain.openerInnerHTML).toBe('null');
-    expect(domain.hasSecurityTxt).toBe('null');
-    expect(domain.victimIP).toBe(undefined);
+    expect(domain.url).toBe('http://localhost:1000/test.html');
+    expect(domain.openerLocation).toBe(null);
+    expect(domain.openerCookie).toBe(null);
+    expect(domain.openerInnerHTML).toBe(null);
+    expect(domain.hasSecurityTxt).toBe(null);
+    expect(domain.victimIP).toBe(null);
   });
 });
 
@@ -63,7 +63,8 @@ describe('processInnerHTML', () => {
       innerHTML: 'SCRIPT,DIV--,DIV-test123-test,DIV--,BODY--,HTML--',
       openerInnerHTML: 'null'
     };
-    const innerHTML = process.processInnerHTML(domain);
+    const config = { intrusiveLevel: 0 };
+    const innerHTML = process.processInnerHTML(domain, config);
 
     expect(innerHTML).toBe('SCRIPT\r\nDIV\r\nDIV-test123-test\r\nDIV\r\nBODY\r\nHTML\r\n');
   });
@@ -95,7 +96,7 @@ describe('processSecurityText', () => {
     };
     const securityText = process.processSecurityText(domain);
 
-    expect(securityText).toBe('null');
+    expect(securityText).toBe(null);
   });
 });
 
@@ -103,7 +104,6 @@ describe('structureDomNodes', () => {
   test('Should append <br/> to each DOM Node For HTML Markdown Display', () => {
     const structure = 'SCRIPT\r\nDIV\r\nDIV-test123-test\r\nDIV\r\nBODY\r\nHTML';
     const domNode = process.structureDomNodes(structure);
-
     expect(domNode).toBe('SCRIPT<br/>DIV<br/>DIV-test123-test<br/>DIV<br/>BODY<br/>HTML<br/>');
   });
 });

@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const Twitter = require('twitter-lite');
 const check = require('../check');
@@ -28,7 +28,7 @@ exports.sendTwitter = (guid, domain, config) => {
                 recipient_id: recipientId
               },
               message_data: {
-                text: `You have a new potential Blind XSS for domain ${domain.URL} for ${guid}`
+                text: `You have a new potential Blind XSS for domain ${domain.url} for ${guid}`
               }
             }
           }

@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const nodemailer = require('nodemailer');
 const nodemailerMarkdown = require('nodemailer-markdown').markdown;
@@ -9,7 +9,7 @@ function mailOptions(config, mail, guid, domain, message) {
   return {
     from: config.gmail.from,
     to: mail,
-    subject: `${message} ${domain.URL} ${guid}`,
+    subject: `${message} ${domain.url} ${guid}`,
     markdown: template.createMarkdownTemplate(domain, config)
   };
 }
@@ -36,15 +36,15 @@ exports.sendMail = (guid, domain, config) => {
       config.gmail.to.forEach(email => {
         const options = mailOptions(config, email, guid, domain, 'New Blind XSS |');
         smtpTransport.sendMail(options, error =>
-          console.log(error || `Mail sent to ${email} for URL ${domain.URL}!`)
+          console.log(error || `Mail sent to ${email} for URL ${domain.url}!`)
         );
       });
 
-      if (check.valueExists(domain.hasSecurityTxt)) {
+      if (domain.hasSecurityTxt) {
         domain.hasSecurityTxt.forEach(email => {
           const options = mailOptions(config, email, guid, domain, 'Auto-Report - Blind XSS - For');
           smtpTransport.sendMail(options, error =>
-            console.log(error || `Auto Report mail sent to ${email} for URL ${domain.URL}!`)
+            console.log(error || `Auto Report mail sent to ${email} for URL ${domain.url}!`)
           );
         });
       }

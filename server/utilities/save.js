@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const path = require('path');
 
@@ -17,15 +17,14 @@ exports.saveFile = (guid, domain, config) => {
     if (readFileError) {
       console.log(readFileError);
     }
-    if (!data.includes(domain.URL)) {
-      fs.appendFile(urls, `${domain.URL}\n`, saveFileError =>
+    if (!data.includes(domain.url)) {
+      fs.appendFile(urls, `${domain.url}\n`, saveFileError =>
         saveFileError ? console.log(saveFileError) : ''
       );
     }
   });
 
   // save to disk
-
   fs.appendFileSync(file, template.createMarkdownTemplate(domain, config), err =>
     console.log(err || 'The file was saved!')
   );

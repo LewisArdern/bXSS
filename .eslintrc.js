@@ -9,6 +9,7 @@ module.exports = {
     'jest/globals': true
   },
   rules: {
-    'no-console': 'off'
+    'no-console': 'off',
+    'no-underscore-dangle': 'off'
   }
 };

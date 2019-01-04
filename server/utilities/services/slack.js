@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const Slack = require('slack');
 const check = require('../check');
@@ -23,7 +23,7 @@ exports.sendSlack = (guid, domain, config) => {
             if (err1) {
               console.error(err1);
             } else {
-              console.log(`Sent Slack Message to channel ${channel} for URL ${domain.URL}`);
+              console.log(`Sent Slack Message to channel ${channel} for URL ${domain.url}`);
             }
           });
         }

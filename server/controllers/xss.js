@@ -1,4 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
+// Copyright 2019 Lewis Ardern. All rights reserved.
 
 const mail = require('../utilities/services/email');
 const sms = require('../utilities/services/sms');
@@ -24,13 +24,13 @@ function reportToUtilities(guid, domain, config) {
 
 function sendSmsAndSaveToDisk(domain, res, guid) {
   if (!sms.lastSms()) {
-    console.log(`Sending SMS And Saving To Disk For URL ${domain.URL}`);
+    console.log(`Sending SMS And Saving To Disk For URL ${domain.url}`);
     sms.sendSMS(guid, domain, config, save);
     save.saveFile(guid, domain, config);
-    res.redirect(domain.URL);
+    res.redirect(domain.url);
   } else {
-    res.redirect(domain.URL);
-    console.log(`Already Sent SMS Today, Saving To Disk For URL ${domain.URL}`);
+    res.redirect(domain.url);
+    console.log(`Already Sent SMS Today, Saving To Disk For URL ${domain.url}`);
     save.saveFile(guid, domain, config);
   }
 }
@@ -58,26 +58,20 @@ exports.capture = (req, res) => {
   const guid = uuid();
   if (req.body._) {
     domain = process.processDomain(req.body._, config);
-  }
-  if (req.originalUrl === '/mH') {
-    domain = {
-      Cookie: 'null',
-      innerHTML: 'null',
-      URL: req.get('referer'),
-      openerLocation: 'null',
-      openerInnerHTML: 'null',
-      openerCookie: 'null',
-      hasSecurityTxt: 'null'
-    };
+  } else {
+    domain = process.processDomain(null, config);
+    console.log(req.get('referer'));
+    domain.url = req.get('referer') || null;
   }
   domain.victimIP =
     req.headers['x-forwarded-for'] ||
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||
-    req.connection.socket.remoteAddress;
-  domain.userAgent = req.headers['user-agent'];
-
-  // check if domain.URL exists or is not null/empty (should always be captured if valid request)
+    req.connection.socket.remoteAddress ||
+    null;
+  domain.userAgent = req.headers['user-agent'] || null;
+  console.log(domain);
+  // check if domain.url exists or is not null/empty (should always be captured if valid request)
   sendSmsAndSaveToDisk(domain, res, guid);
 
   // Always send to email, slack, webex teams, or discord
