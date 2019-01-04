@@ -11,7 +11,6 @@ const Domain = require('./domain');
 exports.processSecurityText = domain => {
   let securityTxtEmail = [];
   if (domain.hasSecurityTxt) {
-    console.log(domain.hasSecurityTxt);
     domain.hasSecurityTxt.split('\r\n').forEach(item => {
       if (item.includes('Contact:')) {
         const email = item
@@ -32,13 +31,12 @@ exports.processSecurityText = domain => {
   return securityTxtEmail;
 };
 
-// Once we know the payload was set to be non-intrusive, we want to structure DOM nodes to send
 exports.processInnerHTML = (domain, config) => {
   let configureInnerHtml = null;
   if (domain.innerHTML) {
     configureInnerHtml = domain.innerHTML;
   }
-  if (domain.openerInnerHTM) {
+  if (domain.openerInnerHTML) {
     configureInnerHtml = domain.openerInnerHTML;
   }
   if (config.intrusiveLevel !== 1 && domain.innerHTML) {
@@ -46,7 +44,7 @@ exports.processInnerHTML = (domain, config) => {
     configureInnerHtml = '';
     nodes.forEach(node => {
       const strippedNode = node.replace('--', '');
-      configureInnerHtml += `${strippedNode}\r\n`;
+      configureInnerHtml += `${strippedNode}<br/>`;
     });
   }
   return configureInnerHtml;
@@ -57,13 +55,4 @@ exports.processDomain = (data, config) => {
   domain.hasSecurityTxt = this.processSecurityText(domain);
   domain.innerHTML = this.processInnerHTML(domain, config);
   return domain;
-};
-
-exports.structureDomNodes = f => {
-  let structured = '';
-  const b = f.split('\r\n');
-  b.forEach(value => {
-    structured += `${value}<br/>`;
-  });
-  return structured;
 };

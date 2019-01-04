@@ -2,7 +2,6 @@
 
 const check = require('../check');
 const path = require('path');
-const process = require('../process');
 
 const dir = path.normalize(`${__dirname}/../../found/`);
 
@@ -89,7 +88,7 @@ ${domain.innerHTML}
 `
           : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
 
-${process.structureDomNodes(domain.innerHTML)}`
+${domain.innerHTML}`
       }`
     : ''
 }
@@ -189,7 +188,7 @@ ${domain.innerHTML}
 `
           : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
 
-${process.structureDomNodes(domain.innerHTML)}`
+${domain.innerHTML}`
       }`
     : ''
 }

@@ -18,7 +18,7 @@ describe('lastSms', () => {
     spy.mockReturnValue('2001-01-01');
     // Flaky (Sometimes passes, sometimes fails -- don't know why)
     // Important part is spy is not today, which means mock is returning mockReturnValue
-    // expect(sms.lastSms()).toBe(false);
+    // expect(sms.lastSms()).toBeFalsy();
     expect(spy).not.toReturnWith(today);
   });
 });

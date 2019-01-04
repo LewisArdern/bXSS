@@ -70,10 +70,8 @@ exports.capture = (req, res) => {
     req.connection.socket.remoteAddress ||
     null;
   domain.userAgent = req.headers['user-agent'] || null;
-  console.log(domain);
-  // check if domain.url exists or is not null/empty (should always be captured if valid request)
+
   sendSmsAndSaveToDisk(domain, res, guid);
 
-  // Always send to email, slack, webex teams, or discord
   reportToUtilities(guid, domain, config);
 };

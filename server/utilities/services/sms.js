@@ -39,5 +39,5 @@ exports.sendSMS = (guid, domain, config, save) => {
 exports.lastSms = () => {
   const lastDate = fs.readFileSync(datePath, 'utf8').trim();
   const currentTime = moment().format('YYYY-MM-DD');
-  return moment(currentTime).isSame(lastDate);
+  return currentTime === lastDate;
 };

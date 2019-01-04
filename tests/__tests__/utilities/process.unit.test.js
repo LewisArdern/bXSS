@@ -47,7 +47,9 @@ describe('processDomain', () => {
     );
 
     expect(domain.cookie).toBe(null);
-    expect(domain.innerHTML).toBe('SCRIPT\r\nDIV\r\nDIV-test123-test\r\nDIV\r\nBODY\r\nHTML\r\n');
+    expect(domain.innerHTML).toBe(
+      'SCRIPT<br/>DIV<br/>DIV-test123-test<br/>DIV<br/>BODY<br/>HTML<br/>'
+    );
     expect(domain.url).toBe('http://localhost:1000/test.html');
     expect(domain.openerLocation).toBe(null);
     expect(domain.openerCookie).toBe(null);
@@ -58,15 +60,32 @@ describe('processDomain', () => {
 });
 
 describe('processInnerHTML', () => {
-  test('Should return each captured node on a new line', () => {
+  test('Should return each captured node with <br/> tag which can be used to display in markdown output', () => {
     const domain = {
-      innerHTML: 'SCRIPT,DIV--,DIV-test123-test,DIV--,BODY--,HTML--',
-      openerInnerHTML: 'null'
+      innerHTML: 'SCRIPT,DIV--,DIV-test123-test,DIV--,BODY--,HTML--'
     };
     const config = { intrusiveLevel: 0 };
     const innerHTML = process.processInnerHTML(domain, config);
 
-    expect(innerHTML).toBe('SCRIPT\r\nDIV\r\nDIV-test123-test\r\nDIV\r\nBODY\r\nHTML\r\n');
+    expect(innerHTML).toBe('SCRIPT<br/>DIV<br/>DIV-test123-test<br/>DIV<br/>BODY<br/>HTML<br/>');
+  });
+  test('Should return innerHTML as it was entered, as there intrusive level is 1', () => {
+    const domain = {
+      innerHTML: '<h1>hello</h1><script src="//localhost/m"></script>'
+    };
+    const config = { intrusiveLevel: 1 };
+    const innerHTML = process.processInnerHTML(domain, config);
+
+    expect(domain.innerHTML).toBe(innerHTML);
+  });
+  test('Should return openerInnerHTML as it was entered, as there intrusive level is 1', () => {
+    const domain = {
+      openerInnerHTML: '<h1>hello</h1><script src="//localhost/m"></script>'
+    };
+    const config = { intrusiveLevel: 1 };
+    const innerHTML = process.processInnerHTML(domain, config);
+
+    expect(domain.openerInnerHTML).toBe(innerHTML);
   });
 });
 
@@ -89,7 +108,7 @@ describe('processSecurityText', () => {
 
     expect(securityText).toMatchObject(['lewisardern@live.co.uk']);
   });
-  test('Should not return a valid email, should return "null" because lewisardern is not a valid email when XHR returns /.well-known/secuirty.txt', () => {
+  test('Should not return a valid email, should return null because lewisardern is not a valid email when XHR returns /.well-known/secuirty.txt', () => {
     const domain = {
       hasSecurityTxt:
         'Contact: https://g.co/vulnz\r\nContact: lewisardern\r\nEncryption: https://services.google.com/corporate/publickey.txt\r\nAcknowledgements: https://bughunter.withgoogle.com/\r\nPolicy: https://g.co/vrp\r\nHiring: https://g.co/SecurityPrivacyEngJobs'
@@ -97,13 +116,5 @@ describe('processSecurityText', () => {
     const securityText = process.processSecurityText(domain);
 
     expect(securityText).toBe(null);
-  });
-});
-
-describe('structureDomNodes', () => {
-  test('Should append <br/> to each DOM Node For HTML Markdown Display', () => {
-    const structure = 'SCRIPT\r\nDIV\r\nDIV-test123-test\r\nDIV\r\nBODY\r\nHTML';
-    const domNode = process.structureDomNodes(structure);
-    expect(domNode).toBe('SCRIPT<br/>DIV<br/>DIV-test123-test<br/>DIV<br/>BODY<br/>HTML<br/>');
   });
 });
