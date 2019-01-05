@@ -2,17 +2,7 @@
 
 /* eslint-disable no-unused-vars */
 class Domain {
-  constructor({
-    cookie,
-    innerHTML,
-    url,
-    openerLocation,
-    openerInnerHTML,
-    openerCookie,
-    hasSecurityTxt,
-    victimIP,
-    userAgent
-  }) {
+  constructor() {
     const data = new Map();
     if (arguments.length > 0) {
       Domain.FIELDS.forEach(key => {

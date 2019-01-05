@@ -81,7 +81,7 @@ ${
   domain.innerHTML
     ? `### Document Object Model (DOM) Structure
 ${
-        check.isIntrusive(config.intrusiveLevel)
+        config.intrusiveLevel === 1
           ? `\`\`\` html
 ${domain.innerHTML}
 \`\`\`
@@ -181,7 +181,7 @@ ${
   domain.innerHTML
     ? `*Document Object Model (DOM) Structure*
 ${
-        check.isIntrusive(config.intrusiveLevel)
+        config.intrusiveLevel === 1
           ? `\`\`\`html
 ${domain.innerHTML}
 \`\`\`

@@ -15,7 +15,7 @@ describe('lastSms', () => {
   });
 
   test('Should return false as it uses todays date, and value from file is from past, allowing SMS to send', () => {
-    spy.mockReturnValue('2001-01-01');
+    spy.mockImplementation(() => '2001-01-01');
     // Flaky (Sometimes passes, sometimes fails -- don't know why)
     // Important part is spy is not today, which means mock is returning mockReturnValue
     // expect(sms.lastSms()).toBeFalsy();

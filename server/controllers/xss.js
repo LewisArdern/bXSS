@@ -26,12 +26,12 @@ function sendSmsAndSaveToDisk(domain, res, guid) {
   if (!sms.lastSms()) {
     console.log(`Sending SMS And Saving To Disk For URL ${domain.url}`);
     sms.sendSMS(guid, domain, config, save);
-    save.saveFile(guid, domain, config);
+    save.saveCapuredResults(guid, domain, config);
     res.redirect(domain.url);
   } else {
-    res.redirect(domain.url);
     console.log(`Already Sent SMS Today, Saving To Disk For URL ${domain.url}`);
-    save.saveFile(guid, domain, config);
+    save.saveCapuredResults(guid, domain, config);
+    res.redirect(domain.url);
   }
 }
 /* eslint-enable no-shadow */
