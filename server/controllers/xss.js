@@ -1,17 +1,19 @@
 // Copyright 2019 Lewis Ardern. All rights reserved.
 
-const mail = require('../utilities/services/email');
+const uuid = require('uuid/v1');
+
 const sms = require('../utilities/services/sms');
 const save = require('../utilities/save');
-const uuid = require('uuid/v1');
-const config = require('../config/config');
+const config = require('../utilities/config')();
+const template = require('../utilities/templates/script');
+const payloads = require('../utilities/payloads');
+const Domain = require('../utilities/domain');
+
+const mail = require('../utilities/services/email');
 const slack = require('../utilities/services/slack');
 const discord = require('../utilities/services/discord');
 const ciscoTeams = require('../utilities/services/spark');
 const twitter = require('../utilities/services/twitter');
-const template = require('../utilities/templates/script');
-const payloads = require('../utilities/payloads');
-const Domain = require('../utilities/domain');
 
 /* eslint-disable no-shadow */
 function reportToUtilities(guid, domain, config) {
