@@ -23,7 +23,7 @@ exports.saveDomain = domain => {
     if (readFileError) {
       console.log(readFileError);
     }
-    if (!data.includes(domain.url) && !readFileError) {
+    if (data && !data.includes(domain.url) && !readFileError) {
       fs.appendFile(urls, `${domain.url}\n`, saveFileError =>
         saveFileError ? console.log(saveFileError) : ''
       );

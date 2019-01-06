@@ -2,7 +2,6 @@
 
 const mail = require('../utilities/services/email');
 const sms = require('../utilities/services/sms');
-const process = require('../utilities/process');
 const save = require('../utilities/save');
 const uuid = require('uuid/v1');
 const config = require('../config/config');
@@ -12,6 +11,7 @@ const ciscoTeams = require('../utilities/services/spark');
 const twitter = require('../utilities/services/twitter');
 const template = require('../utilities/templates/script');
 const payloads = require('../utilities/payloads');
+const Domain = require('../utilities/domain');
 
 /* eslint-disable no-shadow */
 function reportToUtilities(guid, domain, config) {
@@ -57,9 +57,9 @@ exports.capture = (req, res) => {
   let domain = {};
   const guid = uuid();
   if (req.body._) {
-    domain = process.processDomain(req.body._, config);
+    domain = Domain.fromPayload(req.body._, config);
   } else {
-    domain = process.processDomain(null, config);
+    domain = new Domain(config);
     console.log(req.get('referer'));
     domain.url = req.get('referer') || null;
   }
