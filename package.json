@@ -47,16 +47,22 @@
   "eslintConfig": {
     "extends": [
       "airbnb-base",
-      "prettier"
+      "prettier",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "jest"
     ],
     "parserOptions": {
       "ecmaVersion": "2018"
     },
     "env": {
-      "node": true
+      "node": true,
+      "jest/globals": true
     },
     "rules": {
-      "no-console": 0
+      "no-console": 0,
+      "no-underscore-dangle": 0
     }
   },
   "lint-staged": {
@@ -67,5 +73,9 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
   }
 }
