@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "lint": "eslint server",
-    "prettier": "prettier \"**\\**\\**\\**.*+(js|json|md)\"",
+    "prettier": "prettier server/**/*.{js,json,md}",
     "format": "npm run prettier -- --write",
     "validate": "npm run lint && npm run prettier -- --list-different",
     "precommit": "lint-staged"
@@ -41,5 +41,29 @@
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.3",
     "sinon": "^6.1.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "2018"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ],
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
