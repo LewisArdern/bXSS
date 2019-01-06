@@ -74,7 +74,7 @@ class Domain {
     this.data.set('openerInnerHTML', this.processHTML(html));
   }
 
-  /*
+  /**
    * Takes in an XHR response captured from the client-side
    *
    * It will check to see if a value includes Contact: (which is used in the
