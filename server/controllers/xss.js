@@ -9,39 +9,34 @@ const template = require('../utilities/templates/script');
 const payloads = require('../utilities/payloads');
 const Domain = require('../utilities/domain');
 
-const mail = require('../utilities/services/email');
-const slack = require('../utilities/services/slack');
-const discord = require('../utilities/services/discord');
-const ciscoTeams = require('../utilities/services/spark');
-const twitter = require('../utilities/services/twitter');
+const reporters = [
+  require('../utilities/services/email'),
+  require('../utilities/services/slack'),
+  require('../utilities/services/discord'),
+  require('../utilities/services/spark'),
+  require('../utilities/services/twitter')
+];
+
 
 /* eslint-disable no-shadow */
 function reportToUtilities(guid, domain, config) {
-  mail.sendMail(guid, domain, config);
-  slack.sendSlack(guid, domain, config);
-  ciscoTeams.sendCiso(guid, domain, config);
-  discord.sendDiscord(guid, domain, config);
-  twitter.sendTwitter(guid, domain, config);
+  reporters.forEach(svc => svc.send(guid, domain, config));
 }
 
 function sendSmsAndSaveToDisk(domain, res, guid) {
   if (!sms.lastSms()) {
     console.log(`Sending SMS And Saving To Disk For URL ${domain.url}`);
     sms.sendSMS(guid, domain, config, save);
-    save.saveCapuredResults(guid, domain, config);
-    res.redirect(domain.url);
   } else {
     console.log(`Already Sent SMS Today, Saving To Disk For URL ${domain.url}`);
-    save.saveCapuredResults(guid, domain, config);
-    res.redirect(domain.url);
   }
+  save.saveCapuredResults(guid, domain, config);
+  res.redirect(domain.url);
 }
-/* eslint-enable no-shadow */
 
 exports.displayScript = (req, res) => {
   res.type('.js');
-  const generatedTemplate = template.generateTemplate(config);
-  res.send(generatedTemplate);
+  res.send(template.generateTemplate(config));
 };
 
 exports.displayDefault = (req, res) => {
@@ -51,8 +46,7 @@ exports.displayDefault = (req, res) => {
 
 exports.generatePayloads = (req, res) => {
   res.set('Content-Type', 'text/plain');
-  const generatedPayloads = payloads.generatePayloads(config);
-  res.send(generatedPayloads);
+  res.send(payloads.generatePayloads(config));
 };
 
 exports.capture = (req, res) => {
