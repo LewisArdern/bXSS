@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint server",
-    "prettier": "prettier \"**\\**\\**\\**.*+(js|json|md)\"",
+    "prettier": "prettier server/**/*.{js,json,md}",
     "format": "npm run prettier -- --write",
     "validate": "npm run lint && npm run prettier -- --list-different",
     "precommit": "lint-staged && jest"
