@@ -1,4 +1,4 @@
-const config = require('../../../server/utilities/config');
+const config = require('server/utilities/config');
 
 describe('utilities.config', () => {
   beforeEach(() => {

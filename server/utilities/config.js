@@ -2,7 +2,7 @@ const assert = require('assert');
 
 let config = {};
 try {
-  config = require('../config/config');
+  config = require('server/config/config');
 } catch (e) { ;; }
 
 

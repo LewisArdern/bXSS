@@ -1,4 +1,4 @@
-const Domain = require('../../../server/utilities/domain');
+const Domain = require('server/utilities/domain');
 
 describe('utilities.domain', () => {
   describe('fromPayload', () => {

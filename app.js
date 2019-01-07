@@ -1,13 +1,17 @@
+process.env.NODE_PATH = __dirname;
+require('module').Module._initPaths();
+
+//
 const express = require('express');
 const fs = require('fs');
 const https = require('https');
 
 const app = express();
-const config = require('./server/utilities/config')();
-const save = require('./server/utilities/save');
+const config = require('server/utilities/config')();
+const save = require('server/utilities/save');
 
-require('./server/config/express')(app);
-require('./server/config/routes')(app, config);
+require('server/config/express')(app);
+require('server/config/routes')(app, config);
 
 save.folderOrFileExists();
 

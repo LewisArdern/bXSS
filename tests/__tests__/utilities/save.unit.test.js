@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const Domain = require('../../../server/utilities/domain');
-const save = require('../../../server/utilities/save');
+const Domain = require('server/utilities/domain');
+const save = require('server/utilities/save');
 const today = require('moment')().format('YYYY-MM-DD');
 
 describe('saveDomain', () => {

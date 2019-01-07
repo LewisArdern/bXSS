@@ -4,7 +4,7 @@
   "description": "bXSS is a simple Blind XSS application adapted from https://cure53.de/m",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_PATH=. jest",
     "lint": "eslint server",
     "prettier": "prettier server/**/*.{js,json,md}",
     "format": "npm run prettier -- --write",
@@ -64,6 +64,13 @@
       "no-console": 0,
       "no-underscore-dangle": 0,
       "global-require": 0
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": ["."]
+        }
+      }
     }
   },
   "lint-staged": {

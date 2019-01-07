@@ -2,19 +2,19 @@
 
 const uuid = require('uuid/v1');
 
-const sms = require('../utilities/services/sms');
-const save = require('../utilities/save');
-const config = require('../utilities/config')();
-const template = require('../utilities/templates/script');
-const payloads = require('../utilities/payloads');
-const Domain = require('../utilities/domain');
+const sms = require('server/utilities/services/sms');
+const save = require('server/utilities/save');
+const config = require('server/utilities/config')();
+const template = require('server/utilities/templates/script');
+const payloads = require('server/utilities/payloads');
+const Domain = require('server/utilities/domain');
 
 const reporters = [
-  require('../utilities/services/email'),
-  require('../utilities/services/slack'),
-  require('../utilities/services/discord'),
-  require('../utilities/services/spark'),
-  require('../utilities/services/twitter')
+  require('server/utilities/services/email'),
+  require('server/utilities/services/slack'),
+  require('server/utilities/services/discord'),
+  require('server/utilities/services/spark'),
+  require('server/utilities/services/twitter')
 ];
 
 
