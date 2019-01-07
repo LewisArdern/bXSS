@@ -15,7 +15,7 @@ function resolveTypePredicates(types) {
   assert(typeof types === 'string', `Expected string, got ${typeof types}`);
   return types.split('|').map(type => {
     if (type === 'any') {
-      return val => val !== undefined;
+      return val => !(val === undefined || val === null);
     }
     switch (type) {
       case 'null':
