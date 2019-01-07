@@ -1,9 +1,12 @@
+/* eslint valid-typeof: "off" */
 const assert = require('assert');
 
 let config = {};
 try {
   config = require('server/config/config');
-} catch (e) {}
+} catch (e) {
+  console.log(`Error loading config: ${e}`);
+}
 
 /**
  * Converts a string specification of types into predicate functions.

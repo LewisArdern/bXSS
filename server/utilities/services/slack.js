@@ -1,15 +1,13 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
 const Slack = require('slack');
 const template = require('../templates/markdown');
 
 exports.send = (guid, domain, config) => {
-  if (config.isValid(['slack.token', 'slack.channel'])) {
+  if (!config.isValid(['slack.token', 'slack.channel'])) {
     console.log('You need to configure your slack account');
     return;
   }
 
-  const token = config.slack.token || '(no token)';
+  const token = config.slack.token || '';
   const text = template.createSimplifiedMarkdownTemplate(domain, config);
 
   const bot = new Slack({ token });

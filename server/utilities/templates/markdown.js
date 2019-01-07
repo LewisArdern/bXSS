@@ -1,5 +1,3 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
 const path = require('path');
 
 const dir = path.normalize(`${__dirname}/../../found/`);

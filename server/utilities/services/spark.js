@@ -1,5 +1,3 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
 const ciscospark = require('ciscospark');
 const template = require('../templates/markdown');
 

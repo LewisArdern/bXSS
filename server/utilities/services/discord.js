@@ -1,5 +1,3 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
 const Discord = require('discord.js');
 const markdown = require('../templates/markdown');
 

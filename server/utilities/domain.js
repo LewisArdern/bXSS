@@ -1,5 +1,3 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
 const validator = require('validator');
 
 class Domain {
