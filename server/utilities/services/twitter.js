@@ -3,14 +3,13 @@
 const Twitter = require('twitter-lite');
 
 exports.send = (guid, domain, config) => {
-  const conf = config.twitter || {};
   if (
-    !(
-      conf.consumer_key &&
-      conf.consumer_secret &&
-      conf.access_token_key &&
-      conf.access_token_secret
-    )
+    !config.isValid([
+      'twitter.consumer_key',
+      'twitter.consumer_secret',
+      'twitter.access_token_key',
+      'twitter.access_token_secret'
+    ])
   ) {
     console.log('You need to configure Twitter');
     return;
