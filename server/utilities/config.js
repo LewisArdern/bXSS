@@ -3,7 +3,7 @@ const assert = require('assert');
 let config = {};
 try {
   config = require('server/config/config');
-} catch (e) { ;; }
+} catch (e) {}
 
 
 /**
@@ -50,7 +50,7 @@ config.get = path =>
  * @param {object|Array<string>} spec A keys->type specification object, or list of keys
  * @return {bool} Whether the specified keys meet the criteria.
  */
-config.isValid = (spec) =>
+config.isValid = spec =>
   !(spec instanceof Array ? spec : Object.keys(spec)).some(key => {
     assert(
       typeof key === 'string',

