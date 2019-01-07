@@ -27,14 +27,14 @@ exports.saveCapuredResults = (guid, domain, config) => {
  */
 exports.saveDomain = domain => {
   fs.readFile(urls, 'utf8', (readFileError, data) => {
-    if (readFileError) {
+    if (readFileError || data.indexOf(domain.url) === -1) {
       console.log(readFileError);
+      return;
     }
-    if (data && !data.includes(domain.url) && !readFileError) {
-      fs.appendFile(urls, `${domain.url}\n`, saveFileError =>
-        saveFileError ? console.log(saveFileError) : ''
-      );
-    }
+    fs.appendFile(
+      urls,
+      `${domain.url}\n`, saveFileError => saveFileError ? console.log(saveFileError) : ''
+    );
   });
 };
 
