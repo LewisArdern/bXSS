@@ -5,31 +5,30 @@ try {
   config = require('server/config/config');
 } catch (e) {}
 
-
 /**
  * Converts a string specification of types into predicate functions.
  * @example resolveTestTypes('number|string|null')
  * @param {string} types A bar-delimited string of JS types
  * @return {Array<function>}
  */
-function resolveTestTypes(types) {
-  assert(
-    typeof types === 'string',
-    `Expected string, got ${typeof types}`
-  );
+function resolveTypePredicates(types) {
+  assert(typeof types === 'string', `Expected string, got ${typeof types}`);
   return types.split('|').map(type => {
     if (type === 'any') {
       return val => val !== undefined;
     }
     switch (type) {
-      case 'null':   return val => [null, undefined].indexOf(val) !== -1;
-      case 'array':  return val => val instanceof Array;
-      case 'object': return val => !(val instanceof Array) && typeof val === 'object';
-      default: return val => typeof val === type
+      case 'null':
+        return val => [null, undefined].indexOf(val) !== -1;
+      case 'array':
+        return val => val instanceof Array;
+      case 'object':
+        return val => !(val instanceof Array) && typeof val === 'object';
+      default:
+        return val => typeof val === type;
     }
   });
 }
-
 
 /**
  * Returns a node specified by a string path in dot notation.
@@ -38,10 +37,7 @@ function resolveTestTypes(types) {
  * @return {any} The value of the nested property
  */
 config.get = path =>
-  path.split('.').reduce(
-    (obj, key) => typeof obj === 'object' ? obj[key] : undefined,
-    config
-  );
+  path.split('.').reduce((obj, key) => (typeof obj === 'object' ? obj[key] : undefined), config);
 
 /**
  * Check supplied config values against a type specification.
@@ -52,13 +48,10 @@ config.get = path =>
  */
 config.isValid = spec =>
   !(spec instanceof Array ? spec : Object.keys(spec)).some(key => {
-    assert(
-      typeof key === 'string',
-      `Expected string, got ${typeof key}`
-    );
-    const predicates = resolveTestTypes(spec[key] || "any");
+    assert(typeof key === 'string', `Expected string, got ${typeof key}`);
+    const predicates = resolveTypePredicates(spec[key] || 'any');
     const value = config.get(key);
-    return !predicates.some(pred => pred(value))
+    return !predicates.some(pred => pred(value));
   });
 
 //
