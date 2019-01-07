@@ -43,5 +43,39 @@
     "jest": "^23.6.0",
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "jest"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "2018"
+    },
+    "env": {
+      "node": true,
+      "jest/globals": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-underscore-dangle": 0
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ],
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
   }
 }
