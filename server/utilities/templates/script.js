@@ -1,5 +1,3 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
-
 // As some companies might not want all of their innerHTML/Cookies to be leaked to a third-party
 // This acts as a barrier, by default config.intrusiveLevel is set to 0, which means
 // We will only capture relevant information about the host, and report it

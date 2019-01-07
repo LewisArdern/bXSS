@@ -7,14 +7,14 @@ config.letsEncrypt = {};
 config.ciscoSpark = {};
 config.discord = {};
 config.twitter = {};
+config.port = {};
 
-config.port = process.env.PORT || 80;
-config.url = process.env.url || 'example.com';
-// used to split the results (dont remove)
+config.port.http = process.env.httpPort || 80;
+config.url = process.env.url || 'localhost';
 config.boundary = process.env.boundary || '#!!!!#';
 
-// Set to false by default (would recommend reverse proxy instead)
 config.letsEncrypt.TLS = false;
+config.port.https = process.env.httpsPort || 443;
 config.letsEncrypt.publicKey =
   process.env.publicKey || `/etc/letsencrypt/live/${config.url}/fullchain.pem`;
 config.letsEncrypt.privateKey =

@@ -4,11 +4,12 @@
   "description": "bXSS is a simple Blind XSS application adapted from https://cure53.de/m",
   "main": "app.js",
   "scripts": {
+    "test": "jest --modulePaths .",
     "lint": "eslint server",
-    "prettier": "prettier \"**\\**\\**\\**.*+(js|json|md)\"",
+    "prettier": "prettier server/**/*.{js,json,md}",
     "format": "npm run prettier -- --write",
     "validate": "npm run lint && npm run prettier -- --list-different",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged && npm test"
   },
   "author": "Lewis Ardern",
   "license": "MIT",
@@ -28,18 +29,62 @@
     "validator": "^10.8.0"
   },
   "devDependencies": {
-    "cypress": "^3.1.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jest": "^22.1.2",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.7.0",
     "husky": "^1.2.1",
+    "jest": "^23.6.0",
     "lint-staged": "^8.1.0",
-    "prettier": "^1.15.3",
-    "sinon": "^6.1.4"
+    "prettier": "^1.15.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier",
+      "plugin:jest/recommended"
+    ],
+    "plugins": [
+      "jest"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "2018"
+    },
+    "env": {
+      "node": true,
+      "jest/globals": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-underscore-dangle": 0,
+      "global-require": 0
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": [
+            "."
+          ]
+        }
+      }
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ],
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
   }
 }

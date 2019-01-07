@@ -1,8 +1,4 @@
-// Copyright 2018 Lewis Ardern. All rights reserved.
-
-const check = require('../check');
 const path = require('path');
-const process = require('../process');
 
 const dir = path.normalize(`${__dirname}/../../found/`);
 
@@ -11,18 +7,13 @@ exports.createMarkdownTemplate = (domain, config) => `
 # bXSS Report
 
 ${
-  check.valueExists(domain.hasSecurityTxt)
+  domain.hasSecurityTxt
     ? `## Security Contact
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        check.configurationValueExists([config.gmail])
+        config.gmail
           ? `${
-              check.configurationValueExists([
-                config.gmail.user,
-                config.gmail.pass,
-                config.gmail.to,
-                config.gmail.from
-              ])
+              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
                 ? 'who has been automatically notified.'
                 : 'who you can contact.'
             }`
@@ -34,7 +25,7 @@ ${
 ## Details
 
 The following URL ${
-  domain.URL
+  domain.url
 } is succeptible to [Cross-Site-Scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29). XSS attacks occur when an attacker uses a web application to send malicious code, to a different end user. Flaws that allow these attacks to succeed are quite widespread and occur anywhere a web application uses input from a user within the output it generates without validating or encoding it.
 
 An attacker can use XSS to send a malicious script to an unsuspecting user. The end user’s browser has no way to know that the script should not be trusted, and will execute the script. Because it thinks the script came from a trusted source, the malicious script can access any cookies, session tokens, or other sensitive information retained by the browser and used with that site. These scripts can even rewrite the content of the HTML page.
@@ -42,14 +33,14 @@ An attacker can use XSS to send a malicious script to an unsuspecting user. The 
 For more details on the different types of XSS flaws, see: [Types Of XSS](https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting)
 
 ${
-  check.valueExists(domain.innerHTML)
+  domain.innerHTML
     ? ''
     : `### HTTP Interaction
 The triggered payload was through HTTP interaction, only HTTP headers were captured.`
 }
 
 ### Domain
-${domain.URL}
+${domain.url}
 
 ### Affected IP
 [${domain.victimIP}](https://www.whois.com/whois/${domain.victimIP})
@@ -58,38 +49,38 @@ ${domain.URL}
 ${domain.userAgent}
 
 ${
-  check.valueExists(domain.Cookie)
+  domain.cookie
     ? `### Cookies
-${domain.Cookie}`
+${domain.cookie}`
     : ''
 }
               
 ${
-  check.valueExists(domain.openerLocation)
+  domain.openerLocation
     ? `### openerLocation
 ${domain.openerLocation}`
     : ''
 }
 
 ${
-  check.valueExists(domain.openerCookie)
+  domain.openerCookie
     ? `### openerCookie
 ${domain.openerCookie}`
     : ''
 }
 
 ${
-  check.valueExists(domain.innerHTML)
+  domain.innerHTML
     ? `### Document Object Model (DOM) Structure
 ${
-        check.isIntrusive(config.intrusiveLevel)
+        config.intrusiveLevel === 1
           ? `\`\`\` html
 ${domain.innerHTML}
 \`\`\`
 `
           : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
 
-${process.structureDomNodes(domain.innerHTML)}`
+${domain.innerHTML}`
       }`
     : ''
 }
@@ -119,18 +110,13 @@ exports.createSimplifiedMarkdownTemplate = (domain, config) => `
 *bXSS Report*
 
 ${
-  check.valueExists(domain.hasSecurityTxt)
+  domain.hasSecurityTxt
     ? `## Security Contact
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        check.configurationValueExists([config.gmail])
+        config.gmail
           ? `${
-              check.configurationValueExists([
-                config.gmail.user,
-                config.gmail.pass,
-                config.gmail.to,
-                config.gmail.from
-              ])
+              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
                 ? 'who has been automatically notified.'
                 : 'who you can contact.'
             }`
@@ -140,14 +126,14 @@ ${
 }
 
 ${
-  check.valueExists(domain.innerHTML)
+  domain.innerHTML
     ? ''
     : `*HTTP Interaction*
 The triggered payload was through HTTP interaction, only HTTP headers were captured.`
 }
 
 *Domain*
-${domain.URL}
+${domain.url}
 
 *Affected IP*
 ${domain.victimIP}
@@ -157,21 +143,21 @@ https://www.whois.com/whois/${domain.victimIP}
 ${domain.userAgent}
 
 ${
-  check.valueExists(domain.Cookie)
+  domain.cookie
     ? `*Cookies*
-${domain.Cookie}`
+${domain.cookie}`
     : ''
 }
               
 ${
-  check.valueExists(domain.openerLocation)
+  domain.openerLocation
     ? `*openerLocation*
 ${domain.openerLocation}`
     : ''
 }
 
 ${
-  check.valueExists(domain.openerCookie)
+  domain.openerCookie
     ? `*openerCookie*
 ${domain.openerCookie}`
     : ''
@@ -179,17 +165,17 @@ ${domain.openerCookie}`
 
 
 ${
-  check.valueExists(domain.innerHTML)
+  domain.innerHTML
     ? `*Document Object Model (DOM) Structure*
 ${
-        check.isIntrusive(config.intrusiveLevel)
+        config.intrusiveLevel === 1
           ? `\`\`\`html
 ${domain.innerHTML}
 \`\`\`
 `
           : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
 
-${process.structureDomNodes(domain.innerHTML)}`
+${domain.innerHTML}`
       }`
     : ''
 }
@@ -202,18 +188,13 @@ exports.createDiscordSimplifiedMarkdownTemplate = (domain, config, guid) => `
 *bXSS Report - ${guid}*
 
 ${
-  check.valueExists(domain.hasSecurityTxt)
+  domain.hasSecurityTxt
     ? `*Security Contact*
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        check.configurationValueExists([config.gmail])
+        config.gmail
           ? `${
-              check.configurationValueExists([
-                config.gmail.user,
-                config.gmail.pass,
-                config.gmail.to,
-                config.gmail.from
-              ])
+              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
                 ? 'who has been automatically notified.'
                 : 'who you can contact.'
             }`
@@ -223,14 +204,14 @@ ${
 }
 
 ${
-  check.valueExists(domain.innerHTML)
+  domain.innerHTML
     ? ''
     : `*HTTP Interaction*
 The triggered payload was through HTTP interaction, only HTTP headers were captured.`
 }
 
 *Domain*
-${domain.URL}
+${domain.url}
 
 *Affected IP*
 ${domain.victimIP}
@@ -240,7 +221,7 @@ https://www.whois.com/whois/${domain.victimIP}
 ${domain.userAgent}
               
 ${
-  check.valueExists(domain.openerLocation)
+  domain.openerLocation
     ? `*openerLocation*
 ${domain.openerLocation}`
     : ''
