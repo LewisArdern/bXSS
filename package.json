@@ -9,7 +9,7 @@
     "prettier": "prettier server/**/*.{js,json,md}",
     "format": "npm run prettier -- --write",
     "validate": "npm run lint && npm run prettier -- --list-different",
-    "precommit": "lint-staged && jest"
+    "precommit": "lint-staged && npm test"
   },
   "author": "Lewis Ardern",
   "license": "MIT",
@@ -68,7 +68,9 @@
     "settings": {
       "import/resolver": {
         "node": {
-          "paths": ["."]
+          "paths": [
+            "."
+          ]
         }
       }
     }
