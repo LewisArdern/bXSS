@@ -95,7 +95,6 @@ Consider using a [reverse proxy](https://www.nginx.com/resources/glossary/revers
 - Obtain a let's Encrypt cert
   - [Manual](https://gist.github.com/davestevens/c9e437afbb41c1d5c3ab)
   - [certbot](https://medium.com/@yash.kulshrestha/using-lets-encrypt-with-express-e069c7abe625)
-- I would recommend looking at setting up a [reverse proxy](https://www.nginx.com/resources/glossary/reverse-proxy-server/), for example in [NGINX](https://pastebin.com/nCVSh5iv) and skip the next step as I wouldn't want anyone to run express as root.
 - Using Node.js
   - Update Configuration
     - config.letsEncrypt.TLS = true;
