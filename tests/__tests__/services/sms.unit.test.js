@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-const sms = require('../../../server/utilities/services/sms');
+const sms = require('server/utilities/services/sms');
 
 describe('lastSms', () => {
   const fs = require('fs');

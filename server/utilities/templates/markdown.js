@@ -1,6 +1,3 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
-const check = require('../check');
 const path = require('path');
 
 const dir = path.normalize(`${__dirname}/../../found/`);
@@ -14,14 +11,9 @@ ${
     ? `## Security Contact
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        check.configurationValueExists([config.gmail])
+        config.gmail
           ? `${
-              check.configurationValueExists([
-                config.gmail.user,
-                config.gmail.pass,
-                config.gmail.to,
-                config.gmail.from
-              ])
+              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
                 ? 'who has been automatically notified.'
                 : 'who you can contact.'
             }`
@@ -122,14 +114,9 @@ ${
     ? `## Security Contact
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        check.configurationValueExists([config.gmail])
+        config.gmail
           ? `${
-              check.configurationValueExists([
-                config.gmail.user,
-                config.gmail.pass,
-                config.gmail.to,
-                config.gmail.from
-              ])
+              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
                 ? 'who has been automatically notified.'
                 : 'who you can contact.'
             }`
@@ -205,14 +192,9 @@ ${
     ? `*Security Contact*
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        check.configurationValueExists([config.gmail])
+        config.gmail
           ? `${
-              check.configurationValueExists([
-                config.gmail.user,
-                config.gmail.pass,
-                config.gmail.to,
-                config.gmail.from
-              ])
+              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
                 ? 'who has been automatically notified.'
                 : 'who you can contact.'
             }`

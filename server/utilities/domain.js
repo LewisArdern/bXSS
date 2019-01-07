@@ -1,72 +1,104 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
+const validator = require('validator');
 
-/* eslint-disable no-unused-vars */
 class Domain {
-  constructor() {
-    const data = new Map();
-    if (arguments.length > 0) {
-      Domain.FIELDS.forEach(key => {
-        // eslint-disable-next-line prefer-rest-params
-        let value = arguments[0][key];
-        if (value === 'null' || value === undefined) value = null;
-        data.set(key, value);
-      });
+  constructor(config = {}) {
+    this.data = new Map();
+    this.config = config;
+    return new Proxy(this, this);
+  }
+
+  static from(data, config = {}) {
+    const domain = new Domain(config);
+    Domain.FIELDS.forEach(key => {
+      let val = data[key];
+      if (val === 'null' || val === undefined) val = null;
+      domain[key] = val;
+    });
+    return domain;
+  }
+
+  static fromArray(arr = [], config = {}) {
+    const domain = {};
+    Domain.FIELDS.forEach((key, idx) => {
+      domain[key] = arr[idx];
+    });
+    return Domain.from(domain, config);
+  }
+
+  static fromPayload(payload, config = {}) {
+    return Domain.fromArray(unescape(payload).split(`\r\n\r\n${config.boundary}`), config);
+  }
+
+  get(_, prop) {
+    if (this[prop] !== undefined) {
+      return this[prop];
     }
-    this._data = data;
+    const getter = `get${prop.charAt(0).toUpperCase()}${prop.slice(1)}`;
+    if (typeof this[getter] === 'function') {
+      return this[getter]();
+    }
+    return this.data.get(prop);
+  }
+  set(_, prop, value) {
+    const setter = `set${prop.charAt(0).toUpperCase()}${prop.slice(1)}`;
+    if (typeof this[setter] === 'function') {
+      this[setter](value);
+    } else {
+      this.data.set(prop, value);
+    }
+    return true;
   }
   [Symbol.iterator]() {
-    return this._data.iterator();
+    return this.data.iterator();
   }
-  get cookie() {
-    return this._data.get('cookie');
+
+  html() {
+    return this.innerHTML || this.openerInnerHTML;
   }
-  get innerHTML() {
-    return this._data.get('innerHTML');
+  processHTML(html) {
+    if (this.config.intrusiveLevel !== 1 && html) {
+      return (html || '')
+        .split(',')
+        .map(node => `${node.replace('--', '')}<br/>`)
+        .join('');
+    }
+    return html;
   }
-  set innerHTML(newInnerHTML) {
-    this._data.set('innerHTML', newInnerHTML);
+
+  setInnerHTML(html) {
+    this.data.set('innerHTML', this.processHTML(html));
   }
-  get url() {
-    return this._data.get('url');
+  setOpenerInnerHTML(html) {
+    this.data.set('openerInnerHTML', this.processHTML(html));
   }
-  set url(newURL) {
-    this._data.set('url', newURL);
-  }
-  get openerLocation() {
-    return this._data.get('openerLocation');
-  }
-  get openerInnerHTML() {
-    return this._data.get('openerInnerHTML');
-  }
-  get openerCookie() {
-    return this._data.get('openerCookie');
-  }
-  get hasSecurityTxt() {
-    return this._data.get('hasSecurityTxt');
-  }
-  set hasSecurityTxt(newEmail) {
-    this._data.set('hasSecurityTxt', newEmail);
-  }
-  get victimIP() {
-    return this._data.get('victimIP');
-  }
-  set victimIP(newIP) {
-    this._data.set('victimIP', newIP);
-  }
-  get userAgent() {
-    return this._data.get('userAgent');
-  }
-  set userAgent(newUserAgent) {
-    this._data.set('userAgent', newUserAgent);
-  }
-  static fromArray(arr) {
-    const domain = {};
-    // eslint-disable-next-line no-return-assign
-    Domain.FIELDS.forEach((key, idx) => (domain[key] = arr[idx]));
-    return new Domain(domain);
-  }
-  static fromPayload(payload, config) {
-    return Domain.fromArray(payload.split(`\r\n\r\n${config.boundary}`), config);
+
+  /**
+   * Takes in an XHR response captured from the client-side
+   *
+   * It will check to see if a value includes Contact: (which is used in the
+   * spec e.g https://www.google.com/.well-known/security.txt, Strip away Contact: and mailto: and remove any whitespace
+   *
+   * @param {string} securityTxt
+   * @returns {array}
+   */
+  setHasSecurityTxt(securityTxt) {
+    let securityTxtEmail = [];
+    if (typeof securityTxt === 'string') {
+      securityTxt.split('\r\n').forEach(item => {
+        if (item.includes('Contact:')) {
+          const email = item
+            .replace('Contact:', '')
+            .replace('mailto:', '')
+            .trim();
+          if (validator.isEmail(email) && !securityTxtEmail.includes(email))
+            securityTxtEmail.push(email);
+        }
+      });
+    }
+    if (securityTxtEmail[0] === undefined) {
+      securityTxtEmail = null;
+    }
+    this.data.set('hasSecurityTxt', securityTxtEmail);
   }
 }
 

