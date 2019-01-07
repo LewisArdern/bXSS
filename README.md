@@ -1,7 +1,6 @@
 # [bXSS](https://github.com/LewisArdern/bXSS)
 
 <a href="https://codeclimate.com/github/LewisArdern/bXSS/maintainability"><img src="https://api.codeclimate.com/v1/badges/a8e30934a0be1952891c/maintainability" /></a>
-
 <a href="https://lgtm.com/projects/g/LewisArdern/bXSS/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/LewisArdern/bXSS.svg?logo=lgtm&logoWidth=18"/></a>
 
 bXSS is a utility which can be used by bug hunters and organizations to identify [Blind Cross-Site Scripting](https://ardern.io/2017/12/10/blind-xss/).
