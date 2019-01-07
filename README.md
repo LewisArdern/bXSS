@@ -101,6 +101,7 @@ Consider using a [reverse proxy](https://www.nginx.com/resources/glossary/revers
     - config.letsEncrypt.publicKey = \$Path/fullchain.pem
     - config.letsEncrypt.privateKey = \$Path/privkey.pem
     - config.letsEncrypt.ca = \$Path/chain.pem
+    - config.port.https = 443
 
 ## Starting The Application
 
