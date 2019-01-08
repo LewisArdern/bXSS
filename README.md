@@ -17,6 +17,7 @@ bXSS supports the following:
 - [Webex Teams](./Images/cisco.jpg)
 - [Discord](./Images/discord.jpg)
 - [Twitter](./Images/twitter.jpg)
+- [Github](./Images/github.jpg)
 - [Payload Generation](./Images/payloads.jpg)
 - [Save locally](./Images/file.jpg)
 
@@ -35,6 +36,7 @@ bXSS supports the following:
 - [Slack Token](https://api.slack.com/docs/token-types)
 - [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details)
 - [Discord Token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token)
+- [Github Access Token](https://github.com/settings/tokens)
 - [Twitter Developer Account](https://developer.twitter.com/en/apply/user)
 - [SSL/TLS Certificate](https://letsencrypt.org)
 
