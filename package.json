@@ -22,6 +22,7 @@
     "moment": "^2.21.0",
     "nodemailer": "^4.6.2",
     "nodemailer-markdown": "^1.0.2",
+    "octonode": "^0.9.5",
     "slack": "^11.0.0",
     "twilio": "^3.18.0",
     "twitter-lite": "^0.8.0",

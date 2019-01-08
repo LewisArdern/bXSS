@@ -1,7 +1,9 @@
 # [bXSS](https://github.com/LewisArdern/bXSS)
 
+<!-- prettier-ignore-start -->
 <a href="https://codeclimate.com/github/LewisArdern/bXSS/maintainability"><img src="https://api.codeclimate.com/v1/badges/a8e30934a0be1952891c/maintainability" /></a>
 <a href="https://lgtm.com/projects/g/LewisArdern/bXSS/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/LewisArdern/bXSS.svg?logo=lgtm&logoWidth=18"/></a>
+<!-- prettier-ignore-end -->
 
 bXSS is a utility which can be used by bug hunters and organizations to identify [Blind Cross-Site Scripting](https://ardern.io/2017/12/10/blind-xss/).
 
@@ -15,6 +17,7 @@ bXSS supports the following:
 - [Webex Teams](./Images/cisco.jpg)
 - [Discord](./Images/discord.jpg)
 - [Twitter](./Images/twitter.jpg)
+- [Github](./Images/github.jpg)
 - [Payload Generation](./Images/payloads.jpg)
 - [Save locally](./Images/file.jpg)
 
@@ -33,6 +36,7 @@ bXSS supports the following:
 - [Slack Token](https://api.slack.com/docs/token-types)
 - [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details)
 - [Discord Token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token)
+- [Github Access Token](https://github.com/settings/tokens)
 - [Twitter Developer Account](https://developer.twitter.com/en/apply/user)
 - [SSL/TLS Certificate](https://letsencrypt.org)
 
@@ -87,6 +91,9 @@ Services are optional, by default bXSS will save a markdown file to disk. If you
   - config.gmail.pass = Gmail Password
   - config.gmail.to = ['email1@domain.com','email2@domain.com'] Where you want to send the emails
   - config.gmail.from = Who sent the message, usually Gmail Username
+- Github
+  - [config.github.accessToken](https://github.com/settings/tokens) = ''
+  - config.github.repo = '' an example is lewisardern/bXSS
 
 ## Setting Up HTTPS
 

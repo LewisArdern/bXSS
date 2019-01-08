@@ -7,6 +7,7 @@ config.letsEncrypt = {};
 config.ciscoSpark = {};
 config.discord = {};
 config.twitter = {};
+config.github = {};
 config.port = {};
 
 config.port.http = process.env.httpPort || 80;
@@ -51,6 +52,10 @@ config.gmail.user = process.env.gmailUser || 'example@gmail.com';
 config.gmail.pass = process.env.gmailPass || '';
 config.gmail.to = process.env.gmailTo || ['youremail@domain.com']; // add additonal emails with comma seperation '', ''
 config.gmail.from = process.env.gmailFrom || 'example@gmail.com';
+
+// Remove if you don't want github
+config.github.accessToken = process.env.accessToken || '';
+config.github.repo = process.env.githubRepo || '';
 
 // 1 Everything
 // 0 Just DOM Nodes
