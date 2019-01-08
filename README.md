@@ -17,7 +17,7 @@ bXSS supports the following:
 - [Webex Teams](./Images/cisco.jpg)
 - [Discord](./Images/discord.jpg)
 - [Twitter](./Images/twitter.jpg)
-- [Github](./Images/github.jpg)
+- [Github](./Images/github.JPG)
 - [Payload Generation](./Images/payloads.jpg)
 - [Save locally](./Images/file.jpg)
 
