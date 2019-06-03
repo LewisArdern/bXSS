@@ -13,6 +13,7 @@ config.port = {};
 config.port.http = process.env.httpPort || 80;
 config.url = process.env.url || 'localhost';
 config.boundary = process.env.boundary || '#!!!!#';
+config.bodyLimit = process.env.bodyLimit || '50mb';
 
 config.letsEncrypt.TLS = false;
 config.port.https = process.env.httpsPort || 443;
