@@ -3,7 +3,7 @@ const markdown = require('../templates/markdown');
 
 function sendMessage(guid, domain, config, bot) {
   const channelName = config.discord.channel || '';
-  const text = markdown.createDiscordSimplifiedMarkdownTemplate(domain, config, guid);
+  const text = markdown.createBasicMarkdown(domain, config, guid);
 
   bot.channels.find(channel => channel.name === channelName).send(text);
 }

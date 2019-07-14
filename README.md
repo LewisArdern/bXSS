@@ -31,7 +31,7 @@ bXSS supports the following:
 
 ## Optional
 
-- [Gmail](https://gmail.com)
+- [Gmail Account](https://gmail.com)
 - [Twilio Account](https://www.twilio.com/sms)
 - [Slack Token](https://api.slack.com/docs/token-types)
 - [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details)
