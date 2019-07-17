@@ -129,10 +129,10 @@ Once the application is functional, you would just identify sites you are author
 The application has the following routes:
 
 - POST - /m (Captures DOM information)
-- GET - /m (Loads the payload)
 - GET - /mH (Captures HTTP interactions)
 - GET - /alert (displays alert(1))
-- Payloads - /payloads (Gives payloads you can use for testing blind xss)
+- GET - /payloads (Gives payloads you can use for testing blind xss)
+- GET - /** (All other routes load the payload)
 
 
 # Contribute?
