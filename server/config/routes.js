@@ -7,8 +7,6 @@ module.exports = app => {
   app.get('/mH', xss.capture);
   // This GET query show's payloads that can be used when testing for bXSS.
   app.get('/payloads', xss.generatePayloads);
-  // This GET query show's the disclaimer to the victim
-  app.get('/disclaimer', xss.displayDisclaimer);
   // just shows alert(1), for normal xss.
   app.get('/alert', xss.displayDefault);
   // For CSP Base href redirection

