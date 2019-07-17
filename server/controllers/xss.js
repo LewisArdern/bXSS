@@ -4,16 +4,17 @@ const config = require('server/utilities/config');
 const template = require('server/utilities/templates/script');
 const payloads = require('server/utilities/payloads');
 const Domain = require('server/utilities/domain');
+const URL = require('url');
 
 const reporters = [
-  require('server/utilities/services/email'),
-  require('server/utilities/services/slack'),
-  require('server/utilities/services/discord'),
-  require('server/utilities/services/spark'),
-  require('server/utilities/services/twitter'),
-  require('server/utilities/services/sms'),
-  require('server/utilities/services/github'),
-  require('server/utilities/save')
+  require('server/utilities/services/email')
+  // require('server/utilities/services/slack'),
+  // require('server/utilities/services/discord'),
+  // require('server/utilities/services/spark'),
+  // require('server/utilities/services/twitter'),
+  // require('server/utilities/services/sms'),
+  // require('server/utilities/services/github'),
+  // require('server/utilities/save')
 ];
 
 /* eslint-disable no-shadow */
@@ -53,7 +54,11 @@ exports.capture = (req, res) => {
     null;
   domain.userAgent = req.headers['user-agent'] || null;
 
-  reportToUtilities(guid, domain, config);
-
-  res.redirect(domain.url);
+  if (domain.url !== null) {
+    const validDomain = new URL.URL({ toString: () => domain.url });
+    if (validDomain.protocol === 'https:' || 'http:' || 'file:') {
+      reportToUtilities(guid, domain, config);
+    }
+  }
+  res.redirect(`${domain.url}#x1`);
 };

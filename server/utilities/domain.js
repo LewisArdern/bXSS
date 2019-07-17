@@ -1,4 +1,5 @@
 const validator = require('validator');
+const payloads = require('./payloads');
 
 class Domain {
   constructor(config = {}) {
@@ -59,17 +60,19 @@ class Domain {
     if (this.config.intrusiveLevel !== 1 && html) {
       return (html || '')
         .split(',')
-        .map(node => `${node.replace('--', '')}<br/>`)
+        .map(node => `${node}<br/>`)
         .join('');
     }
     return html;
   }
-
   setInnerHTML(html) {
     this.data.set('innerHTML', this.processHTML(html));
   }
   setOpenerInnerHTML(html) {
     this.data.set('openerInnerHTML', this.processHTML(html));
+  }
+  setPayload(payload) {
+    this.data.set('payload', payloads.processPayload(payload, this.config));
   }
 
   /**
@@ -110,6 +113,7 @@ Domain.FIELDS = [
   'openerInnerHTML',
   'openerCookie',
   'hasSecurityTxt',
+  'payload',
   'victimIP',
   'userAgent'
 ];
