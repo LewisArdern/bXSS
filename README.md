@@ -133,7 +133,6 @@ The application has the following routes:
 - GET - /mH (Captures HTTP interactions)
 - GET - /alert (displays alert(1))
 - Payloads - /payloads (Gives payloads you can use for testing blind xss)
-- * - (Wildcard for <base href> injection
 
 
 # Contribute?
