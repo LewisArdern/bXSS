@@ -31,7 +31,7 @@ bXSS supports the following:
 
 ## Optional
 
-- [Gmail Account](https://gmail.com)
+- [SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)
 - [Twilio Account](https://www.twilio.com/sms)
 - [Slack Token](https://api.slack.com/docs/token-types)
 - [Cisco Token](https://developer.webex.com/docs/api/v1/people/get-my-own-details)
@@ -86,11 +86,13 @@ Services are optional, by default bXSS will save a markdown file to disk. If you
   - config.twitter.access_token_secret = Application Access Token Secret
   - Permissions (Write)
   - config.twitter.recipient_id = Twitter User ID, which can be found [here](https://twitter.com/settings/your_twitter_data)
-- Gmail
-  - config.gmail.user = Gmail Username
-  - config.gmail.pass = Gmail Password
-  - config.gmail.to = ['email1@domain.com','email2@domain.com'] Where you want to send the emails
-  - config.gmail.from = Who sent the message, usually Gmail Username
+- SMTP
+  - config.smtp.user = email username
+  - config.smtp.pass = email password
+  - config.smtp.port = port you are connecting to e.g 465
+  - config.smtp.host = host you are connecting to e.g smtp.example.com
+  - config.smtp.to = ['email1@domain.com','email2@domain.com'] Where you want to send the emails
+  - config.smtp.tls = Use TLS, boolean true or false
 - Github
   - [config.github.accessToken](https://github.com/settings/tokens) = ''
   - config.github.repo = '' an example is lewisardern/bXSS
@@ -132,8 +134,7 @@ The application has the following routes:
 - GET - /mH (Captures HTTP interactions)
 - GET - /alert (displays alert(1))
 - GET - /payloads (Gives payloads you can use for testing blind xss)
-- GET - /** (All other routes load the payload)
-
+- GET - /\*\* (All other routes load the payload)
 
 # Contribute?
 

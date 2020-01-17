@@ -48,11 +48,13 @@ config.twitter.access_token_key = process.env.twitterAccessKey || '';
 config.twitter.access_token_secret = process.env.twitterAccessSecret || '';
 config.twitter.recipient_id = process.env.recipient || ['']; // add additional recipients which can be comma seperation e.g '12030210321','1232131321'
 
-// Remove if you dont want Gmail
-config.gmail.user = process.env.gmailUser || 'example@gmail.com';
-config.gmail.pass = process.env.gmailPass || '';
-config.gmail.to = process.env.gmailTo || ['youremail@domain.com']; // add additonal emails with comma seperation '', ''
-config.gmail.from = process.env.gmailFrom || 'example@gmail.com';
+// Remove if you don't want email
+config.smtp.user = process.env.smtpUser || 'user@example.com';
+config.smtp.pass = process.env.smtpPass || 'hunter2';
+config.smtp.port = process.env.smtpPort || '469';
+config.smtp.host = process.env.smtpHost || 'smtp.example.com';
+config.smtp.tls = process.env.smtpTls || true; // true or false
+config.smtp.to = process.env.smtpTo || ['user2@example.com']; // add additonal emails with comma seperation '', ''
 
 // Remove if you don't want github
 config.github.accessToken = process.env.accessToken || '';
