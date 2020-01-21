@@ -24,14 +24,13 @@ exports.send = (guid, domain, config) => {
  */
 exports.saveDomain = domain => {
   fs.readFile(urls, 'utf8', (readFileError, data) => {
-    if (readFileError && data.indexOf(domain.url)) {
-      if (readFileError) {
-        console.log(readFileError);
-        return;
-      }
-      if (data.includes(domain.url)) {
-        return;
-      }
+    if (data.indexOf(domain.url)) {
+      console.log('Domain already exists, no need to write again');
+      return;
+    }
+    if (readFileError) {
+      console.log(`Read error: ${readFileError}`);
+      return;
     }
     fs.appendFile(urls, `${domain.url}\n`, saveFileError =>
       saveFileError ? console.log(`Save error: ${saveFileError}`) : ''
@@ -44,7 +43,7 @@ exports.saveDomain = domain => {
  */
 exports.saveTodaysDate = () => {
   // This is only used as it's unlikely there will be more than one ping a day
-  // from bug bounties Will change to a shorter time if that changes.
+  // from bug bounties change to a shorter time if that changes.
   fs.writeFileSync(date, moment().format('YYYY-MM-DD'), err =>
     console.log(err || 'Todays date was saved in date.txt')
   );

@@ -58,7 +58,7 @@ class Domain {
   }
   processHTML(html) {
     if (this.config.intrusiveLevel !== 1 && html) {
-      return (html || '')
+      return html
         .split(',')
         .map(node => `${node}<br/>`)
         .join('');
