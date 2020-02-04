@@ -9,7 +9,7 @@ exports.createMarkdownTemplate = (domain, config) => `
 ${
   // prettier-ignore
   domain.hasSecurityTxt ? `## Security Contact
-The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt} ${config.gmail ? `${config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from']) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.'}` : ''
+The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt} ${config.smtp ? `${config.isValid(['smtp.smtpUser']) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.'}` : ''
 }
 
 ## Details
@@ -98,7 +98,7 @@ exports.createSimplifiedMarkdownTemplate = (domain, config) => `
 ${
   // prettier-ignore
   domain.hasSecurityTxt ? `*Security Contact*
-The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt} ${config.gmail ? `${config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from']) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.'}` : ''
+The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt} ${config.smtp ? `${config.isValid(['smtp.user', 'smtp.pass']) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.'}` : ''
 }
 
 *Details*
@@ -179,9 +179,9 @@ ${
     ? `*Security Contact*
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        config.gmail
+        config.smtp
           ? `${
-              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
+              config.isValid(['smtp.user', 'smtp.pass'])
                 ? 'who has been automatically notified.'
                 : 'who you can contact.'
             }`
@@ -208,4 +208,11 @@ https://www.whois.com/whois/${domain.victimIP}
 ${domain.userAgent}
           
 See ${dir}${guid}.md for a full breakdown
+`;
+
+// Create Plain Text Response For Services such as SMS, Twitter
+exports.createPlainText = (domain, guid) => `
+You have a new potential Blind XSS for domain ${
+  domain.url
+} see ${dir}${guid}.md for a full breakdown
 `;

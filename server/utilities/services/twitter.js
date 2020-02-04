@@ -1,4 +1,5 @@
 const Twitter = require('twitter-lite');
+const template = require('../templates/reporting');
 
 exports.send = (guid, domain, config) => {
   if (
@@ -28,7 +29,7 @@ exports.send = (guid, domain, config) => {
             recipient_id: recipientId
           },
           message_data: {
-            text: `You have a new potential Blind XSS for domain ${domain.url} for ${guid}`
+            text: template.createPlainText(domain, guid)
           }
         }
       }

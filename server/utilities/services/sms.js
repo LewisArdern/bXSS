@@ -2,6 +2,7 @@ const Twilio = require('twilio');
 const moment = require('moment');
 const fs = require('fs');
 const save = require('../save');
+const template = require('../templates/reporting');
 
 const path = require('path');
 
@@ -25,7 +26,7 @@ exports.send = (guid, domain, config) => {
         .create({
           from: config.twilio.from,
           to: element,
-          body: `You have a new potential Blind XSS for domain ${domain.url} for ${guid}`
+          body: template.createPlainText(domain, guid)
         })
         .then(message =>
           console.log(`SMS send to ${element} from ${config.twilio.from} MSG ID ${message.sid}`)

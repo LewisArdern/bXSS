@@ -1,5 +1,5 @@
 const Slack = require('slack');
-const template = require('../templates/markdown');
+const template = require('../templates/reporting');
 
 exports.send = (guid, domain, config) => {
   if (!config.isValid(['slack.token', 'slack.channel'])) {

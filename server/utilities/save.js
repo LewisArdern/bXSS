@@ -5,7 +5,7 @@ const moment = require('moment');
 const dir = path.normalize(`${__dirname}/../../server/found/`);
 const urls = path.normalize(`${dir}urls.txt`);
 const date = path.normalize(`${dir}date.txt`);
-const template = require('./templates/markdown');
+const template = require('./templates/reporting');
 
 /**
  * TODO
@@ -33,7 +33,9 @@ exports.saveDomain = domain => {
       return;
     }
     fs.appendFile(urls, `${domain.url}\n`, saveFileError =>
-      saveFileError ? console.log(`Save error: ${saveFileError}`) : ''
+      saveFileError
+        ? console.log(`Save error: ${saveFileError}`)
+        : console.log(`New URL: ${domain.url} `)
     );
   });
 };

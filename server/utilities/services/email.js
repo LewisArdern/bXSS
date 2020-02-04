@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const nodemailerMarkdown = require('nodemailer-markdown').markdown;
-const template = require('../templates/markdown');
+const template = require('../templates/reporting');
 
 function mailOptions(config, mail, guid, domain, message) {
   return {

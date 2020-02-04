@@ -1,5 +1,5 @@
 const github = require('octonode');
-const template = require('../templates/markdown');
+const template = require('../templates/reporting');
 
 exports.send = (guid, domain, config) => {
   if (!config.isValid(['github.accessToken', 'github.repo'])) {

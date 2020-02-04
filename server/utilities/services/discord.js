@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const markdown = require('../templates/markdown');
+const markdown = require('../templates/reporting');
 
 function sendMessage(guid, domain, config, bot) {
   const channelName = config.discord.channel || '';

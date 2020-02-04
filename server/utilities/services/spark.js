@@ -1,5 +1,5 @@
 const ciscospark = require('ciscospark');
-const template = require('../templates/markdown');
+const template = require('../templates/reporting');
 
 exports.send = (guid, domain, config) => {
   if (!config.isValid(['ciscoSpark.token', 'ciscoSpark.sparkRoom'])) {
