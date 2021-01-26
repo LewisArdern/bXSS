@@ -7,6 +7,7 @@ config.letsEncrypt = {};
 config.ciscoSpark = {};
 config.discord = {};
 config.twitter = {};
+config.smtp = {};
 config.github = {};
 config.port = {};
 
