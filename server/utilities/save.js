@@ -24,7 +24,8 @@ exports.send = (guid, domain, config) => {
  */
 exports.saveDomain = domain => {
   fs.readFile(urls, 'utf8', (readFileError, data) => {
-    if (data.indexOf(domain.url)) {
+    console.log(`1 ${data} + 2 ${domain.url} + 3 ${data.indexOf(domain.url)}`);
+    if (data.indexOf(domain.url) !== -1) {
       console.log('Domain already exists, no need to write again');
       return;
     }
