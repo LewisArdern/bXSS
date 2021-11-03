@@ -30,7 +30,7 @@
     "twilio": "^3.18.0",
     "twitter-lite": "^0.8.0",
     "uuid": "^3.2.1",
-    "validator": "^10.8.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
