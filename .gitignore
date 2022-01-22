@@ -1,8 +1,9 @@
 node_modules
-server/config/config.js
-server/config/site.conf
-found/
 certs/
 .idea/
 test.html
 Dockerfile
+server/config/.env
+build/
+.env
+.DS_STORE

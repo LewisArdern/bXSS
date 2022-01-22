@@ -2,6 +2,7 @@ const validator = require('validator');
 const payloads = require('./payloads');
 
 class Domain {
+  
   constructor(config = {}) {
     this.data = new Map();
     this.config = config;
@@ -104,6 +105,8 @@ class Domain {
     this.data.set('hasSecurityTxt', securityTxtEmail);
   }
 }
+
+
 
 Domain.FIELDS = [
   'cookie',

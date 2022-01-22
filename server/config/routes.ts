@@ -1,4 +1,4 @@
-const xss = require('../controllers/xss');
+import xss = require('../controllers/xss');
 
 module.exports = app => {
   // Whenever _ body is sent via /m/ POST it will trigger the capture request

@@ -1,28 +1,33 @@
-const uuid = require('uuid/v1');
+import uuid = require('uuid/v1');
 
-const config = require('server/utilities/config');
-const template = require('server/utilities/templates/script');
-const payloads = require('server/utilities/payloads');
-const Domain = require('server/utilities/domain');
-const URL = require('url');
+import config from '../config';
+
+import template = require('../utilities/templates/script');
+import payloads = require('../utilities/payloads');
+import Domain = require('../utilities/domain');
+import URL = require('url');
+
+
+console.log(process.env.SLACK_TOKEN)
 
 const reporters = [
-  require('server/utilities/services/email'),
-  require('server/utilities/services/slack'),
-  require('server/utilities/services/discord'),
-  require('server/utilities/services/spark'),
-  require('server/utilities/services/twitter'),
-  require('server/utilities/services/sms'),
-  require('server/utilities/services/github'),
-  require('server/utilities/save')
+  // require('server/utilities/services/email'),
+  require('../utilities/services/slack'),
+  // require('server/utilities/services/discord'),
+  // require('server/utilities/services/spark'),
+  // require('server/utilities/services/twitter'),
+  // require('server/utilities/services/sms'),
+  // require('server/utilities/services/github'),
+  // require('server/utilities/save')
 ];
 
 /* eslint-disable no-shadow */
-function reportToUtilities(guid, domain, config) {
-  reporters.forEach(svc => svc.send(guid, domain, config));
+function reportToUtilities(domain) {
+  reporters.forEach(svc => svc.send(domain));
 }
 
 exports.displayScript = (req, res) => {
+  console.log(process.env.SLACK_TOKEN)
   res.type('.js');
   res.send(template.generateTemplate(config));
 };
@@ -38,6 +43,7 @@ exports.generatePayloads = (req, res) => {
 };
 
 exports.capture = (req, res) => {
+  console.log(__dirname)
   let domain = {};
   const guid = uuid();
   if (req.body._) {
