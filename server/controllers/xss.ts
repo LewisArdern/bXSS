@@ -56,6 +56,7 @@ exports.capture = (req, res) => {
 
   domain.identifier = uuid();
   
+  
   if (domain.url !== null) {
     const validDomain = new URL.URL({ toString: () => domain.url });
     if (validDomain.protocol === 'https:' || 'http:' || 'file:') {
