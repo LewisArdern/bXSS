@@ -1,16 +1,21 @@
 const validator = require('validator');
 const payloads = require('./payloads');
+import config from "config";
 
 class Domain {
-  
-  constructor(config = {}) {
+  data: Map<any, any>;
+  config: any;
+  static FIELDS: any;
+  innerHTML: any;
+  openerInnerHTML: any;
+
+  constructor() {
     this.data = new Map();
     this.config = config;
-    return new Proxy(this, this);
   }
 
-  static from(data, config = {}) {
-    const domain = new Domain(config);
+  static from(data) {
+    const domain = new Domain();
     Domain.FIELDS.forEach(key => {
       let val = data[key];
       if (val === 'null' || val === undefined) val = null;
@@ -19,46 +24,23 @@ class Domain {
     return domain;
   }
 
-  static fromArray(arr = [], config = {}) {
+  static fromArray(arr = []) {
     const domain = {};
     Domain.FIELDS.forEach((key, idx) => {
       domain[key] = arr[idx];
     });
-    return Domain.from(domain, config);
+    return Domain.from(domain);
   }
 
-  static fromPayload(payload, config = {}) {
-    return Domain.fromArray(unescape(payload).split(`\r\n\r\n${config.boundary}`), config);
-  }
-
-  get(_, prop) {
-    if (this[prop] !== undefined) {
-      return this[prop];
-    }
-    const getter = `get${prop.charAt(0).toUpperCase()}${prop.slice(1)}`;
-    if (typeof this[getter] === 'function') {
-      return this[getter]();
-    }
-    return this.data.get(prop);
-  }
-  set(_, prop, value) {
-    const setter = `set${prop.charAt(0).toUpperCase()}${prop.slice(1)}`;
-    if (typeof this[setter] === 'function') {
-      this[setter](value);
-    } else {
-      this.data.set(prop, value);
-    }
-    return true;
-  }
-  [Symbol.iterator]() {
-    return this.data.iterator();
+  static fromPayload(payload) {
+    return Domain.fromArray(unescape(payload).split(`\r\n\r\n${config.get<string>('boundary')}`));
   }
 
   html() {
     return this.innerHTML || this.openerInnerHTML;
   }
   processHTML(html) {
-    if (this.config.intrusiveLevel !== 1 && html) {
+    if (config.get<number>('intrusiveLevel') !== 1 && html) {
       return html
         .split(',')
         .map(node => `${node}<br/>`)
@@ -105,8 +87,6 @@ class Domain {
     this.data.set('hasSecurityTxt', securityTxtEmail);
   }
 }
-
-
 
 Domain.FIELDS = [
   'cookie',

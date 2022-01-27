@@ -1,8 +1,8 @@
 require('module').Module._initPaths();
 
-import * as express from 'express';
-import * as fs from 'fs';
-import * as https from 'https';
+import express = require('express');
+import fs = require('fs');
+import https = require('https');
 
 const app = express();
 require('dotenv').config({ override: true, path: __dirname + '/config/.env' })

@@ -20,13 +20,13 @@ interface Config {
     },
   },
   services: {
-    twilio?: {
-      accountSid: string,
-      authToken: string,
-      to: Array<string>,
-      from: Array<string>,
+    twilio: {
+      accountSid?: string,
+      authToken?: string,
+      to?: Array<string>,
+      from?: Array<string>,
     },
-    slack?: {
+    slack: {
       token: string,
       channel: string,
     },
@@ -61,7 +61,15 @@ interface Config {
 
 }
 
-const config: Config = {
+function set_service(configProperty){
+  if(userConfig.has(configProperty)) {
+    return userConfig.get(configProperty)
+  }  else {
+    return undefined
+  }
+}
+
+let config: Config = {
   url: userConfig.get<string>('url'),
   bodyLimit: userConfig.get<string>('bodyLimit'),
   boundary: userConfig.get<string>('boundary'),
@@ -75,15 +83,15 @@ const config: Config = {
     },
   },
   services: {
-    // twilio: {
-    //   accountSid: userConfig.get<string>('services.twilio.accountSid'),
-    //   authToken: userConfig.get<string>('services.twilio.authToken'),
-    //   to: userConfig.get<Array<string>>('services.twilio.to'),
-    //   from: userConfig.get<Array<string>>('services.twilio.from'),
-    // },
+    twilio: {
+      accountSid: set_service('services.twilio.accountSid'),
+      authToken: set_service('services.twilio.authToken'),
+      to: set_service('services.twilio.to'),
+      from: set_service('services.twilio.from'),
+    },
     slack: {
-      token: userConfig.get<string>('services.slack.token'),
-      channel: userConfig.get<string>('services.slack.channel'),
+      token: set_service('services.slack.token'),
+      channel: set_service('services.slack.channel'),
     },
     // twitter: {
     //   consumer_key: userConfig.get<string>('services.twitter.consumer_key'),

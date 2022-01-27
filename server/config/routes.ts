@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import xss = require('../controllers/xss');
 
 module.exports = app => {

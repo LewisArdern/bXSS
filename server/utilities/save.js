@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const moment = require('moment');
 
-const dir = path.normalize(`${__dirname}/../../server/found/`);
+const dir = path.normalize(`${__dirname}/../../found/`);
 const urls = path.normalize(`${dir}urls.txt`);
 const date = path.normalize(`${dir}date.txt`);
 const template = require('./templates/markdown');
@@ -10,7 +10,7 @@ const template = require('./templates/markdown');
 /**
  * TODO
  */
-exports.send = (guid, domain, config) => {
+exports.send = (domain, config) => {
   const file = `${dir}${guid}.md`;
   this.saveDomain(domain);
   fs.appendFileSync(file, template.createMarkdownTemplate(domain, config), err =>
