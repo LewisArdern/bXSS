@@ -54,7 +54,7 @@ exports.capture = (req, res) => {
     null;
   domain.userAgent = req.headers['user-agent'] || null;
 
-  Domain.identifier = uuid();
+  domain.identifier = uuid();
   
   if (domain.url !== null) {
     const validDomain = new URL.URL({ toString: () => domain.url });
