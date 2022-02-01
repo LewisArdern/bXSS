@@ -4,10 +4,10 @@ import config from '../../config';
 
 const { services } = config;
 
-exports.send = async (domain,cnfg) => {
+exports.send = async (domain) => {
   if (services.slack.token && services.slack.channel) {
 
-  const text = template.createSimplifiedMarkdownTemplate(domain, cnfg);
+  const text = template.createSimplifiedMarkdownTemplate(domain, config);
   const client = new WebClient(services.slack.token);
   try {
     await client.chat.postMessage({

@@ -1,9 +1,10 @@
 const path = require('path');
+const config = require('../../config');
 
 const dir = path.normalize(`${__dirname}/../../found/`);
 
 // Full Markdown For Email Reporting
-exports.createMarkdownTemplate = (domain, config) => `
+exports.createMarkdownTemplate = domain => `
 # bXSS Report
 
 ${

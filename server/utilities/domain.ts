@@ -55,7 +55,7 @@ class Domain {
     this.data.set('openerInnerHTML', this.processHTML(html));
   }
   setPayload(payload) {
-    this.data.set('payload', payloads.processPayload(payload, this.config));
+    this.data.set('payload', payloads.processPayload(payload));
   }
 
   /**

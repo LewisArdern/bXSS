@@ -1,20 +1,22 @@
-const path = require('path');
-const fs = require('fs');
-const moment = require('moment');
+import path = require('path');
+import fs = require('fs');
+import moment = require('moment');
 
 const dir = path.normalize(`${__dirname}/../../found/`);
 const urls = path.normalize(`${dir}urls.txt`);
 const date = path.normalize(`${dir}date.txt`);
-const template = require('./templates/markdown');
+import template = require('./templates/markdown');
 
 /**
  * TODO
  */
 exports.send = (domain, config) => {
-  const file = `${dir}${guid}.md`;
+  const file = `${dir}${domain.identifier}.md`;
   this.saveDomain(domain);
-  fs.appendFileSync(file, template.createMarkdownTemplate(domain, config), err =>
-    console.log(err || 'The file was saved!')
+  fs.appendFileSync(file, template.createMarkdownTemplate(domain, config), (err: string) =>
+    {
+      return console.log(err || 'The file was saved!');
+    }
   );
 };
 
