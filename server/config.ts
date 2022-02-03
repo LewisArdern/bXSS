@@ -103,10 +103,10 @@ let config: Config = {
     //   access_token_secret: userConfig.get<string>('services.twitter.access_token_secret'),
     //   recipient_id: userConfig.get<Array<string>>('services.twitter.recipient_id'),
     // },
-    // github: {
-    //   accessToken: userConfig.get<string>('services.github.accessToken'),
-    //   repo: userConfig.get<string>('services.github.repo'),
-    // },
+    github: {
+      accessToken: set_service('services.github.accessToken'),
+      repo: set_service('services.github.repo'),
+    },
     // discord: {
     //   token: userConfig.get<string>('services.discord.token'),
     //   channel: userConfig.get<string>('services.discord.channel'),

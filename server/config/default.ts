@@ -33,7 +33,7 @@ export default {
     },
     github: {
       accessToken: process.env.GITHUB_TOKEN,
-      repo: '',
+      repo: process.env.GITHUB_REPO,
     },
     discord: {
       token: process.env.DISCORD_TOKEN,
