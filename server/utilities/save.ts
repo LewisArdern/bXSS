@@ -1,33 +1,33 @@
 import path = require('path');
-import fs = require('fs');
+import * as fs from 'fs';
 import moment = require('moment');
 
-const dir = path.normalize(`${__dirname}/../../found/`);
+const dir = path.normalize(`${__dirname}/../../build/found/`);
 const urls = path.normalize(`${dir}urls.txt`);
 const date = path.normalize(`${dir}date.txt`);
 import template = require('./templates/markdown');
+import save = require('./save');
+/**
+ * TODO
+ */
+exports.send = (domain) => {
+  const file = `${dir}${domain.identifier}.md`;
+  save.saveDomain(domain.url);
+  fs.appendFileSync(file, template.createMarkdownTemplate(domain));
+};
+
 
 /**
  * TODO
  */
-exports.send = (domain, config) => {
-  const file = `${dir}${domain.identifier}.md`;
-  this.saveDomain(domain);
-  fs.appendFileSync(file, template.createMarkdownTemplate(domain, config), (err: string) =>
-    {
-      return console.log(err || 'The file was saved!');
-    }
-  );
+export function saveTodaysDate() {
+  fs.writeFileSync(date, moment().format('YYYY-MM-DD'));
 };
 
-/**
- * Save domain if it does not exist in urls.txt.
- * @param {Domain} domain
- */
-exports.saveDomain = domain => {
+export function saveDomain(url: string) {
   fs.readFile(urls, 'utf8', (readFileError, data) => {
-    console.log(`1 ${data} + 2 ${domain.url} + 3 ${data.indexOf(domain.url)}`);
-    if (data.indexOf(domain.url) !== -1) {
+    console.log(`1 ${data} + 2 ${url} + 3 ${data.indexOf(url)}`);
+    if (data.indexOf(url) !== -1) {
       console.log('Domain already exists, no need to write again');
       return;
     }
@@ -35,19 +35,8 @@ exports.saveDomain = domain => {
       console.log(`Read error: ${readFileError}`);
       return;
     }
-    fs.appendFile(urls, `${domain.url}\n`, saveFileError =>
+    fs.appendFile(urls, `${url}\n`, saveFileError =>
       saveFileError ? console.log(`Save error: ${saveFileError}`) : ''
     );
   });
-};
-
-/**
- * TODO
- */
-exports.saveTodaysDate = () => {
-  // This is only used as it's unlikely there will be more than one ping a day
-  // from bug bounties change to a shorter time if that changes.
-  fs.writeFileSync(date, moment().format('YYYY-MM-DD'), err =>
-    console.log(err || 'Todays date was saved in date.txt')
-  );
-};
+}

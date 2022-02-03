@@ -14,7 +14,7 @@ const reporters = [
   // require('server/utilities/services/twitter'),
   // require('server/utilities/services/sms'),
   // require('server/utilities/services/github'),
-  // require('../../utilities/save')
+  require('../utilities/save')
 ];
 
 function reportToUtilities(domain) {
