@@ -1,16 +1,20 @@
 const path = require('path');
-const config = require('../../config');
+import config from '../../config';
+
+const { services, intrusiveLevel } = config;
+
 
 const dir = path.normalize(`${__dirname}/../../found/`);
 
 // Full Markdown For Email Reporting
-exports.createMarkdownTemplate = domain => `
+export function createMarkdownTemplate(domain: any) {
+return `
 # bXSS Report
 
 ${
   // prettier-ignore
   domain.hasSecurityTxt ? `## Security Contact
-The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt} ${config.gmail ? `${config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from']) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.'}` : ''
+The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt} ${services.smtp.password  ? 'who has been automatically notified.' : 'who you can contact.'}`: ``
 }
 
 ## Details
@@ -24,7 +28,7 @@ An attacker can use XSS to send a malicious script to an unsuspecting user. The 
 ${
   domain.payload
     ? `In this instance, the following payload was utilized: 
-\`\`\` html
+\`\`\` 
 ${domain.payload}
 \`\`\`
 `
@@ -60,7 +64,7 @@ ${
   domain.innerHTML
     ? `### Document Object Model (DOM) Structure
 ${
-        config.intrusiveLevel === 1
+        intrusiveLevel === 1
           ? `\`\`\` html
 ${domain.innerHTML}
 \`\`\`
@@ -90,16 +94,17 @@ For more information, see:
 * [Angular  Sanitzation](https://angular.io/guide/security#sanitization-and-security-contexts)
 * [Angular Template Security](https://angular.io/guide/template-syntax#content-security)
 * [ReactJS Escaping](https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks)
-`;
+`};
 
 // ### etc does not work within slack.
-exports.createSimplifiedMarkdownTemplate = (domain, config) => `
+export function createSimplifiedMarkdownTemplate(domain: any) {
+  return `
 *bXSS Report*
 
 ${
   // prettier-ignore
   domain.hasSecurityTxt ? `*Security Contact*
-The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt} ${config.gmail ? `${config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from']) ? 'who has been automatically notified.' : 'who you can contact.'}` : 'who you can contact.'}` : ''
+  The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}`:``
 }
 
 *Details*
@@ -111,6 +116,16 @@ The following URL ${
 An attacker can use XSS to send a malicious script to an unsuspecting user. The end user's browser has no way to know that the script should not be trusted, and will execute the script. Because it thinks the script came from a trusted source, the malicious script can access any cookies, session tokens, or other sensitive information retained by the browser and used with that site. These scripts can even rewrite the content of the HTML page.
 
 For more details on the different types of XSS flaws, see: Types Of XSS https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting
+
+${
+  domain.payload
+    ? `In this instance, the following payload was utilized: 
+\`\`\` 
+${domain.payload}
+\`\`\`
+`
+    : ''
+}
 
 ${
   domain.innerHTML
@@ -130,21 +145,20 @@ https://www.whois.com/whois/${domain.victimIP}
 ${domain.userAgent}
 
 ${
-  domain.cookie || domain.openerCookie
+  domain.cookie
     ? `*Cookies*
-${domain.cookie || domain.openerCookie}`
+${domain.cookie}`
     : ''
 }
-              
+
 ${
   domain.innerHTML
-    ? `*Document Object Model (DOM) Structure*
+    ? `
 ${
-        config.intrusiveLevel === 1
-          ? `\`\`\`
-${domain.innerHTML}
-\`\`\`
-`
+    
+        intrusiveLevel === 1 ? `\`\`\`
+            ${domain.innerHTML}
+            \`\`\``
           : `The payload utilized was non-intrusve, it only captures HTML elements (nodeName, className, and id) not the entire innerHTML.
 
 ${domain.innerHTML}`
@@ -169,23 +183,20 @@ https://docs.angularjs.org/api/ng/directive/ngBind
 https://angular.io/guide/security#sanitization-and-security-contexts
 https://angular.io/guide/template-syntax#content-security
 https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks
-`;
+`
+};
 
 // Basic markdown for external services which do not offer a lot of character room
-exports.createBasicMarkdown = (domain, config, guid) => `
-*bXSS Report - ${guid}*
+exports.createBasicMarkdown = (domain) => `
+*bXSS Report - ${domain.identier}*
 
 ${
   domain.hasSecurityTxt
     ? `*Security Contact*
 The affected URL has a /.well-known/.security.txt contact ${domain.hasSecurityTxt}
 ${
-        config.gmail
-          ? `${
-              config.isValid(['gmail.user', 'gmail.pass', 'gmail.to', 'gmail.from'])
-                ? 'who has been automatically notified.'
-                : 'who you can contact.'
-            }`
+        services.smtp.password
+          ? ``
           : 'who you can contact.'
       }`
     : ''
@@ -208,5 +219,7 @@ https://www.whois.com/whois/${domain.victimIP}
 *User Agent*
 ${domain.userAgent}
           
-See ${dir}${guid}.md for a full breakdown
+See ${dir}${domain.identifier}.md for a full breakdown
 `;
+
+

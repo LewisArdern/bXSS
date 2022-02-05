@@ -107,22 +107,22 @@ let config: Config = {
       accessToken: set_service('services.github.accessToken'),
       repo: set_service('services.github.repo'),
     },
-    // discord: {
-    //   token: userConfig.get<string>('services.discord.token'),
-    //   channel: userConfig.get<string>('services.discord.channel'),
-    // },
+    discord: {
+      token: set_service('services.discord.token'),
+      channel: set_service('services.discord.channel'),
+    },
     // cisco: {
     //   token: userConfig.get<string>('services.cisco.token'),
     //   sparkRoom: userConfig.get<Array<string>>('services.cisco.sparkRoom'),
     // },
-    // smtp: {
-    //   password: userConfig.get<string>('services.smtp.password'),
-    //   username: userConfig.get<string>('services.smtp.username'),
-    //   port: userConfig.get<number>('services.smtp.port'),
-    //   host: userConfig.get<string>('services.smtp.host'),
-    //   tls: userConfig.get<boolean>('services.smtp.tls'),
-    //   to: userConfig.get<Array<string>>('services.smtp.to'),
-    // }
+    smtp: {
+      password: set_service('services.smtp.password'),
+      username: set_service('services.smtp.username'),
+      port: set_service('services.smtp.port'),
+      host: set_service('services.smtp.host'),
+      tls: set_service('services.smtp.tls'),
+      to: set_service('services.smtp.to'),
+    }
    }
 };
 

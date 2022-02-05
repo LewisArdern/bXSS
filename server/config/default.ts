@@ -1,9 +1,9 @@
 export default {
-  url: 'localhost',
+  url: process.env.DEPLOY_URL,
   boundary: '#!!!!#',
   bodyLimit: '50mb',
   // 1 to capture everything, 0 for non-intrusive
-  intrusiveLevel: 0,
+  intrusiveLevel: 1,
   website: {
     port: 80, 
     tls: {
@@ -45,11 +45,11 @@ export default {
     },
     smtp: {
       password: process.env.SMTP_PASSWORD,
-      username: '',
-      port: 469,
-      host: '',
+      username: process.env.SMTP_USERNAME,
+      port: process.env.SMTP_PORT,
+      host: process.env.SMTP_HOST,
       tls: true,
-      to: [''],
+      to: ['lewis@ardern.io'],
     },
   },
 };

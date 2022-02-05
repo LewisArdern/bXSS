@@ -26,7 +26,6 @@ export function saveTodaysDate() {
 
 export function saveDomain(url: string) {
   fs.readFile(urls, 'utf8', (readFileError, data) => {
-    console.log(`1 ${data} + 2 ${url} + 3 ${data.indexOf(url)}`);
     if (data.indexOf(url) !== -1) {
       console.log('Domain already exists, no need to write again');
       return;

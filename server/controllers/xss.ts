@@ -7,13 +7,13 @@ import Domain = require('../utilities/domain');
 import URL = require('url');
 
 const reporters = [
-  // require('server/utilities/services/email'),
-  require('../utilities/services/slack'),
+  require('../utilities/services/email'),
+  // require('../utilities/services/slack'),
   // require('server/utilities/services/discord'),
   // require('server/utilities/services/spark'),
   // require('server/utilities/services/twitter'),
   // require('server/utilities/services/sms'),
-  require('../utilities/services/github'),
+  // require('../utilities/services/github'),
   require('../utilities/save')
 ];
 
@@ -51,9 +51,7 @@ exports.capture = (req, res) => {
     req.connection.socket.remoteAddress ||
     null;
   domain.userAgent = req.headers['user-agent'] || null;
-
   domain.identifier = uuid();
-
   if (domain.url !== null) {
     const validDomain = new URL.URL({ toString: () => domain.url });
     if (validDomain.protocol === 'https:' || 'http:' || 'file:') {
