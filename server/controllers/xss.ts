@@ -9,7 +9,7 @@ import URL = require('url');
 const reporters = [
   require('../utilities/services/email'),
   // require('../utilities/services/slack'),
-  // require('server/utilities/services/discord'),
+  require('../utilities/services/discord'),
   // require('server/utilities/services/spark'),
   // require('server/utilities/services/twitter'),
   // require('server/utilities/services/sms'),

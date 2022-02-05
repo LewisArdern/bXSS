@@ -57,7 +57,7 @@ interface Config {
       port: number,
       host: string,
       tls: boolean,
-      to: Array<string>,
+      to: string,
     },
   },
 

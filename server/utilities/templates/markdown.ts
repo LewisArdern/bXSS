@@ -188,7 +188,7 @@ https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks
 
 // Basic markdown for external services which do not offer a lot of character room
 exports.createBasicMarkdown = (domain) => `
-*bXSS Report - ${domain.identier}*
+*bXSS Report - ${domain.identifier}*
 
 ${
   domain.hasSecurityTxt

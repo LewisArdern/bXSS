@@ -16,7 +16,6 @@ function mailOptions(mail, domain, message) {
 }
 
 exports.send = (domain) => {
-  console.log('host'+services.smtp.host + services.smtp.password+ 'host'+ services.smtp.port+ 'host'+ services.smtp.to + services.smtp.username)
   if (services.smtp.host && services.smtp.password && services.smtp.port && services.smtp.to && services.smtp.username) {
 
     const smtpTransport = nodemailer.createTransport({
@@ -34,7 +33,7 @@ exports.send = (domain) => {
         console.log(`Error with your SMTP config: ${verifyError}`);
       } else {
         smtpTransport.use('compile', nodemailerMarkdown());
-        services.smtp.to.forEach(email => {
+        services.smtp.to.split(",").forEach(email => {
           const options = mailOptions(email, domain, 'New Blind XSS |');
           smtpTransport.sendMail(options, error => {
             console.log(error || `Mail sent to ${email} for URL ${domain.url}!`);

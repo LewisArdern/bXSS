@@ -37,7 +37,7 @@ export default {
     },
     discord: {
       token: process.env.DISCORD_TOKEN,
-      channel: '',
+      channel: process.env.DISCORD_CHANNEL,
     },
     cisco: {
       token: process.env.SPARK_TOKEN,
@@ -49,7 +49,7 @@ export default {
       port: process.env.SMTP_PORT,
       host: process.env.SMTP_HOST,
       tls: true,
-      to: ['lewis@ardern.io'],
+      to: process.env.SMTP_TO,
     },
   },
 };
