@@ -25,8 +25,8 @@ interface Config {
     twilio: {
       accountSid?: string,
       authToken?: string,
-      to?: Array<string>,
-      from?: Array<string>,
+      to?: string,
+      from?: string,
     },
     slack: {
       token: string,

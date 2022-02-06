@@ -19,10 +19,10 @@ export default {
       channel: 'begbounty',
     },
     twilio: {
-      accountSid: '',
+      accountSid: process.env.TWILIO_ACCOUNTSID,
       authToken: process.env.TWILIO_TOKEN,
-      to: ['+1'],
-      from: ['']
+      to: process.env.TWILIO_TO,
+      from: process.env.TWILIO_FROM
     },
     twitter: {
       consumer_key: process.env.TWITTER_KEY,

@@ -12,7 +12,7 @@ const reporters = [
   require('../utilities/services/discord'),
   // require('server/utilities/services/spark'),
   // require('server/utilities/services/twitter'),
-  // require('server/utilities/services/sms'),
+  require('../utilities/services/sms'),
   // require('../utilities/services/github'),
   require('../utilities/save')
 ];
