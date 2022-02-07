@@ -10,7 +10,7 @@ const reporters = [
   require('../utilities/services/email'),
   require('../utilities/services/slack'),
   require('../utilities/services/discord'),
-  require('../utilities/services/spark'),
+  require('../utilities/services/webex'),
   require('../utilities/services/twitter'),
   require('../utilities/services/sms'),
   require('../utilities/services/github'),

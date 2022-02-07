@@ -49,7 +49,7 @@ interface Config {
     },
     cisco?: {
       token: string,
-      sparkRoom: Array<string>,
+      person: Array<string>,
     },
     smtp?: {
       password: string,
@@ -113,7 +113,7 @@ let config: Config = {
     },
     cisco: {
       token: set_service('services.cisco.token'),
-      sparkRoom: set_service('services.cisco.sparkRoom'),
+      person: set_service('services.cisco.person'),
     },
     smtp: {
       password: set_service('services.smtp.password'),

@@ -40,8 +40,8 @@ export default {
       channel: process.env.DISCORD_CHANNEL,
     },
     cisco: {
-      token: process.env.SPARK_TOKEN,
-      sparkRoom: process.env.SPARK_ROOM,
+      token: process.env.WEBEX_TEAMS_TOKEN,
+      person: process.env.WEBEX_TEAMS_PERSON,
     },
     smtp: {
       password: process.env.SMTP_PASSWORD,
