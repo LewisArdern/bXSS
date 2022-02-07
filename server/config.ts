@@ -37,7 +37,7 @@ interface Config {
       consumer_secret: string,
       access_token_key: string,
       access_token_secret: string,
-      recipient_id: Array<string>,
+      recipient_id: string,
     },
     github?: {
       accessToken: string,
@@ -96,13 +96,13 @@ let config: Config = {
       token: set_service('services.slack.token'),
       channel: set_service('services.slack.channel'),
     },
-    // twitter: {
-    //   consumer_key: userConfig.get<string>('services.twitter.consumer_key'),
-    //   consumer_secret: userConfig.get<string>('services.twitter.consumer_secret'),
-    //   access_token_key: userConfig.get<string>('services.twitter.access_token_key'),
-    //   access_token_secret: userConfig.get<string>('services.twitter.access_token_secret'),
-    //   recipient_id: userConfig.get<Array<string>>('services.twitter.recipient_id'),
-    // },
+    twitter: {
+      consumer_key: set_service('services.twitter.consumer_key'),
+      consumer_secret: set_service('services.twitter.consumer_secret'),
+      access_token_key: set_service('services.twitter.access_token_key'),
+      access_token_secret: set_service('services.twitter.access_token_secret'),
+      recipient_id: set_service('services.twitter.recipient_id'),
+    },
     github: {
       accessToken: set_service('services.github.accessToken'),
       repo: set_service('services.github.repo'),
@@ -111,10 +111,10 @@ let config: Config = {
       token: set_service('services.discord.token'),
       channel: set_service('services.discord.channel'),
     },
-    // cisco: {
-    //   token: userConfig.get<string>('services.cisco.token'),
-    //   sparkRoom: userConfig.get<Array<string>>('services.cisco.sparkRoom'),
-    // },
+    cisco: {
+      token: set_service('services.cisco.token'),
+      sparkRoom: set_service('services.cisco.sparkRoom'),
+    },
     smtp: {
       password: set_service('services.smtp.password'),
       username: set_service('services.smtp.username'),

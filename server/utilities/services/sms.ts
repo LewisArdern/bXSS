@@ -1,9 +1,11 @@
 const Twilio = require('twilio');
-const moment = require('moment');
-const fs = require('fs');
+import moment = require('moment');
+import fs = require('fs');
+import path = require('path');
+
+
 import save = require('../save');
 import sms = require('./sms');
-const path = require('path');
 
 const datePath = path.normalize(`${__dirname}/../../../build/found/date.txt`);
 

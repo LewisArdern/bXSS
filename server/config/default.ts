@@ -16,7 +16,7 @@ export default {
   services: {
     slack: {
       token: process.env.SLACK_TOKEN,
-      channel: 'begbounty',
+      channel: process.env.SLACK_CHANNEL,
     },
     twilio: {
       accountSid: process.env.TWILIO_ACCOUNTSID,
@@ -27,9 +27,9 @@ export default {
     twitter: {
       consumer_key: process.env.TWITTER_KEY,
       consumer_secret: process.env.TWITTER_SECRET,
-      access_token_key: process.env.TWITTER_TOKEN,
+      access_token_key: process.env.TWITTER_TOKEN_KEY,
       access_token_secret: process.env.TWITTER_TOKEN_SECRET,
-      recipient_id: ['']
+      recipient_id: process.env.TWITTER_RECIPIENT_ID
     },
     github: {
       accessToken: process.env.GITHUB_TOKEN,
@@ -41,7 +41,7 @@ export default {
     },
     cisco: {
       token: process.env.SPARK_TOKEN,
-      sparkRoom: [''],
+      sparkRoom: process.env.SPARK_ROOM,
     },
     smtp: {
       password: process.env.SMTP_PASSWORD,

@@ -54,9 +54,7 @@ class Domain {
   setOpenerInnerHTML(html) {
     this.data.set('openerInnerHTML', this.processHTML(html));
   }
-  setPayload(payload) {
-    this.data.set('payload', payloads.processPayload(payload));
-  }
+
 
   /**
    * Takes in an XHR response captured from the client-side

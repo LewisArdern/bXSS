@@ -14,7 +14,7 @@ exports.send = async (domain) => {
       channel: services.slack.channel,
       text: text
     });
-    console.log(`Message sent to ${services.slack.channel} channel`);
+    console.log(`Slack message sent to ${services.slack.channel} channel`);
   }
   catch (error) {
     console.error(error);

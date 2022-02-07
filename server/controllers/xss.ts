@@ -8,12 +8,12 @@ import URL = require('url');
 
 const reporters = [
   require('../utilities/services/email'),
-  // require('../utilities/services/slack'),
+  require('../utilities/services/slack'),
   require('../utilities/services/discord'),
-  // require('server/utilities/services/spark'),
-  // require('server/utilities/services/twitter'),
+  require('../utilities/services/spark'),
+  require('../utilities/services/twitter'),
   require('../utilities/services/sms'),
-  // require('../utilities/services/github'),
+  require('../utilities/services/github'),
   require('../utilities/save')
 ];
 
