@@ -22,7 +22,7 @@
     "express": "^4.16.2",
     "helmet": "^3.12.0",
     "jsdom": "^13.2.0",
-    "moment": "^2.21.0",
+    "moment": "^2.29.2",
     "nodemailer": "^6.4.16",
     "nodemailer-markdown": "^1.0.3",
     "octonode": "^0.9.5",
