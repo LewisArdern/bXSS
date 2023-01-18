@@ -40,7 +40,7 @@ bXSS supports the following:
 - [Twitter Developer Account](https://developer.twitter.com/en/apply/user)
 - [SSL/TLS Certificate](https://letsencrypt.org)
 
-# Step-Up
+# Set-Up
 
 ## Default
 
@@ -78,7 +78,7 @@ Services are optional, by default bXSS will save a markdown file to disk. If you
     - Select the server you want your bot to join and authorize
     - Update the following values below for the bot to post to the 'text channel' e.g ('general')
   - config.discord.token = 'your bot token'
-  - config.discord.channel = 'channel you want it to join, e.g general'
+  - config.discord.channel = 'channel that you want it to join, e.g general'
 - Twitter
   - config.twitter.consumer_key = API Key
   - config.twitter.consumer_secret = API Secret Key
@@ -91,8 +91,8 @@ Services are optional, by default bXSS will save a markdown file to disk. If you
   - config.smtp.pass = email password
   - config.smtp.port = port you are connecting to e.g 465
   - config.smtp.host = host you are connecting to e.g smtp.example.com
-  - config.smtp.to = ['email1@domain.com','email2@domain.com'] Where you want to send the emails
-  - config.smtp.tls = Use TLS, boolean true or false
+  - config.smtp.to = ['email1@domain.com','email2@domain.com'] where you want to send the emails
+  - config.smtp.tls = use TLS, boolean true or false
 - Github
   - [config.github.accessToken](https://github.com/settings/tokens) = ''
   - config.github.repo = '' an example is lewisardern/bXSS
