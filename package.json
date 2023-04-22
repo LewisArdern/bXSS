@@ -19,7 +19,7 @@
     "ciscospark": "^1.32.23",
     "cors": "^2.8.5",
     "discord.js": "^11.4.2",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "helmet": "^3.12.0",
     "jsdom": "^13.2.0",
     "moment": "^2.21.0",
